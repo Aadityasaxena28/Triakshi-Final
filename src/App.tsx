@@ -22,7 +22,7 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 // ✅ Base name (for GitHub/Vercel deployment)
-const base = "/TriyakshiGems";
+const base = "/";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
