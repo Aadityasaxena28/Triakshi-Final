@@ -36,8 +36,6 @@ const Home = () => {
         <>
           <TopSlider />
           <Marquee />
-          {/* <Hero /> */}
-          {/* <Categories /> */}
           <ProductSlider />
           <NewArrivals/>
           
