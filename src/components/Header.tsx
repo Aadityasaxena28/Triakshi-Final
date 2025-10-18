@@ -26,11 +26,11 @@ const Header: React.FC = () => {
     { name: "Gemstones", path: "/gemstones" },
     { name: "Rudraksh", path: "/rudraksha" },
     { name: "Mala & Bracelets", path: "/mala" },
-    { name: "Refer & Earn", path: "/refer-earn" },
+    // { name: "Refer & Earn", path: "/refer-earn" },
   ];
 
   const calculatorItems: MenuItem[] = [
-    { name: "Life Stone Calculator", path: "/gemstone-calculator" },
+    { name: "Life Stone Calculator", path: "/life-calculator" },
     { name: "Health Stone Calculator", path: "/health-calculator" },
     { name: "Lucky Stone Calculator", path: "/lucky-stone-calculator" },
     { name: "Rudraksh Calculator", path: "/health-calculator" },
@@ -39,7 +39,7 @@ const Header: React.FC = () => {
 
   const aboutItems: MenuItem[] = [
     { name: "About Us", path: "/about-us" },
-    { name: "Our Blogs", path: "/blogs" },
+    // { name: "Our Blogs", path: "/blogs" },
   ];
 
   const profileItems = [
