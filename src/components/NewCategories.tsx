@@ -1,278 +1,192 @@
-import { useState, useRef, useEffect } from "react";
+import { addToCart } from "@/API/Cart";
+import { getProducts } from "@/API/Product";
+import { Button } from "@/components/ui/button";
+import { CartItem } from "@/DataTypes/CartData";
+import { Product } from "@/DataTypes/product";
+import { toastError, toastSuccess } from "@/utlity/AlertSystem";
+import { useQuery } from "@tanstack/react-query";
 import {
-  ChevronLeft,
-  ChevronRight,
   Briefcase,
+  Coins,
+  Eye,
   GraduationCap,
   Heart,
   Shield,
-  Filter,
   ShoppingCart,
-  CreditCard,
-  Coins,
-  Sparkles,
+  Sparkles
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NewCategories = () => {
-  const [activeCategory, setActiveCategory] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState({
-    career: 0,
-    education: 0,
-    loveLife: 0,
-    health: 0,
-    finance: 0,
-  });
-  const [priceFilters, setPriceFilters] = useState({
-    career: "all",
-    education: "all",
-    loveLife: "all",
-    health: "all",
-    finance: "all",
-  });
-
-  const scrollRefs = {
-    career: useRef<HTMLDivElement>(null),
-    education: useRef<HTMLDivElement>(null),
-    loveLife: useRef<HTMLDivElement>(null),
-    health: useRef<HTMLDivElement>(null),
-    finance: useRef<HTMLDivElement>(null),
-  };
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const categories = [
+    {
+      id: "all",
+      name: "All",
+      icon: Sparkles,
+      color: "from-purple-500 to-pink-500",
+    },
     {
       id: "career",
       name: "Career",
       icon: Briefcase,
       color: "from-orange-500 to-amber-600",
-      products: [
-        {
-          name: "Citrine Success Stone",
-          price: 850,
-          image:
-            "",
-        },
-        {
-          name: "Tiger Eye Confidence",
-          price: 650,
-          image:
-            "",
-        },
-        {
-          name: "Pyrite Abundance",
-          price: 750,
-          image:
-            "",
-        },
-        {
-          name: "Green Aventurine Luck",
-          price: 550,
-          image:
-            "",
-        },
-      ],
     },
     {
       id: "education",
       name: "Education",
       icon: GraduationCap,
       color: "from-amber-500 to-yellow-500",
-      products: [
-        {
-          name: "Fluorite Focus Stone",
-          price: 600,
-          image:
-            "",
-        },
-        {
-          name: "Clear Quartz Clarity",
-          price: 500,
-          image:
-            "",
-        },
-        {
-          name: "Amethyst Wisdom",
-          price: 700,
-          image:
-            "",
-        },
-        {
-          name: "Sodalite Intelligence",
-          price: 450,
-          image:
-            "",
-        },
-      ],
     },
     {
-      id: "loveLife",
+      id: "love-life",
       name: "Love Life",
       icon: Heart,
       color: "from-red-500 to-orange-500",
-      products: [
-        {
-          name: "Rose Quartz Love",
-          price: 550,
-          image:
-            "",
-        },
-        {
-          name: "Moonstone Romance",
-          price: 800,
-          image:
-            "",
-        },
-        {
-          name: "Garnet Passion",
-          price: 900,
-          image:
-            "",
-        },
-        {
-          name: "Rhodonite Healing",
-          price: 650,
-          image:
-            "",
-        },
-      ],
     },
     {
       id: "health",
       name: "Health",
       icon: Shield,
       color: "from-orange-600 to-amber-500",
-      products: [
-        {
-          name: "Bloodstone Vitality",
-          price: 700,
-          image:
-            "",
-        },
-        {
-          name: "Carnelian Energy",
-          price: 600,
-          image:
-            "",
-        },
-        {
-          name: "Jade Wellness",
-          price: 850,
-          image:
-            "",
-        },
-        {
-          name: "Hematite Grounding",
-          price: 500,
-          image:
-            "",
-        },
-      ],
     },
     {
       id: "finance",
       name: "Finance",
       icon: Coins,
       color: "from-yellow-500 to-orange-500",
-      products: [
-        {
-          name: "Pyrite Prosperity",
-          price: 750,
-          image:
-            "",
-        },
-        {
-          name: "Citrine Wealth Stone",
-          price: 850,
-          image:
-            "",
-        },
-        {
-          name: "Green Jade Fortune",
-          price: 900,
-          image:
-            "",
-        },
-        {
-          name: "Tiger Eye Abundance",
-          price: 650,
-          image:
-            "",
-        },
-      ],
     },
   ];
 
-  const handleScroll = (categoryId: string) => {
-    const scrollElement = scrollRefs[categoryId]?.current;
-    if (scrollElement) {
-      const scrollWidth = scrollElement.scrollWidth - scrollElement.clientWidth;
-      const scrollLeft = scrollElement.scrollLeft;
-      const progress = scrollWidth > 0 ? (scrollLeft / scrollWidth) * 100 : 0;
-      setScrollProgress((prev) => ({
-        ...prev,
-        [categoryId]: progress,
-      }));
+  // Fetch Mala products
+  const { data: malaProducts = [], isLoading: malaLoading, isError: malaError } = useQuery({
+    queryKey: ["category-mala-products", activeCategory],
+    queryFn: () =>
+      getProducts({
+        page: 1,
+        category: "mala",
+        type: activeCategory === "all" ? "" : activeCategory,
+        productCount: 5,
+      }),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  // Fetch Bracelet products
+  const { data: braceletProducts = [], isLoading: braceletLoading, isError: braceletError } = useQuery({
+    queryKey: ["category-bracelet-products", activeCategory],
+    queryFn: () =>
+      getProducts({
+        page: 1,
+        category: "bracelet",
+        type: activeCategory === "all" ? "" : activeCategory,
+        productCount: 5,
+      }),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  // Merge and filter products
+  const allProducts = useMemo(() => {
+    const merged = [...malaProducts, ...braceletProducts];
+    return merged.filter(
+      (product: Product) =>
+        product &&
+        product.price != null &&
+        product.price > 0 &&
+        product.name
+    );
+  }, [malaProducts, braceletProducts]);
+
+  const updateScrollProgress = () => {
+    if (scrollRef.current) {
+      const scrollWidth = scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
+      const scrollLeft = scrollRef.current.scrollLeft;
+      const progress = scrollWidth > 0 ? Math.min(100, Math.max(0, (scrollLeft / scrollWidth) * 100)) : 0;
+      setScrollProgress(progress);
     }
   };
 
   useEffect(() => {
-    const refs = Object.entries(scrollRefs);
-    refs.forEach(([key, ref]) => {
-      const element = ref.current;
-      if (element) {
-        const handler = () => handleScroll(key);
-        element.addEventListener('scroll', handler);
-      }
-    });
+    const scrollElement = scrollRef.current;
+    if (scrollElement) {
+      // Initial calculation
+      updateScrollProgress();
+      
+      // Add scroll listener
+      scrollElement.addEventListener('scroll', updateScrollProgress);
+      
+      // Add resize listener
+      window.addEventListener('resize', updateScrollProgress);
+      
+      // Recalculate after products load
+      const timer = setTimeout(updateScrollProgress, 500);
+      
+      return () => {
+        scrollElement.removeEventListener('scroll', updateScrollProgress);
+        window.removeEventListener('resize', updateScrollProgress);
+        clearTimeout(timer);
+      };
+    }
+  }, [allProducts, activeCategory]);
 
-    return () => {
-      refs.forEach(([key, ref]) => {
-        const element = ref.current;
-        if (element) {
-          const handler = () => handleScroll(key);
-          element.removeEventListener('scroll', handler);
-        }
-      });
-    };
-  }, []);
-
-  const handleSlideChange = (categoryId: string, direction: string) => {
-    const scrollElement = scrollRefs[categoryId]?.current;
-    if (!scrollElement) return;
-
+  const handleSlideChange = (direction: string) => {
+    if (!scrollRef.current) return;
     const scrollAmount = direction === "next" ? 300 : -300;
-    scrollElement.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
-  const handlePriceFilter = (categoryId: string, filter: string) => {
-    setPriceFilters((prev) => ({
-      ...prev,
-      [categoryId]: filter,
-    }));
-  };
-
-  const getFilteredProducts = (categoryId: string, products: any[]) => {
-    const filter = priceFilters[categoryId];
-    if (filter === "all") return products;
-
-    switch (filter) {
-      case "under-500":
-        return products.filter((p) => p.price < 500);
-      case "500-700":
-        return products.filter((p) => p.price >= 500 && p.price <= 700);
-      case "above-700":
-        return products.filter((p) => p.price > 700);
-      default:
-        return products;
+  const handleViewDetails = (product: Product) => {
+    if (product.category === 'gemstone') {
+      navigate(`/gemstone/${product.id}`);
+    } else if (product.category === 'mala' || product.category === 'bracelet') {
+      navigate(`/mala-brace-view/${product.id}`);
+    } else {
+      navigate(`/product/${product.id}`);
     }
   };
+
+  const handleAddToCart = async (product: Product) => {
+        try {
+  
+        const param:CartItem= {
+          productId: product.id,
+          quantity: 1
+        };
+        const isAdded = await addToCart(param);
+        if (isAdded){
+          toastSuccess("Item Successfully Added to cart")
+        }
+      } 
+      catch (error) {
+        toastError(error||"Failed To Add Product")
+      }
+  
+      };
+
+  const getProductImage = (product: Product) => {
+    const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
+    
+    if (product.images && product.images[0]) {
+      return `${baseUrl}${product.images[0]}`;
+    } else if (product.image) {
+      return `${baseUrl}${product.image}`;
+    }
+    return "";
+  };
+
+  const calculateDiscountedPrice = (product: Product) => {
+    const price = product.price || 0;
+    const discount = product.discount || 0;
+    const discountAmount = (price * discount) / 100;
+    return Math.round(price - discountAmount);
+  };
+
+  const isLoading = malaLoading || braceletLoading;
+  const isError = malaError && braceletError;
 
   return (
     <section className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 relative overflow-hidden">
@@ -300,19 +214,23 @@ const NewCategories = () => {
             <Sparkles className="w-7 h-7 text-orange-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
           </div>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto font-medium">
-            ✨ Find the perfect gemstone for your specific needs and aspirations ✨
+            ✨ Find the perfect mala or bracelet for your specific needs and aspirations ✨
           </p>
         </div>
 
+        {/* Category Tabs */}
         <div className="flex flex-wrap justify-center gap-3 mb-10">
-          {categories.map((category, index) => {
+          {categories.map((category) => {
             const Icon = category.icon;
             return (
               <button
                 key={category.id}
-                onClick={() => setActiveCategory(index)}
+                onClick={() => {
+                  setActiveCategory(category.id);
+                  setScrollProgress(0);
+                }}
                 className={`flex items-center space-x-2 px-5 py-2.5 rounded-full transition-all duration-300 ${
-                  activeCategory === index
+                  activeCategory === category.id
                     ? `bg-gradient-to-r ${category.color} text-white shadow-xl scale-105`
                     : "bg-white border-2 border-orange-200 text-gray-700 hover:border-orange-400 hover:shadow-lg"
                 }`}
@@ -324,123 +242,205 @@ const NewCategories = () => {
           })}
         </div>
 
-        {categories.map((category, categoryIndex) => (
-          <div
-            key={category.id}
-            className={`${activeCategory === categoryIndex ? "block" : "hidden"}`}
-          >
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
-              <h3 className="text-2xl font-bold text-gray-800">
-                {category.name} Gemstones
-              </h3>
-              <div className="flex items-center gap-3 flex-wrap">
-                <div className="flex items-center space-x-2">
-                  <Filter className="h-4 w-4 text-orange-600" />
-                  <Select
-                    value={priceFilters[category.id]}
-                    onValueChange={(value) =>
-                      handlePriceFilter(category.id, value)
-                    }
-                  >
-                    <SelectTrigger className="w-40 border-2 border-orange-200 focus:border-orange-400">
-                      <SelectValue placeholder="Filter by price" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Prices</SelectItem>
-                      <SelectItem value="under-500">Under ₹500</SelectItem>
-                      <SelectItem value="500-700">₹500 - ₹700</SelectItem>
-                      <SelectItem value="above-700">Above ₹700</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex space-x-2">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => handleSlideChange(category.id, "prev")}
-                    className="rounded-full border-2 border-orange-300 hover:bg-orange-100 hover:border-orange-400"
-                  >
-                    <ChevronLeft className="h-4 w-4 text-orange-600" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => handleSlideChange(category.id, "next")}
-                    className="rounded-full border-2 border-orange-300 hover:bg-orange-100 hover:border-orange-400"
-                  >
-                    <ChevronRight className="h-4 w-4 text-orange-600" />
-                  </Button>
-                </div>
-              </div>
-            </div>
+        {/* Loading State */}
+        {isLoading && (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading products...</p>
+          </div>
+        )}
 
-            <div 
-              ref={scrollRefs[category.id]}
-              className="flex overflow-x-auto no-scrollbar gap-4 pb-4"
-              style={{
-                scrollSnapType: "x mandatory",
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-              }}
-            >
-              {getFilteredProducts(category.id, category.products).map(
-                (product, i) => (
-                  <div
-                    key={i}
-                    className="flex-shrink-0 w-[280px] sm:w-[300px]"
-                    style={{ scrollSnapAlign: "start" }}
-                  >
-                    <div className="bg-white border-2 border-orange-200 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 overflow-hidden relative">
-                      {/* Festive corner decoration */}
-                      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-400 opacity-20 rounded-bl-full"></div>
+        {/* Error State */}
+        {isError && (
+          <div className="text-center py-12 text-red-600">
+            <p>Failed to load products. Please try again later.</p>
+          </div>
+        )}
 
-                      <div className="aspect-square overflow-hidden rounded-t-3xl relative">
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                      </div>
-                      <div className="p-5">
-                        <h4 className="text-lg font-bold text-gray-800 mb-2">
-                          {product.name}
-                        </h4>
-                        <div className="text-2xl font-extrabold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-4">
-                          ₹{product.price}
-                        </div>
-                        <div className="flex space-x-2">
-                          <Button className="flex-1 h-10 text-sm bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold shadow-lg">
-                            <ShoppingCart className="mr-2 h-4 w-4" />
-                            Add
-                          </Button>
-                          <Button
-                            variant="outline"
-                            className="h-10 px-4 text-sm border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-semibold"
+        {/* Products Display */}
+        {!isLoading && !isError && (
+          <>
+            {allProducts.length > 0 ? (
+              <>
+                <div 
+                  ref={scrollRef}
+                  className="flex overflow-x-auto no-scrollbar gap-4 pb-4"
+                  style={{
+                    scrollSnapType: "x mandatory",
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                  }}
+                >
+                  {allProducts.map((product: Product) => {
+                    const price = product.price || 0;
+                    const discount = product.discount || 0;
+                    const discountedPrice = calculateDiscountedPrice(product);
+                    const rating = product.rating || 0;
+
+                    return (
+                      <div
+                        key={product.id}
+                        className="flex-shrink-0 w-[280px] sm:w-[300px]"
+                        style={{ scrollSnapAlign: "start" }}
+                      >
+                        <div className="bg-white border-2 border-orange-200 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 overflow-hidden relative group">
+                          {/* Discount Badge */}
+                          {discount > 0 && (
+                            <div className="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg z-10">
+                              {discount}% OFF
+                            </div>
+                          )}
+
+                          {/* Category Badge */}
+                          <div className="absolute top-3 right-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg z-10 capitalize">
+                            {product.category}
+                          </div>
+
+                          {/* Festive corner decoration */}
+                          <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-400 opacity-20 rounded-bl-full"></div>
+
+                          {/* Image */}
+                          <div 
+                            className="aspect-square overflow-hidden rounded-t-3xl relative bg-gray-100 cursor-pointer"
+                            onClick={() => handleViewDetails(product)}
                           >
-                            <CreditCard className="h-4 w-4" />
-                          </Button>
+                            {getProductImage(product) ? (
+                              <img
+                                src={getProductImage(product)}
+                                alt={product.name}
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                onLoad={updateScrollProgress}
+                                onError={(e) => {
+                                  e.currentTarget.style.display = 'none';
+                                }}
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                <Sparkles className="w-16 h-16" />
+                              </div>
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+
+                            {/* Quick View Overlay */}
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                              <Button
+                                variant="secondary"
+                                size="sm"
+                                className="bg-white text-orange-600 hover:bg-orange-50"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleViewDetails(product);
+                                }}
+                              >
+                                <Eye className="mr-2 h-4 w-4" />
+                                View
+                              </Button>
+                            </div>
+                          </div>
+
+                          {/* Product Details */}
+                          <div className="p-5">
+                            <h4 
+                              className="text-lg font-bold text-gray-800 mb-2 hover:text-orange-600 transition-colors cursor-pointer line-clamp-2"
+                              onClick={() => handleViewDetails(product)}
+                            >
+                              {product.name}
+                            </h4>
+
+                            {/* Type Badge */}
+                            {product.type && (
+                              <div className="mb-2">
+                                <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-semibold capitalize">
+                                  {product.type}
+                                </span>
+                              </div>
+                            )}
+
+                            {/* Rating */}
+                            <div className="flex items-center space-x-1 mb-3">
+                              {[...Array(5)].map((_, i) => (
+                                <Sparkles
+                                  key={i}
+                                  className={`h-3 w-3 ${
+                                    i < Math.floor(rating)
+                                      ? "text-amber-500 fill-amber-500"
+                                      : "text-gray-300"
+                                  }`}
+                                />
+                              ))}
+                              <span className="text-xs text-gray-600 ml-2 font-medium">
+                                {rating.toFixed(1)}
+                              </span>
+                            </div>
+
+                            {/* Price */}
+                            <div className="flex items-baseline space-x-2 mb-4">
+                              <div className="text-2xl font-extrabold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                                ₹{discountedPrice.toLocaleString()}
+                              </div>
+                              {discount > 0 && (
+                                <span className="text-sm text-gray-500 line-through">
+                                  ₹{price.toLocaleString()}
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Availability */}
+                            {product.availability === 'out-of-stock' && (
+                              <div className="mb-3 text-red-600 text-xs font-semibold">
+                                Out of Stock
+                              </div>
+                            )}
+
+                            {/* Buttons */}
+                            <div className="flex space-x-2">
+                              <Button 
+                                className="flex-1 h-10 text-sm bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold shadow-lg"
+                                onClick={() => handleAddToCart(product)}
+                                disabled={product.availability === 'out-of-stock'}
+                              >
+                                <ShoppingCart className="mr-2 h-4 w-4" />
+                                Add
+                              </Button>
+                              <Button
+                                variant="outline"
+                                className="h-10 px-4 text-sm border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-semibold"
+                                onClick={() => handleViewDetails(product)}
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
                         </div>
                       </div>
+                    );
+                  })}
+                </div>
+
+                {/* Progress Bar */}
+                <div className="mt-6 flex justify-center">
+                  <div className="w-full max-w-md">
+                    <div className="h-2 bg-orange-200 rounded-full overflow-hidden shadow-inner">
+                      <div 
+                        className="h-full bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 rounded-full transition-all duration-300 shadow-lg"
+                        style={{ width: `${scrollProgress}%` }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between mt-2 text-xs text-gray-600 font-medium">
+                      <span>Scroll to explore</span>
+                      <span>{Math.round(scrollProgress)}%</span>
                     </div>
                   </div>
-                )
-              )}
-            </div>
-
-            {/* Progress Bar */}
-            <div className="mt-6 flex justify-center">
-              <div className="w-full max-w-md">
-                <div className="h-2 bg-orange-200 rounded-full overflow-hidden shadow-inner">
-                  <div 
-                    className="h-full bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 rounded-full transition-all duration-300 shadow-lg"
-                    style={{ width: `${scrollProgress[category.id]}%` }}
-                  ></div>
                 </div>
+              </>
+            ) : (
+              <div className="text-center py-12 text-gray-600">
+                <Sparkles className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+                <p>No products found for this category.</p>
               </div>
-            </div>
-          </div>
-        ))}
+            )}
+          </>
+        )}
       </div>
 
       <style>{`
