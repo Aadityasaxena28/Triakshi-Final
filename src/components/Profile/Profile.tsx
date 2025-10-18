@@ -14,7 +14,7 @@ type ProfileProps = {
 
 const emptyProfile: UserProfile = {
   name: "",
-  phone: "",
+  phone: 0,
   email: "",
   address: "",
   state: "",
@@ -57,7 +57,7 @@ const Profile = ({ profile, isLoading, isError, refetchProfile }: ProfileProps) 
 
       // (Optional) minimal client-side validation
       if (!editData.name?.trim()) throw new Error("Name is required");
-      if (!editData.phone?.trim()) throw new Error("Phone is required");
+      if (!editData.phone) throw new Error("Phone is required");
       if (!editData.email?.trim()) throw new Error("Email is required");
       // Call backend
       const ok = await updateProfileAPI(editData);
@@ -152,7 +152,7 @@ const Profile = ({ profile, isLoading, isError, refetchProfile }: ProfileProps) 
           <Field
             label="Phone Number"
             isEditing={isEditing}
-            displayValue={extractTenDigitsPhone(userData.phone)}
+            displayValue={userData.phone}
             input={
               <input
                 type="tel"
