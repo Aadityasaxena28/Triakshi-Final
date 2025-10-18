@@ -33,12 +33,6 @@ export async function  getCartItems(){
 }
 
 
-export interface CartItem {
-  productId: string;
-  quantity: number; // absolute new qty; 0 or less => remove
-}
-
-// if your route is /api/cart/update (recommended)
 export async function updateCartItems(items: CartItem[]) {
   try {
     console.log(items)
