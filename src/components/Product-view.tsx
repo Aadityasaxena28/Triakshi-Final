@@ -20,33 +20,19 @@ const THEME: Record<
     pageBgTo: string;
     headerFrom: string;
     headerTo: string;
-
-    // hero band / image panel
     bandFrom: string;
     bandVia?: string;
     bandTo: string;
     overlayPulse: string;
-
-    // discount badge
-    badgeWrap: string; // gradient or solid
+    badgeWrap: string;
     badgeText: string;
-
-    // chips
     catChip: string;
     sizeChip: string;
-
-    // price gradient text
     priceFrom: string;
     priceTo: string;
-
-    // qty card border tint
     qtyBorder: string;
-
-    // outline btn
     outlineText: string;
     outlineBorder: string;
-
-    // carousel dot active
     dotActive: string;
     dotIdle: string;
   }
@@ -108,7 +94,67 @@ const THEME: Record<
     dotActive: "bg-orange-500",
     dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
+
+  // Same look as Rudraksha / Mala view
+  mala: {
+    pageBgFrom: "from-orange-50/30",
+    pageBgTo: "to-yellow-50/30",
+    headerFrom: "from-orange-500",
+    headerTo: "to-yellow-500",
+
+    bandFrom: "from-orange-50",
+    bandVia: "via-white",
+    bandTo: "to-yellow-100",
+    overlayPulse: "bg-orange-400/20",
+
+    badgeWrap: "bg-gradient-to-r from-orange-400 to-yellow-500",
+    badgeText: "text-white",
+
+    catChip: "bg-orange-50 text-orange-800 border-2 border-orange-200",
+    sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
+
+    priceFrom: "from-orange-600",
+    priceTo: "to-yellow-600",
+
+    qtyBorder: "border-orange-100",
+
+    outlineText: "text-orange-600",
+    outlineBorder: "border-orange-500",
+
+    dotActive: "bg-orange-500",
+    dotIdle: "bg-gray-300 hover:bg-gray-400",
+  },
+
+  bracelet: {
+    pageBgFrom: "from-orange-50/30",
+    pageBgTo: "to-yellow-50/30",
+    headerFrom: "from-orange-500",
+    headerTo: "to-yellow-500",
+
+    bandFrom: "from-orange-50",
+    bandVia: "via-white",
+    bandTo: "to-yellow-100",
+    overlayPulse: "bg-orange-400/20",
+
+    badgeWrap: "bg-gradient-to-r from-orange-400 to-yellow-500",
+    badgeText: "text-white",
+
+    catChip: "bg-orange-50 text-orange-800 border-2 border-orange-200",
+    sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
+
+    priceFrom: "from-orange-600",
+    priceTo: "to-yellow-600",
+
+    qtyBorder: "border-orange-100",
+
+    outlineText: "text-orange-600",
+    outlineBorder: "border-orange-500",
+
+    dotActive: "bg-orange-500",
+    dotIdle: "bg-gray-300 hover:bg-gray-400",
+  },
 };
+
 
 const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const params = useParams();
@@ -137,14 +183,16 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       setDiscountedPrice(discPrice);
       setBenefits(fetchedProduct.benefits || []);
       // console.log(fetchedProduct);
-      const initialQty = Number(fetchedProduct.quantity) || 1;
+      const initialQty = 1;
       setTotalPrice(discPrice * initialQty);
       setQuantity(1);
       setCurrentImageIndex(0);
     };
     fetchProduct();
   }, [params.id]);
-
+  React.useEffect(()=>{
+    window.scrollTo({top:0, behavior:"smooth"});
+  },[]);
   React.useEffect(() => {
     if (discountedPrice >= 0) {
       setTotalPrice(discountedPrice * quantity);
@@ -213,7 +261,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   return (
     <div className={`min-h-screen bg-gradient-to-br ${theme.pageBgFrom} ${theme.pageBgTo}`}>
       {/* Header */}
-      <div className={`bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} text-white py-6 px-6 shadow-lg sticky top-0 z-50`}>
+      <div className={`bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} text-white py-6 px-6 shadow-lg sticky top-0 z-20`}>
         <div className="max-w-7xl mx-auto flex items-center gap-4">
           <button onClick={onBack} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
             <ArrowLeft className="w-6 h-6" />
