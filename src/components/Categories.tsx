@@ -5,7 +5,9 @@ import lucky from "@/assets/lucky.jpg";
 import malaImg from "@/assets/mala-category.jpg";
 import rudrakshImg from "@/assets/rudraksha-category.jpg";
 import { Button } from "@/components/ui/button";
+import { toastError } from "@/utlity/AlertSystem";
 import { Calculator, Circle, CircleDot, Gem, Heart, ShoppingBag, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Categories = () => {
   const categories = [
@@ -14,44 +16,59 @@ const Categories = () => {
       description: "Healing crystals and precious stones for spiritual growth",
       image: gemstonesImg,
       icon: Gem,
-      color: "from-orange-500 to-amber-600"
+      color: "from-orange-500 to-amber-600",
+      link: "/gemstones"
     },
     {
       title: "Rudraksh",
       description: "Sacred beads for meditation and spiritual protection",
       image: rudrakshImg,
       icon: Heart,
-      color: "from-red-500 to-orange-500"
+      color: "from-red-500 to-orange-500",
+      link:"/rudraksha"
     },
     {
       title: "Mala",
       description: "Handcrafted malas for meditation, focus, and positive energy",
       image: malaImg,
       icon: CircleDot,
-      color: "from-amber-500 to-yellow-500"
+      color: "from-amber-500 to-yellow-500",
+      link:"/mala"
     },
     {
       title: "Bracelets",
       description: "Elegant gemstone bracelets designed for balance and style",
       image: braceletImg,
       icon: Circle,
-      color: "from-orange-600 to-amber-500"
+      color: "from-orange-600 to-amber-500",
+      link:"/bracelet"
     },
     {
       title: "Lucky Gemstone",
       description: "Feng shui items and lucky charms for prosperity",
       image: lucky,
       icon: ShoppingBag,
-      color: "from-yellow-500 to-orange-500"
+      color: "from-yellow-500 to-orange-500",
+      link: "/lucky-store"
     },
     {
       title: "Health Calculator",
       description: "Personalized recommendations based on your birth chart",
       image: healthCalculatorImg,
       icon: Calculator,
-      color: "from-amber-500 to-orange-600"
+      color: "from-amber-500 to-orange-600",
+      link: "/life-calculator"
     }
   ];
+  const navigate = useNavigate();
+  const handleExplore = (link:string)=>{
+    try {
+      navigate(link);
+    } 
+    catch (error) {
+      toastError("Navigation Failed"+error);
+    }
+  }
 
   return (
     <section className="py-20 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 relative overflow-hidden">
@@ -123,6 +140,7 @@ const Categories = () => {
                     <Button 
                       size="sm" 
                       className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 rounded-full px-6"
+                      onClick={()=>handleExplore(category.link)}
                     >
                       <Sparkles className="mr-2 h-4 w-4" />
                       Explore
@@ -155,6 +173,9 @@ const Categories = () => {
           <Button 
             size="lg" 
             className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold px-10 py-6 text-lg shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 transition-all rounded-full"
+            onClick={() => {
+              window.open('https://astroashoknarayan.com/home', '_blank');
+            }}
           >
             <Sparkles className="mr-2 h-5 w-5" />
             Get Personal Consultation
