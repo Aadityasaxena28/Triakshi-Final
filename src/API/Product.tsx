@@ -11,6 +11,7 @@ type GetProductsParams = {
 export async function getProducts({page=0,category="gemstone",type="all", productCount=40}:GetProductsParams):Promise<Product[]>{
 
   try {
+    // console.log("Fetching products with params:", {page, category, type, productCount});
     const { data } = await api.get<RawProduct[]>(`/api/products/products`,{
       params:{
         page,
@@ -23,7 +24,7 @@ export async function getProducts({page=0,category="gemstone",type="all", produc
       throw new Error("Failed to fetch products");
     }
     // const products:RawProduct[]= data.products;
-    console.log(data.data);
+    // console.log(data.data);
     return data.data.map(toProduct);
   } catch (error) {
     throw new Error("Failed to fetch products" + error);
@@ -37,7 +38,7 @@ export async function getProductById(id: string):Promise<Product> {
     if(!data.isOkay){
       throw new Error("Failed to fetch product by ID");
     }
-    console.log(data.data);
+    // console.log(data.data);
     return toProduct(data.data);
   } 
   catch (error) {
@@ -48,5 +49,50 @@ export async function getProductById(id: string):Promise<Product> {
 export async function getAllCategories(){
   // Need to be implemented
 };
+
+export async function getLatestProducts({category="",type="",count=10}) {
+  try {
+    const {data} = await api("/api/products/latest",
+      {
+        params:{
+        category,
+        type,
+        count
+      }
+    }
+    );
+    if(!data.success){
+      throw new Error(data.error);
+    }
+    // console.log(data.data)
+    return data.data.map(toProduct);
+
+  } 
+  catch (error) {
+    throw new Error(error)
+  }
+}
+
+
+export async function getDiscountedProducts({category="",type="",count=10, discount=10}){
+  try {
+    const {data} = await api("/api/products/discounted",{
+      params:{
+        category,
+        type,
+        count,
+        discount
+      }
+    })
+    if(!data.success){
+      throw new Error(data.error||"Unable to load discounted products")
+    }
+    // console.log(data.data)
+    return data.data.map(toProduct);
+  } 
+  catch (error) {
+    throw new Error(error)
+  }
+}
 
 
