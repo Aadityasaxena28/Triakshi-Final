@@ -10,6 +10,8 @@ export interface RawProduct {
   type: string;             //class:subclass
   availability: string; // allow unknown strings without breaking
   category: string;
+  rating?:number;
+  // braodcategory: string;
   created_at: string;        // ISO datetime string from API
   description?: string;
   // Not being used currently
@@ -26,6 +28,8 @@ export interface Product {
   image?: string;
   images?:string[];
   availability:string;
+  rating:number;
+  // braodcategory: string;
   type: string;
   category: string;
   createdAt: Date;
@@ -45,6 +49,8 @@ export function toProduct(raw: RawProduct): Product {
     images: raw.images,
     availability: raw.availability,
     category: raw.category,
+    rating:raw.rating??5,
+    // braodcategory: raw.braodcategory,
     type: raw.type,
     createdAt: new Date(raw.created_at),
     description: raw.description ?? "",
