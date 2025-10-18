@@ -47,6 +47,7 @@ export default function CheckoutPage() {
 
   function extractTenDigitsPhone(input?: string) {
   if (!input) return "";
+
   const digits = (input.match(/\d/g) || []).join("");
   // take last 10 if it looks like +91xxxxxxxxxx
   if (digits.length >= 10) return digits.slice(-10);
@@ -62,9 +63,9 @@ export default function CheckoutPage() {
 
       const profile: UserProfile = await getProfile(); 
       if (!alive || !profile) return;
-
+      // console.log("[CHECKOUT] Loaded profile:",profile.phone )
       // Contact
-      const phone10 = extractTenDigitsPhone(profile.phone);
+      const phone10 = extractTenDigitsPhone(profile.phone.toString());
       if (phone10) setMobileNumber(phone10);
       if (profile.email) setEmail(profile.email);
 
@@ -98,7 +99,7 @@ export default function CheckoutPage() {
     
     // Check if coming from cart
     if (locationState?.from === "cart" && locationState?.items) {
-      console.log("[CHECKOUT] Loading from Cart:", locationState.items);
+      // console.log("[CHECKOUT] Loading from Cart:", locationState.items);
       setDraft({ items: locationState.items });
       setSource("cart");
     } 
@@ -182,68 +183,6 @@ export default function CheckoutPage() {
     navigate("/home");
   };
 
-
-
-
-  // const renderPaymentForm = () => (
-  //   <div className="max-w-xl">
-  //     <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-  //       <CreditCard className="w-8 h-8 text-gray-600" />
-  //     </div>
-
-  //     <h2 className="text-2xl font-bold text-gray-900 text-center mb-2">Payment method</h2>
-  //     <p className="text-gray-600 text-center mb-8">Choose your preferred payment method</p>
-
-  //     <div className="space-y-3">
-  //       {[
-  //         { key: "upi", title: "UPI", subtitle: "Pay using UPI apps", emoji: "📱" },
-  //         { key: "card", title: "Credit / Debit Card", subtitle: "Visa, Mastercard, Amex, Rupay", emoji: "💳" },
-  //         { key: "netbanking", title: "Net Banking", subtitle: "All major banks supported", emoji: "🏦" },
-  //         { key: "wallet", title: "Wallets", subtitle: "Paytm, PhonePe, Amazon Pay", emoji: "👛" },
-  //       ].map((m) => (
-  //         <button
-  //           key={m.key}
-  //           onClick={() => setPaymentMethod(m.key as any)}
-  //           className={`w-full p-4 border-2 rounded-lg text-left transition-all ${
-  //             paymentMethod === m.key ? "border-yellow-600 bg-yellow-50" : "border-gray-300 hover:border-gray-400"
-  //           }`}
-  //         >
-  //           <div className="flex items-center justify-between">
-  //             <div className="flex items-center gap-3">
-  //               <div
-  //                 className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-  //                   paymentMethod === m.key ? "border-yellow-600" : "border-gray-300"
-  //                 }`}
-  //               >
-  //                 {paymentMethod === m.key && <div className="w-3 h-3 rounded-full bg-yellow-600"></div>}
-  //               </div>
-  //               <div>
-  //                 <p className="font-semibold text-gray-900">{m.title}</p>
-  //                 <p className="text-sm text-gray-600">{m.subtitle}</p>
-  //               </div>
-  //             </div>
-  //             <div className="text-2xl">{m.emoji}</div>
-  //           </div>
-  //         </button>
-  //       ))}
-  //     </div>
-
-  //     <div className="flex gap-3">
-  //       <button
-  //         onClick={() => setCurrentStep("address")}
-  //         className="flex-1 bg-gray-200 text-gray-800 py-4 rounded-lg font-semibold text-lg hover:bg-gray-300 transition-colors mt-6"
-  //       >
-  //         Back
-  //       </button>
-  //       <button
-  //         onClick={handlePaymentComplete}
-  //         className="flex-1 bg-yellow-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-yellow-700 transition-colors mt-6"
-  //       >
-  //         Place Order
-  //       </button>
-  //     </div>
-  //   </div>
-  // );
 
   // ====== Empty/Invalid draft UI ======
   if (!draft || !draft.items || draft.items.length === 0) {
