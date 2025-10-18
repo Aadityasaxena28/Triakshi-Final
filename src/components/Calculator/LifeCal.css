@@ -1,0 +1,304 @@
+/* Root layout */
+.lifeCalculator_container {
+  
+  margin: 0 auto;
+  padding: 20px;
+
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  min-height: 100vh;
+
+  background: linear-gradient(135deg, #10051a 0%, #1e0f31 50%, #301f4a 100%);
+  position: relative;
+  /* overflow-x: hidden; */
+}
+
+/* Twinkling background overlay */
+.lifeCalculator_container::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, #e0e0ff, transparent),
+    radial-gradient(2px 2px at 60% 70%, #e0e0ff, transparent),
+    radial-gradient(1px 1px at 50% 50%, #e0e0ff, transparent),
+    radial-gradient(1px 1px at 80% 10%, #e0e0ff, transparent),
+    radial-gradient(2px 2px at 90% 60%, #e0e0ff, transparent);
+  background-size: 200% 200%;
+  animation: lifeCalculator_twinkle 8s ease-in-out infinite;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes lifeCalculator_twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+.lifeCalculator_header {
+  text-align: center;
+  padding: 30px 0;
+  background: rgba(180, 150, 255, 0.05);
+  border-radius: 20px;
+  margin-bottom: 40px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+}
+
+.lifeCalculator_logo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #d8b4fe 0%, #ffffff 50%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+  text-shadow: 0 0 30px rgba(200, 162, 255, 0.5);
+}
+
+.lifeCalculator_tagline {
+  font-size: 1.2rem;
+  color: #d8b4fe;
+}
+
+/* Input section */
+.lifeCalculator_inputSection {
+  background: rgba(162, 108, 255, 0.1);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(162, 108, 255, 0.2);
+  margin-bottom: 50px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(216, 180, 254, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.lifeCalculator_sectionTitle {
+  color: #d8b4fe;
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+  text-shadow: 0 0 20px rgba(162, 108, 255, 0.5);
+}
+
+.lifeCalculator_formGroup {
+  margin-bottom: 25px;
+}
+
+.lifeCalculator_formGroup label {
+  display: block;
+  color: #d8b4fe;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+#lifeCalculator_form input[type="date"],
+#lifeCalculator_form input[type="time"],
+#lifeCalculator_form input[type="text"] {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid rgba(216, 180, 254, 0.3);
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  backdrop-filter: blur(5px);
+}
+
+#lifeCalculator_form input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+#lifeCalculator_form input:focus {
+  outline: none;
+  border-color: rgba(162, 108, 255, 0.6);
+  box-shadow: 0 0 15px rgba(162, 108, 255, 0.3);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.lifeCalculator_error {
+  color: #ff7070;
+  font-size: 0.875rem;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Button */
+.lifeCalculator_btn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #a78bfa 0%, #6d28d9 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  box-shadow: 0 8px 20px rgba(162, 108, 255, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.lifeCalculator_btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(162, 108, 255, 0.35);
+  background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+}
+
+.lifeCalculator_btn:active {
+  transform: translateY(0);
+}
+
+.lifeCalculator_btn[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.lifeCalculator_btnLoading {
+  background: linear-gradient(135deg, #999 0%, #666 100%);
+}
+
+.lifeCalculator_spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: lifeCalculator_spin 1s ease-in-out infinite;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+@keyframes lifeCalculator_spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Results */
+.lifeCalculator_results {
+  animation: lifeCalculator_fadeIn 0.6s ease-in;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes lifeCalculator_fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lifeCalculator_resultsTitle {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #d8b4fe;
+  text-shadow: 0 0 20px rgba(162, 108, 255, 0.5);
+}
+
+.lifeCalculator_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+/* Card */
+.lifeCalculator_card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 3px solid transparent;
+}
+
+.lifeCalculator_card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 50px rgba(162, 108, 255, 0.4);
+  border-color: #a78bfa;
+}
+
+.lifeCalculator_image {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #d8b4fe;
+  box-shadow: 0 10px 30px rgba(162, 108, 255, 0.3);
+}
+
+.lifeCalculator_cat {
+  color: #a78bfa;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.lifeCalculator_name {
+  color: #2d1b4e;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.lifeCalculator_benefit {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Explore button */
+.lifeCalculator_explore {
+  display: inline-block;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #a78bfa 0%, #6d28d9 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(162, 108, 255, 0.3);
+}
+
+.lifeCalculator_explore:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(162, 108, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .lifeCalculator_logo {
+    font-size: 2rem;
+  }
+  .lifeCalculator_tagline {
+    font-size: 1rem;
+  }
+  .lifeCalculator_inputSection {
+    padding: 25px;
+  }
+  .lifeCalculator_sectionTitle {
+    font-size: 1.5rem;
+  }
+  .lifeCalculator_resultsTitle {
+    font-size: 1.6rem;
+  }
+}
