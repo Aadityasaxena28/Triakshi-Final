@@ -1,45 +1,44 @@
-import { Gem, Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
+import { Facebook, Gem, Instagram, Mail, MapPin, Phone, Twitter, Youtube } from "lucide-react";
+import { Link } from "react-router-dom";
 const Footer = () => {
   const footerLinks = {
     company: [
-      { name: "About Us", href: "#" },
-      { name: "Our Story", href: "#" },
-      { name: "Certifications", href: "#" },
-      { name: "Blog", href: "#" }
+      { name: "About Us", href: "about-us" },
+      // { name: "Our Story", href: "our-story" },
+      // { name: "Certifications", href: "#" },
+      // { name: "Blog", href: "#" }
     ],
     products: [
-      { name: "Gemstones", href: "#" },
-      { name: "Rudraksh", href: "#" },
-      { name: "Lucky Store", href: "#" },
-      { name: "Health Calculator", href: "#" }
+      { name: "Gemstones", href: "/gemstones" },
+      { name: "Rudraksh", href: "/rudraksha" },
+      { name: "Lucky Store", href: "/lucky-store" },
+      { name: "Health Calculator", href: "/health-calculator" }
     ],
     support: [
-      { name: "Contact Us", href: "#" },
-      { name: "Size Guide", href: "#" },
-      { name: "Care Instructions", href: "#" },
-      { name: "Returns & Exchange", href: "#" }
+      { name: "Contact Us", href: "/contact-us" },
+      // { name: "Size Guide", href: "#" },
+      // { name: "Care Instructions", href: "#" },
+      { name: "Returns & Exchange", href: "/return-&-exchange" }
     ],
     legal: [
-      { name: "Privacy Policy", href: "#" },
-      { name: "Terms of Service", href: "#" },
-      { name: "Shipping Policy", href: "#" },
-      { name: "Refund Policy", href: "#" }
+      { name: "Privacy Policy", href: "/privacy-policy" },
+      { name: "Terms And Conditions", href: "/terms-&-conditions" },
+      { name: "Shipping Policy", href: "/shipping-policy" },
+      { name: "Refund Policy", href: "/refund-policy" }
     ]
   };
 
   const socialLinks = [
-    { name: "Facebook", icon: Facebook, href: "#" },
-    { name: "Instagram", icon: Instagram, href: "#" },
-    { name: "Twitter", icon: Twitter, href: "#" },
-    { name: "YouTube", icon: Youtube, href: "#" }
+    { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/share/1BamtK6UWo/" },
+    { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/astrologerashoknarayann?igsh=ZDk4cWg3OHF0Z2wx" },
+    { name: "Twitter", icon: Twitter, href: "https://x.com/Ashoknarayan9" },
+    { name: "YouTube", icon: Youtube, href: "https://www.youtube.com/@astroashoknarayan" }
   ];
 
   return (
     <footer className="bg-gradient-to-br from-primary to-primary-light text-white">
       {/* Newsletter Section */}
-      <div className="border-b border-white/10">
+      {/* <div className="border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <h3 className="text-2xl font-bold mb-4">
@@ -60,7 +59,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -104,12 +103,12 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-white/70 hover:text-gold transition-colors duration-300 text-sm"
+                  <Link
+                    to={link.href}
+                    className="text-white/70 hover:text-black transition-colors duration-300 text-sm"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -120,12 +119,12 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.products.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-white/70 hover:text-gold transition-colors duration-300 text-sm"
+                  <Link
+                    to={link.href}
+                    className="text-white/70 hover:text-black transition-colors duration-300 text-sm"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -136,12 +135,12 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-white/70 hover:text-gold transition-colors duration-300 text-sm"
+                  <Link
+                    to={link.href}
+                    className="text-white/70 hover:text-black transition-colors duration-300 text-sm"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -152,12 +151,12 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-white/70 hover:text-gold transition-colors duration-300 text-sm"
+                  <Link
+                    to={link.href}
+                    className="text-white/70 hover:text-black transition-colors duration-300 text-sm"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -173,13 +172,14 @@ const Footer = () => {
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
-                  <a
+                  <Link
                     key={social.name}
-                    href={social.href}
+                    to={social.href}
+                    target="_blank"
                     className="bg-white/10 hover:bg-gold transition-colors duration-300 p-2 rounded-full"
                   >
                     <Icon className="h-4 w-4" />
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -201,7 +201,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col md:flex-row items-center justify-between text-sm text-white/60">
             <p>© 2024 Triyakshi Gems. All rights reserved.</p>
-            <p>Made with ❤️ for spiritual wellness</p>
+            {/* <p>Made with ❤️ for spiritual wellness</p> */}
           </div>
         </div>
       </div>
