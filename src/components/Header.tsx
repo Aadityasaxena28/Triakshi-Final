@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Gem, LogOut, Menu, Share2, ShoppingCart, User, UserCircle, X } from "lucide-react";
+import { Gem, LogOut, Menu, Share2, ShoppingCart, User, UserCircle, X, ChevronDown, ChevronUp } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,6 +13,11 @@ const Header: React.FC = () => {
   const [isCalcOpen, setIsCalcOpen] = useState<boolean>(false);
   const [isAboutOpen, setIsAboutOpen] = useState<boolean>(false);
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
+  
+  // Mobile-specific states
+  const [mobileCalcOpen, setMobileCalcOpen] = useState<boolean>(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState<boolean>(false);
+  const [mobileProfileOpen, setMobileProfileOpen] = useState<boolean>(false);
 
   const calcTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const aboutTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -56,6 +61,8 @@ const Header: React.FC = () => {
   const handleLogout = (): void => {
     localStorage.removeItem("tg_user");
     setIsProfileOpen(false);
+    setMobileProfileOpen(false);
+    setIsMenuOpen(false);
     navigate("/");
   };
 
@@ -100,13 +107,20 @@ const Header: React.FC = () => {
     setIsProfileOpen(false);
   };
 
+  const closeMobileMenu = () => {
+    setIsMenuOpen(false);
+    setMobileCalcOpen(false);
+    setMobileAboutOpen(false);
+    setMobileProfileOpen(false);
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-border/20 shadow-card overflow-visible">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2" onClick={closeMobileMenu}>
               <div className="bg-gradient-primary p-2 rounded-xl shadow-elegant">
                 <Gem className="h-4 w-4 text-white" />
               </div>
@@ -248,6 +262,148 @@ const Header: React.FC = () => {
             {isMenuOpen ? <X className="h-4 w-4 text-foreground" /> : <Menu className="h-4 w-4 text-foreground" />}
           </button>
         </div>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden absolute left-0 right-0 top-16 bg-white border-b border-border/20 shadow-lg max-h-[calc(100vh-4rem)] overflow-y-auto">
+            <nav className="px-4 py-4 space-y-2">
+              {/* Quick Action Buttons */}
+              <div className="flex gap-2 pb-4 border-b border-border/20">
+                <Button className="bg-red-500 text-white rounded-xl hover:bg-red-600 flex-1 text-sm">
+                  NEW
+                </Button>
+                <Button className="btn-primary flex-1 text-sm">On Sale</Button>
+              </div>
+
+              {/* Menu Items */}
+              {menuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className="block px-4 py-3 text-foreground hover:bg-secondary rounded-lg transition-smooth font-medium"
+                  onClick={closeMobileMenu}
+                >
+                  {item.name}
+                </Link>
+              ))}
+
+              {/* Calculator Accordion */}
+              <div className="border-t border-border/20 pt-2">
+                <button
+                  className="flex items-center justify-between w-full px-4 py-3 text-foreground hover:bg-secondary rounded-lg transition-smooth font-medium"
+                  onClick={() => setMobileCalcOpen(!mobileCalcOpen)}
+                >
+                  <span>Calculator</span>
+                  {mobileCalcOpen ? (
+                    <ChevronUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
+                </button>
+                {mobileCalcOpen && (
+                  <div className="pl-4 space-y-1 mt-1">
+                    {calculatorItems.map((calc) => (
+                      <Link
+                        key={calc.name}
+                        to={calc.path}
+                        className="block px-4 py-2.5 text-sm text-foreground hover:bg-secondary rounded-lg transition-smooth"
+                        onClick={closeMobileMenu}
+                      >
+                        {calc.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* About Us Accordion */}
+              <div>
+                <button
+                  className="flex items-center justify-between w-full px-4 py-3 text-foreground hover:bg-secondary rounded-lg transition-smooth font-medium"
+                  onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                >
+                  <span>About Us</span>
+                  {mobileAboutOpen ? (
+                    <ChevronUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
+                </button>
+                {mobileAboutOpen && (
+                  <div className="pl-4 space-y-1 mt-1">
+                    {aboutItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className="block px-4 py-2.5 text-sm text-foreground hover:bg-secondary rounded-lg transition-smooth"
+                        onClick={closeMobileMenu}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Profile Section for Logged In Users */}
+              {isLoggedIn ? (
+                <div className="border-t border-border/20 pt-2">
+                  <button
+                    className="flex items-center justify-between w-full px-4 py-3 text-foreground hover:bg-secondary rounded-lg transition-smooth font-medium"
+                    onClick={() => setMobileProfileOpen(!mobileProfileOpen)}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <User className="h-5 w-5" />
+                      <span>My Account</span>
+                    </div>
+                    {mobileProfileOpen ? (
+                      <ChevronUp className="h-4 w-4" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4" />
+                    )}
+                  </button>
+                  {mobileProfileOpen && (
+                    <div className="pl-4 space-y-1 mt-1">
+                      {profileItems.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <Link
+                            key={item.name}
+                            to={item.path}
+                            className="flex items-center space-x-3 px-4 py-2.5 text-sm text-foreground hover:bg-secondary rounded-lg transition-smooth"
+                            onClick={closeMobileMenu}
+                          >
+                            <Icon className="h-4 w-4" />
+                            <span>{item.name}</span>
+                          </Link>
+                        );
+                      })}
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center space-x-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-smooth w-full text-left"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        <span>Log Out</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="border-t border-border/20 pt-4">
+                  <Button
+                    className="btn-primary w-full rounded-full"
+                    onClick={() => {
+                      closeMobileMenu();
+                      navigate("/login");
+                    }}
+                  >
+                    Login/SignUp
+                  </Button>
+                </div>
+              )}
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );
