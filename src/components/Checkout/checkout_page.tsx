@@ -1,6 +1,8 @@
+import { Bill, createBill } from "@/API/Cart";
 import { getProfile } from "@/API/Profile";
 import { CheckoutDraft } from "@/DataTypes/Checkout";
 import { UserProfile } from "@/DataTypes/Profile";
+import { toastError } from "@/utlity/AlertSystem";
 import { getWithExpiry } from "@/utlity/Storage";
 import { ChevronRight, XCircle } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -19,6 +21,7 @@ export default function CheckoutPage() {
   const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
 
   const [currentStep, setCurrentStep] = useState<"contact" | "address" | "payment">("contact");
+  const [loading, setLoading] = useState(false);
 
   // Contact
   const [mobileNumber, setMobileNumber] = useState("");
@@ -46,63 +49,59 @@ export default function CheckoutPage() {
   const [userError, setUserError] = useState<string | null>(null);
 
   function extractTenDigitsPhone(input?: string) {
-  if (!input) return "";
+    if (!input) return "";
 
-  const digits = (input.match(/\d/g) || []).join("");
-  // take last 10 if it looks like +91xxxxxxxxxx
-  if (digits.length >= 10) return digits.slice(-10);
-  return "";
-}
-  useEffect(() => {
-  let alive = true;
-
-  async function loadProfile() {
-    try {
-      setUserLoading(true);
-      setUserError(null);
-
-      const profile: UserProfile = await getProfile(); 
-      if (!alive || !profile) return;
-      // console.log("[CHECKOUT] Loaded profile:",profile.phone )
-      // Contact
-      const phone10 = extractTenDigitsPhone(profile.phone.toString());
-      if (phone10) setMobileNumber(phone10);
-      if (profile.email) setEmail(profile.email);
-
-      // Address
-      if (profile.name) setFullName(profile.name);
-      if (profile.address) setAddressLine1(profile.address);
-      // If your backend splits address into addressLine1/2, map accordingly
-      if (profile.city) setCity(profile.city);
-      if (profile.state) setState(profile.state);
-      if (profile.zipcode) setPincode(profile.zipcode);
-
-    } catch (err: any) {
-      setUserError(err?.message || "Failed to load profile");
-    } finally {
-      if (alive) setUserLoading(false);
-    }
+    const digits = (input.match(/\d/g) || []).join("");
+    // take last 10 if it looks like +91xxxxxxxxxx
+    if (digits.length >= 10) return digits.slice(-10);
+    return "";
   }
 
-  loadProfile();
-  return () => {
-    alive = false;
-  };
-}, []);
+  useEffect(() => {
+    let alive = true;
 
+    async function loadProfile() {
+      try {
+        setUserLoading(true);
+        setUserError(null);
 
+        const profile: UserProfile = await getProfile();
+        if (!alive || !profile) return;
 
+        // Contact
+        const phone10 = extractTenDigitsPhone(profile.phone.toString());
+        if (phone10) setMobileNumber(phone10);
+        if (profile.email) setEmail(profile.email);
+
+        // Address
+        if (profile.name) setFullName(profile.name);
+        if (profile.address) setAddressLine1(profile.address);
+        if (profile.city) setCity(profile.city);
+        if (profile.state) setState(profile.state);
+        if (profile.zipcode) setPincode(profile.zipcode);
+
+      } catch (err: any) {
+        setUserError(err?.message || "Failed to load profile");
+      } finally {
+        if (alive) setUserLoading(false);
+      }
+    }
+
+    loadProfile();
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   // ====== Load items from either Buy-Now Draft OR Cart State ======
   useEffect(() => {
     const locationState = location.state as any;
-    
+
     // Check if coming from cart
     if (locationState?.from === "cart" && locationState?.items) {
-      // console.log("[CHECKOUT] Loading from Cart:", locationState.items);
       setDraft({ items: locationState.items });
       setSource("cart");
-    } 
+    }
     // Otherwise check for buy-now draft
     else {
       console.log("[CHECKOUT] Loading from Buy-Now draft");
@@ -130,23 +129,113 @@ export default function CheckoutPage() {
     }
 
     // Free shipping for both buy-now and cart
-    const shipping = items.length > 0 ? 0 : 0;
-    const tax = Math.round(sub * 0.03); // 3% GST
-    const grand = sub + shipping + tax;
+    const shippingCost = items.length > 0 ? 0 : 0;
+    const taxAmount = Math.round(sub * 0.03); // 3% GST
+    const grand = sub + shippingCost + taxAmount;
 
-    return { subTotal: sub, discountTotal: disc, shipping, tax, grandTotal: grand };
+    return { subTotal: sub, discountTotal: disc, shipping: shippingCost, tax: taxAmount, grandTotal: grand };
   }, [draft]);
 
   // ====== Step handlers ======
+  const handleAddressContinue = async () => {
+    // Validate address fields
+    const errors: Record<string, boolean> = {};
+    if (!fullName.trim()) errors.fullName = true;
+    if (!addressLine1.trim()) errors.addressLine1 = true;
+    if (!city.trim()) errors.city = true;
+    if (!state.trim()) errors.state = true;
+    if (!/^\d{6}$/.test(pincode)) errors.pincode = true;
+
+    setAddressErrors(errors);
+
+    if (Object.keys(errors).length !== 0) {
+      return;
+    }
+
+    // Check if order has items
+    if (!draft?.items?.length) {
+      alert('Your order is empty.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const payload:Bill = {
+        contact: { mobileNumber: `+91${mobileNumber}`, email, receiveUpdates },
+        address: { fullName, addressLine1, addressLine2, city, state, pincode },
+        order: {
+          items: draft.items,
+          subTotal,
+          discountTotal,
+          shipping,
+          tax,
+          grandTotal,
+        },
+        meta: { source },
+      };
 
 
+      // const createJson = await createRes.json();
+      const createRes =  await createBill(payload);
 
+      const billId =createRes.billId;
+
+      if (!billId) {
+        throw new Error('Missing billId from server');
+      }
+
+      // 2) Ask backend for PayU params
+      const checkoutRes = await fetch(`${baseUrl}/api/payment/payu-checkout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ billId }),
+        credentials: 'include',
+      });
+
+      const checkoutJson = await checkoutRes.json();
+
+      if (!checkoutRes.ok) {
+        throw new Error(checkoutJson.error || 'Failed to initialize PayU checkout');
+      }
+
+      // Backend should return payuUrl and payuParams
+      const { payuUrl, payuParams } = checkoutJson;
+
+      if (!payuUrl || !payuParams) {
+        throw new Error('Invalid PayU response from server');
+      }
+
+      // Build a form and POST to PayU (auto-submit)
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = payuUrl;
+      form.style.display = 'none';
+
+      Object.keys(payuParams).forEach((k) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = k;
+        input.value = String(payuParams[k] ?? '');
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+
+    } catch (err: any) {
+      console.error('Checkout error', err);
+      toastError(err?.message || String(err));
+      setLoading(false);
+    }
+  };
 
   const handlePaymentComplete = async () => {
     if (!paymentMethod) {
       alert("Please select a payment method");
       return;
     }
+
     if (!draft?.items?.length) {
       alert("Your order is empty.");
       return;
@@ -183,7 +272,6 @@ export default function CheckoutPage() {
     navigate("/home");
   };
 
-
   // ====== Empty/Invalid draft UI ======
   if (!draft || !draft.items || draft.items.length === 0) {
     return (
@@ -192,8 +280,8 @@ export default function CheckoutPage() {
           <XCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
           <h2 className="text-xl font-bold text-gray-900 mb-2">Your bag is empty</h2>
           <p className="text-gray-600 mb-6">
-            {source === "cart" 
-              ? "Your cart is empty. Add some items to checkout!" 
+            {source === "cart"
+              ? "Your cart is empty. Add some items to checkout!"
               : "Looks like you didn't add an item via Buy Now. Grab something shiny!"}
           </p>
           <div className="flex gap-3 justify-center">
@@ -254,7 +342,7 @@ export default function CheckoutPage() {
             </div>
 
             {/* Items */}
-            <div className="space-y-4">
+            <div className="space-y-4 max-h-64 overflow-y-auto">
               {draft.items.map((it, idx) => {
                 const d = Math.min(100, Math.max(0, Number(it.discount) || 0));
                 const unit = Math.max(0, Number(it.unitPrice) || 0);
@@ -289,8 +377,6 @@ export default function CheckoutPage() {
                 );
               })}
             </div>
-
-            
 
             {/* Totals */}
             <div className="mt-6 border-t pt-4 space-y-2 text-sm">
@@ -363,16 +449,23 @@ export default function CheckoutPage() {
               </span>
             </div>
           </div>
-          {userLoading && (
-            <div>
+
+          {/* Loading State */}
+          {(userLoading || loading) && (
+            <div className="flex justify-center items-center py-12">
               <Loader />
             </div>
           )}
+
+          {/* Error State */}
           {!userLoading && userError && (
-            <div className="mb-4 text-sm text-red-600">{userError}</div>
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-600">{userError}</p>
+            </div>
           )}
 
-          {!userLoading && currentStep === "contact" && (
+          {/* Contact Step */}
+          {!userLoading && !loading && currentStep === "contact" && (
             <Checkout_Contact
               mobileNumber={mobileNumber}
               setMobileNumber={setMobileNumber}
@@ -384,7 +477,8 @@ export default function CheckoutPage() {
             />
           )}
 
-          {!userLoading && currentStep === "address" && (
+          {/* Address Step */}
+          {!userLoading && !loading && currentStep === "address" && (
             <CheckOut_Address
               fullName={fullName}
               setFullName={setFullName}
@@ -399,10 +493,14 @@ export default function CheckoutPage() {
               pincode={pincode}
               setPincode={setPincode}
               setCurrentStep={setCurrentStep}
+              handleAddressContinue={handleAddressContinue}
+              addressErrors={addressErrors}
+              setAddressErrors={setAddressErrors}
             />
           )}
 
-          {/* {currentStep === "payment" && renderPaymentForm()} */}
+          {/* Payment Step - if you have a payment form */}
+          {/* {!loading && currentStep === "payment" && renderPaymentForm()} */}
 
           <div className="mt-6 text-center">
             <p className="text-xs text-gray-500">

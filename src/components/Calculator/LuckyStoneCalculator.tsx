@@ -52,13 +52,13 @@ const LuckyStoneCalculator: React.FC<Props> = () => {
         stoneInfos.push(stoneInfo);
       } else {
 
-        throw new Error(`Stone not found in mapping: ${res}`);
+        toastError(`Stone not found in mapping: ${res}`);
       }
   
       
       return stoneInfos;
     } catch (error) {
-      throw new Error(error);
+      toastError(error);
     }
   };
 

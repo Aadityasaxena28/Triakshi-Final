@@ -1,73 +1,139 @@
-import { useMemo, useState } from "react";
+import { getOrderByUser } from "@/API/OrderAndBill";
+import { IAddress, IBill, ITransaction } from "@/DataTypes/Order";
+import { useEffect, useMemo, useState } from "react";
 import "./Order.css";
 
+// Backend types
+// interface IOrderItem {
+//   name: string;
+//   qty: number;
+//   image: string;
+//   unitPrice: number;
+//   discount: number;
+// }
+
+// interface IContact {
+//   name?: string;
+//   email: string;
+//   receiveUpdates: boolean;
+//   mobileNumber: string;
+// }
+
+// interface IAddress {
+//   addressLine1: string;
+//   addressLine2?: string;
+//   city: string;
+//   state?: string;
+//   pincode: string;
+// }
+
+// interface IUserDetails {
+//   contact: IContact;
+//   address: IAddress;
+// }
+
+// interface ITransaction {
+//   transactionId: string;
+//   paymentId: string;
+//   orderId: string;
+//   signature: string;
+//   method: 'card' | 'upi' | 'wallet' | 'netbanking' | 'emi';
+//   paidAt: Date | string;
+//   failedAt?: Date | string;
+// }
+
+// interface IBill {
+//   _id?: string;
+//   userId: string;
+//   amount: number;
+//   items: IOrderItem[];
+//   status: 'not_paid' | 'paid' | 'refunded' | 'cancelled' | 'pending';
+//   transaction: ITransaction | null;
+//   meta: {
+//     source: 'cart' | 'buy_now';
+//     couponCode?: string | null;
+//     giftWrap?: boolean;
+//     giftMessage?: string;
+//   };
+//   created_at: Date | string;
+//   updated_at?: Date | string;
+//   userDetails: IUserDetails;
+// }
+
+// Frontend display types
 type OrderStatus = "delivered" | "dispatched" | "pending";
-type OrderType = "single" | "cart";
 
-interface OrderItem {
-  name: string;
-  description: string;
-}
-
-interface Order {
+interface DisplayOrder {
   id: string;
-  type: OrderType;
+  type: "cart" | "single";
   status: OrderStatus;
   orderDate: string;
   deliveryDate: string;
   price: number;
-  items: OrderItem[];
+  items: Array<{
+    name: string;
+    description: string;
+    image: string;
+    qty: number;
+  }>;
+  address?: IAddress;
+  giftWrap?: boolean;
+  giftMessage?: string;
 }
 
-const ordersData: Order[] = [
-  {
-    id: "ORD-2024-10851",
-    type: "cart",
-    status: "dispatched",
-    orderDate: "Oct 10, 2025",
-    deliveryDate: "Oct 15, 2025",
-    price: 459.97,
-    items: [
-      { name: "Wireless Bluetooth Headphones", description: "Premium noise-canceling headphones with 30hr battery" },
-      { name: "Smart Watch Series 5", description: "Fitness tracker with heart rate monitor" },
-      { name: "USB-C Fast Charger", description: "65W rapid charging adapter" }
-    ]
-  },
-  {
-    id: "ORD-2024-10842",
-    type: "single",
-    status: "delivered",
-    orderDate: "Oct 5, 2025",
-    deliveryDate: "Oct 8, 2025",
-    price: 89.99,
-    items: [
-      { name: "Mechanical Gaming Keyboard", description: "RGB backlit with blue switches" }
-    ]
-  },
-  {
-    id: "ORD-2024-10833",
-    type: "cart",
-    status: "pending",
-    orderDate: "Oct 12, 2025",
-    deliveryDate: "Oct 18, 2025",
-    price: 234.98,
-    items: [
-      { name: "4K Webcam Pro", description: "Ultra HD video with auto-focus and noise reduction" },
-      { name: "Desk Lamp LED", description: "Adjustable brightness with USB charging port" }
-    ]
-  },
-  {
-    id: "ORD-2024-10825",
-    type: "single",
-    status: "delivered",
-    orderDate: "Sep 28, 2025",
-    deliveryDate: "Oct 2, 2025",
-    price: 149.99,
-    items: [
-      { name: "Portable SSD 1TB", description: "High-speed external storage with USB 3.2" }
-    ]
-  }
-];
+// Transform backend bill to frontend display order
+function transformBillToOrder(bill: IBill): DisplayOrder {
+  // Map payment status to delivery status
+  const getStatus = (billStatus: string, transaction: ITransaction | null): OrderStatus => {
+    if (billStatus === 'paid' && transaction?.paidAt) {
+      const paidDate = new Date(transaction.paidAt);
+      const daysSincePaid = Math.floor((Date.now() - paidDate.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (daysSincePaid >= 5) return "delivered";
+      if (daysSincePaid >= 1) return "dispatched";
+      return "pending";
+    }
+    return "pending";
+  };
+
+  // Calculate delivery date
+  const getDeliveryDate = (createdAt: Date | string): string => {
+    const orderDate = new Date(createdAt);
+    const deliveryDate = new Date(orderDate);
+    deliveryDate.setDate(deliveryDate.getDate() + 7); // 7 days delivery
+    
+    return deliveryDate.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric', 
+      year: 'numeric' 
+    });
+  };
+
+  // Format order date
+  const orderDate = new Date(bill.created_at).toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric', 
+    year: 'numeric' 
+  });
+
+  return {
+    id: bill._id || bill.transaction?.orderId || 'Unknown',
+    type: bill.items.length > 1 ? "cart" : "single",
+    status: getStatus(bill.status, bill.transaction),
+    orderDate,
+    deliveryDate: getDeliveryDate(bill.created_at),
+    price: bill.amount,
+    items: bill.items.map(item => ({
+      name: item.name,
+      description: `Qty: ${item.qty} | Price: ₹${item.unitPrice} ${item.discount > 0 ? `| Discount: ${item.discount}%` : ''}`,
+      image: item.image,
+      qty: item.qty
+    })),
+    address: bill.userDetails.address,
+    giftWrap: bill.meta.giftWrap,
+    giftMessage: bill.meta.giftMessage
+  };
+}
 
 const statusClassMap: Record<OrderStatus, string> = {
   delivered: "status-delivered",
@@ -82,8 +148,40 @@ const statusTextMap: Record<OrderStatus, string> = {
 };
 
 const Order = () => {
-  const [orders] = useState<Order[]>(ordersData);
+  const [orders, setOrders] = useState<DisplayOrder[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(() => new Set());
+
+  // Fetch orders on component mount
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Get phone number from user context/auth (replace with your auth logic)
+        const userPhone = "4578097812"; // Replace with actual user phone
+        
+        const bills = await getOrderByUser(userPhone);
+        const transformedOrders = bills.map(transformBillToOrder);
+        
+        // Sort by date (newest first)
+        transformedOrders.sort((a, b) => 
+          new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()
+        );
+        
+        setOrders(transformedOrders);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load orders');
+        console.error('Error fetching orders:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
 
   const toggleCart = (orderId: string) => {
     setExpanded(prev => {
@@ -122,7 +220,7 @@ const Order = () => {
             </div>
             <div className="detail-item">
               <div className="detail-label">{isCart ? "Total Price" : "Price"}</div>
-              <div className="detail-value price">${order.price.toFixed(2)}</div>
+              <div className="detail-value price">₹{order.price.toFixed(2)}</div>
             </div>
             {isCart && (
               <div className="detail-item">
@@ -133,6 +231,7 @@ const Order = () => {
           </div>
 
           {isCart && <div className="cart-badge">Cart Order</div>}
+          {order.giftWrap && <div className="cart-badge" style={{marginTop: '4px', background: '#e91e63'}}>🎁 Gift Wrapped</div>}
 
           <div className="item-display">
             <div className="item-info">
@@ -170,10 +269,64 @@ const Order = () => {
               </div>
             </div>
           )}
+
+          {order.giftMessage && isExpanded && (
+            <div style={{
+              marginTop: '12px',
+              padding: '12px',
+              background: '#fff3e0',
+              borderRadius: '8px',
+              borderLeft: '4px solid #ff9800'
+            }}>
+              <div style={{fontWeight: 600, marginBottom: '4px'}}>Gift Message:</div>
+              <div style={{fontStyle: 'italic', color: '#666'}}>{order.giftMessage}</div>
+            </div>
+          )}
         </div>
       );
     });
   }, [orders, expanded]);
+
+  if (loading) {
+    return (
+      <div className="order-container">
+        <h1>📦 Order History</h1>
+        <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+          Loading your orders...
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="order-container">
+        <h1>📦 Order History</h1>
+        <div style={{ 
+          textAlign: 'center', 
+          padding: '40px', 
+          color: '#d32f2f',
+          background: '#ffebee',
+          borderRadius: '8px',
+          margin: '20px'
+        }}>
+          <p style={{ fontWeight: 600, marginBottom: '8px' }}>Failed to load orders</p>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (orders.length === 0) {
+    return (
+      <div className="order-container">
+        <h1>📦 Order History</h1>
+        <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+          No orders found. Start shopping to see your orders here!
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="order-container">
