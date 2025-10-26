@@ -1,3 +1,4 @@
+
 import { Calculator, CalculatorParams } from "@/API/Calculator";
 import { toastError } from "@/utlity/AlertSystem";
 import { getStoneInfo, StoneInfo } from "@/utlity/StoneMapper";
@@ -29,38 +30,41 @@ const LuckyStoneCalculator: React.FC<Props> = () => {
   };
 
   const fetchLuckyStones = async (): Promise<StoneInfo[]> => {
-    try {
-      const data: CalculatorParams = {
-        type: "luck",
-        dob,
-        tob,
-        place: pob,
-      };
-      
-      const res = await Calculator(data);
-      console.log("API response for lucky stones:", res);
-      // Map API response to StoneInfo objects
-      const stoneInfos: StoneInfo[] = [];
-      
-      if (!res) {
-        throw new Error("No stones returned from API");
-      }
-      const eng_name = res.split('(')[0].trim();
-      console.log("Processing stone:", res, "->", eng_name);
+  try {
+    const data: CalculatorParams = {
+      type: "luck",
+      dob,
+      tob,
+      place: pob,
+    };
+    
+    const res = await Calculator(data);
+    console.log("API response for lucky stones:", res);
+    
+    const stoneInfos: StoneInfo[] = [];
+    
+    if (!res || res.length === 0) {
+      throw new Error("No stones returned from API");
+    }
+
+    // Process each stone in the array
+    res.forEach(stone => {
+      const eng_name = stone.split('(')[0].trim();
+      console.log("Processing stone:", stone, "->", eng_name);
       const stoneInfo = getStoneInfo(eng_name);
       if (stoneInfo) {
         stoneInfos.push(stoneInfo);
       } else {
-
-        toastError(`Stone not found in mapping: ${res}`);
+        toastError(`Stone not found in mapping: ${stone}`);
       }
-  
-      
-      return stoneInfos;
-    } catch (error) {
-      toastError(error);
-    }
-  };
+    });
+    
+    return stoneInfos;
+  } catch (error) {
+    toastError(error||"Unable to get your lucky stones ");
+    return []; // Return empty array on error
+  }
+};
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
