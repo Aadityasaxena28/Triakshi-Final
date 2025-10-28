@@ -6,30 +6,38 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ShoppingBag, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+type ImageSlide = {
+  id: number;
+  type: "hero" | "image-only";
+  image: string;
+  /** optional focal point for cover mode (e.g. 'center', '50% 20%') */
+  objectPosition?: string;
+  /** background behind contain mode (mobile) */
+  bg?: string;
+};
+
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const timerRef = useRef<number | null>(null);
 
-  const slides = [
-    { id: 1, type: "hero", image: heroImage, bgColor: "from-black/80 to-black/60" },
-    { id: 2, type: "image-only", image: slideImage2 },
-    { id: 3, type: "image-only", image: slideImage3 },
-    { id: 4, type: "image-only", image: slideImage4 },
+  const slides: ImageSlide[] = [
+    { id: 1, type: "hero", image: heroImage },
+    // pick a dark tone close to each image edge to avoid visible bars on mobile
+    { id: 2, type: "image-only", image: slideImage2, objectPosition: "center", bg: "#1b120c" },
+    { id: 3, type: "image-only", image: slideImage3, objectPosition: "center", bg: "#160f0a" },
+    { id: 4, type: "image-only", image: slideImage4, objectPosition: "center", bg: "#140e0a" },
   ];
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  const nextSlide = () => setCurrentSlide((p) => (p + 1) % slides.length);
+  const prevSlide = () => setCurrentSlide((p) => (p - 1 + slides.length) % slides.length);
 
-  // run a single interval (avoid recreating on each tick)
   useEffect(() => {
     timerRef.current = window.setInterval(nextSlide, 5000);
-    return () => {
-      if (timerRef.current) window.clearInterval(timerRef.current);
-    };
+    return () => timerRef.current && window.clearInterval(timerRef.current);
   }, []);
 
   return (
-    <section className="relative h-[60vh] sm:h-[65vh] overflow-hidden">
+    <section className="relative h-[60vh] sm:h-[65vh] overflow-hidden bg-black">
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
           <div
@@ -38,16 +46,16 @@ const TopSlider = () => {
               index === currentSlide ? "opacity-100" : "opacity-0"
             }`}
           >
-            {/* Background for slide 1 (cover with gradient) */}
             {slide.id === 1 ? (
               <>
+                {/* HERO uses full cover + gradient overlay */}
                 <div
                   className="absolute inset-0 bg-center bg-no-repeat bg-cover"
                   style={{ backgroundImage: `url(${slide.image})` }}
                 />
-                <div className={`absolute inset-0 bg-gradient-to-r ${slide.bgColor}`} />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/60" />
 
-                {/* Buttons */}
+                {/* Top CTA buttons */}
                 <div className="absolute top-16 left-8 right-8 z-20 flex justify-between items-center">
                   <Button size="lg" className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm">
                     <Sparkles className="mr-2 h-5 w-5" /> Trial Now
@@ -57,7 +65,7 @@ const TopSlider = () => {
                   </Button>
                 </div>
 
-                {/* Hero Text */}
+                {/* Hero text */}
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col justify-center h-full pt-20 md:pt-28">
                   <div className="space-y-6 md:space-y-8">
                     <h1 className="text-[2.8rem] sm:text-[3.5rem] md:text-[5rem] font-bold text-white leading-tight">
@@ -71,19 +79,31 @@ const TopSlider = () => {
                 </div>
               </>
             ) : (
-              // Slides 2/3/4: full-bleed image, no padding/background, cover the box
-              <img
-                src={slide.image}
-                alt={`Slide ${slide.id}`}
-                className="absolute inset-0 w-full h-full object-cover block select-none"
-                draggable={false}
-              />
+              /**
+               * Slides 2–4:
+               * - Mobile: object-contain so nothing is cropped (no cut text/faces).
+               * - sm+ : object-cover for full-bleed look.
+               * - We color the background (no white bars on mobile).
+               */
+              <div
+                className="absolute inset-0 w-full h-full"
+                style={{ background: slide.bg || "#000" }}
+              >
+                <img
+                  src={slide.image}
+                  alt={`Slide ${slide.id}`}
+                  className="absolute inset-0 w-full h-full block select-none
+                             object-contain sm:object-cover"
+                  style={{ objectPosition: slide.objectPosition || "center" }}
+                  draggable={false}
+                />
+              </div>
             )}
           </div>
         ))}
       </div>
 
-      {/* Nav buttons */}
+      {/* Navigation */}
       <Button
         variant="outline"
         size="icon"
@@ -101,7 +121,7 @@ const TopSlider = () => {
         <ChevronRight className="h-5 w-5" />
       </Button>
 
-      {/* Indicators */}
+      {/* Dots */}
       <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
         {slides.map((_, i) => (
           <button
