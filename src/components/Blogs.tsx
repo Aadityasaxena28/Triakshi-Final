@@ -16,7 +16,7 @@ const BlogSection = () => {
       id: 1,
       title: "The Timeless Elegance of Yellow Sapphires",
       excerpt: "Discover the rich history and astrological significance of yellow sapphires, one of the most coveted gemstones in Vedic traditions. Learn how these radiant gems bring prosperity and wisdom...",
-      image: "https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=800&q=80",
+      image: "",
       author: "Dr. Priya Sharma",
       date: "October 25, 2025",
       fullContent: `Yellow sapphires, known as Pukhraj in Hindi, have captivated humanity for millennia with their warm, golden glow. These precious gemstones belong to the corundum family and are second only to diamonds in hardness, making them both beautiful and durable.
@@ -33,7 +33,7 @@ Whether you're drawn to yellow sapphires for their astrological benefits or simp
       id: 2,
       title: "How to Identify Authentic Gemstones",
       excerpt: "In a market flooded with synthetic alternatives, knowing how to identify genuine gemstones is crucial. Our expert guide walks you through professional techniques and simple tests you can perform...",
-      image: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=800&q=80",
+      image: "",
       author: "Rajesh Kumar",
       date: "October 20, 2025",
       fullContent: `The gemstone market has evolved significantly, with sophisticated treatments and synthetics becoming increasingly common. Understanding how to identify authentic gemstones protects your investment and ensures you receive genuine pieces.
