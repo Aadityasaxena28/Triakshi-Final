@@ -1,4 +1,3 @@
-You said:
 import heroImage from "@/assets/hero-gemstones.jpg";
 import slideImage2 from "@/assets/Slide2.jpg";
 import slideImage3 from "@/assets/slide3.jpg";
@@ -31,17 +30,17 @@ const TopSlider = () => {
         {slides.map((slide, index) => (
           <div
             key={slide.id}
-            className={absolute inset-0 transition-opacity duration-1000 ${
+            className={`absolute inset-0 transition-opacity duration-1000 ${
               index === currentSlide ? "opacity-100" : "opacity-0"
-            }}
+            }`}
           >
             {/* Background Image */}
             <div
-              className={absolute inset-0 ${
+              className={`absolute inset-0 ${
                 slide.id === 1 ? "bg-cover" : "bg-contain"
-              } bg-center bg-no-repeat}
+              } bg-center bg-no-repeat`}
               style={{
-                backgroundImage: url(${slide.image}),
+                backgroundImage: `url(${slide.image})`,
                 backgroundColor: slide.id !== 1 ? "#f5f5f5" : "transparent",
                 backgroundSize: slide.id === 1 ? "cover" : "contain",
               }}
@@ -50,7 +49,7 @@ const TopSlider = () => {
             {/* Hero Slide (Slide 1) */}
             {slide.id === 1 && (
               <>
-                <div className={absolute inset-0 bg-gradient-to-r ${slide.bgColor}} />
+                <div className={`absolute inset-0 bg-gradient-to-r ${slide.bgColor}`} />
 
                 {/* Buttons */}
                 <div className="absolute top-16 left-8 right-8 z-20 flex justify-between items-center">
@@ -84,12 +83,12 @@ const TopSlider = () => {
               </>
             )}
 
-            {/* Slides 2 & 3 (Image-only, Responsive Fit) */}
-            {(slide.id === 2 || slide.id === 3) && (
+            {/* Slides 2–4 (Image-only) */}
+            {slide.type === "image-only" && (
               <div className="flex items-center justify-center h-full bg-white px-2 sm:px-6">
                 <img
                   src={slide.image}
-                  alt={Slide ${slide.id}}
+                  alt={`Slide ${slide.id}`}
                   className="h-full w-full object-contain sm:object-contain rounded-none sm:rounded-3xl"
                 />
               </div>
@@ -107,6 +106,7 @@ const TopSlider = () => {
       >
         <ChevronLeft className="h-5 w-5" />
       </Button>
+
       <Button
         variant="outline"
         size="icon"
@@ -122,12 +122,14 @@ const TopSlider = () => {
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+            className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
               index === currentSlide ? "bg-white" : "bg-white/50"
-            }}
+            }`}
           />
         ))}
       </div>
     </section>
   );
 };
+
+export default TopSlider;

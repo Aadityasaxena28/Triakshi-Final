@@ -1,4 +1,3 @@
-
 import axios from "axios";
 
 
@@ -191,5 +190,5 @@ export async function Calculator(params: CalculatorParams): Promise<string[]> {
   } catch (error) {
     console.error('Calculator error:', error);
     throw new Error(`Unable To Calculate Your ${params.type} Stone: ${error.message}`);
-  }
+  }
 }

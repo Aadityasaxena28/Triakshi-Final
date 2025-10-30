@@ -163,9 +163,9 @@ const LuckyStoneCalculator: React.FC<Props> = () => {
       {stones && stones.length > 0 && (
         <section className="lifeCalculator_resultsSection">
           <h2 className="lifeCalculator_resultsTitle">Your Personal Lucky Stones</h2>
-          <p className="lifeCalculator_resultsSubtitle">
+          {/* <p className="lifeCalculator_resultsSubtitle">
             Based on your birth details, these gemstones are recommended for you
-          </p>
+          </p> */}
           
           <div className="lifeCalculator_stonesGrid">
             {stones.map((stone, index) => (

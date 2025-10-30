@@ -104,9 +104,9 @@ export default function CheckoutPage() {
     }
     // Otherwise check for buy-now draft
     else {
-      console.log("[CHECKOUT] Loading from Buy-Now draft");
+      // console.log("[CHECKOUT] Loading from Buy-Now draft");
       const d = getWithExpiry<CheckoutDraft>(BDK);
-      console.log("[CHECKOUT] Buy-now draft:", d);
+      // console.log("[CHECKOUT] Buy-now draft:", d);
       setDraft(d);
       setSource("buy-now");
     }
@@ -180,7 +180,7 @@ export default function CheckoutPage() {
       const createRes =  await createBill(payload);
 
       const billId =createRes.billId;
-
+      // console.log(billId)
       if (!billId) {
         throw new Error('Missing billId from server');
       }
