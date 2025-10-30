@@ -352,7 +352,7 @@ export default function CheckoutPage() {
                     <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
                       {it.image ? (
                         <img
-                          src={`${baseUrl}${it.image}`}
+                          src={`${it.image}`}
                           alt={it.name}
                           className="w-12 h-12 object-cover"
                         />
