@@ -168,12 +168,12 @@ const NewCategories = () => {
       };
 
   const getProductImage = (product: Product) => {
-    const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
+    // const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
     
     if (product.images && product.images[0]) {
-      return `${baseUrl}${product.images[0]}`;
+      return `${product.images[0]}`;
     } else if (product.image) {
-      return `${baseUrl}${product.image}`;
+      return `${product.image}`;
     }
     return "";
   };

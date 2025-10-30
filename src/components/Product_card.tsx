@@ -103,16 +103,16 @@ const Product_card: React.FC<Props> = ({
     product.price * (1 - 0.01 * discountPct)
   );
   // console.log("Discounted Price:", product);
-console.log(category);
+// console.log(category);
   const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
   let imageSrc = ""
   if (product.images && product.images[0]){
       product.image = product.images[0];
-     imageSrc = `${baseUrl}${product.image}`;
-     console.log("Image inside",product.images[0])
+     imageSrc = `${product.image}`;
+    //  console.log("Image inside",product.images[0])
   }
   else if(product.image){
-    imageSrc = `${baseUrl}${product.image}`;
+    imageSrc = `${product.image}`;
   }
 
   // Get rating from product, default to 5 if not available

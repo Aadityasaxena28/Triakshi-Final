@@ -2,19 +2,35 @@ import { Login, Signup } from "@/API/Auth";
 import { LoginData, SignupData } from "@/DataTypes/Auth";
 import { toastError, toastSuccess } from "@/utlity/AlertSystem";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./Auth.css";
 
 type props = {
   state: string;
 };
+type AuthLocationState = {
+  from?: Location & { pathname?: string; search?: string; hash?: string };
+} | null;
+function safeRedirectPath(from?: Location): string {
+  // Only allow same-app paths; ignore absolute URLs
+  if (!from) return "/home";
+  const pathname = from.pathname || "/home";
+  const search = from.search || "";
+  const hash = from.hash || "";
+  
+  return `${pathname}${search}${hash}`;
+}
 
 const Auth: React.FC<props> = ({ state }) => {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
   const [isLoginLoading, setIsLoginLoading] = useState(false);
   const [isSignupLoading, setIsSignupLoading] = useState(false);
+
   const Navigate = useNavigate();
+  const location = useLocation();
+  const locState = (location.state as AuthLocationState) ?? null;
+  const redirectTo = safeRedirectPath(locState?.from || undefined);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
@@ -52,7 +68,7 @@ const Auth: React.FC<props> = ({ state }) => {
       toastSuccess("Logged in successfully!");
 
       // Navigate to home
-      Navigate("/home");
+      Navigate(redirectTo, { replace: true });
     }
   } catch (err: any) {
     // err is now the error message string
@@ -99,7 +115,7 @@ const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
       localStorage.setItem("tg_user", JSON.stringify(res.user));
 
       toastSuccess("Account created successfully!");
-      Navigate("/home");
+      Navigate(redirectTo, { replace: true });
     }
   } catch (err: any) {
     // err is now the error message string

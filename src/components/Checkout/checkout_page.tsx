@@ -1,4 +1,4 @@
-import { Bill, createBill } from "@/API/Cart";
+import { Bill, createBill } from "@/API/OrderAndBill";
 import { getProfile } from "@/API/Profile";
 import { CheckoutDraft } from "@/DataTypes/Checkout";
 import { UserProfile } from "@/DataTypes/Profile";

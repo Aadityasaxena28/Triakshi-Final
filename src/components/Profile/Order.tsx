@@ -3,62 +3,7 @@ import { IAddress, IBill, ITransaction } from "@/DataTypes/Order";
 import { useEffect, useMemo, useState } from "react";
 import "./Order.css";
 
-// Backend types
-// interface IOrderItem {
-//   name: string;
-//   qty: number;
-//   image: string;
-//   unitPrice: number;
-//   discount: number;
-// }
 
-// interface IContact {
-//   name?: string;
-//   email: string;
-//   receiveUpdates: boolean;
-//   mobileNumber: string;
-// }
-
-// interface IAddress {
-//   addressLine1: string;
-//   addressLine2?: string;
-//   city: string;
-//   state?: string;
-//   pincode: string;
-// }
-
-// interface IUserDetails {
-//   contact: IContact;
-//   address: IAddress;
-// }
-
-// interface ITransaction {
-//   transactionId: string;
-//   paymentId: string;
-//   orderId: string;
-//   signature: string;
-//   method: 'card' | 'upi' | 'wallet' | 'netbanking' | 'emi';
-//   paidAt: Date | string;
-//   failedAt?: Date | string;
-// }
-
-// interface IBill {
-//   _id?: string;
-//   userId: string;
-//   amount: number;
-//   items: IOrderItem[];
-//   status: 'not_paid' | 'paid' | 'refunded' | 'cancelled' | 'pending';
-//   transaction: ITransaction | null;
-//   meta: {
-//     source: 'cart' | 'buy_now';
-//     couponCode?: string | null;
-//     giftWrap?: boolean;
-//     giftMessage?: string;
-//   };
-//   created_at: Date | string;
-//   updated_at?: Date | string;
-//   userDetails: IUserDetails;
-// }
 
 // Frontend display types
 type OrderStatus = "delivered" | "dispatched" | "pending";

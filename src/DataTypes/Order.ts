@@ -42,7 +42,7 @@ export interface IOrderRequest {
  * Metadata for the order
  */
 export interface IOrderMeta {
-  source: 'cart' | 'buy_now';
+  source: 'cart' | 'buy-now';
   couponCode?: string | null;
   giftWrap?: boolean;
   giftMessage?: string;

@@ -1,3 +1,4 @@
+import { CheckoutItem } from "@/DataTypes/Checkout";
 import { api } from "./Api";
 
 export async function getOrderByUser(phone:string){
@@ -30,5 +31,53 @@ export async function getBill(id: string) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to fetch bill with the given id";
     throw new Error(message);
+  }
+}
+
+
+export type Bill = {
+  contact: {
+    mobileNumber: string;
+    email: string;
+    receiveUpdates: boolean;
+  };
+  address: {
+    fullName: string;
+    addressLine1: string;
+    addressLine2?: string;
+    city: string;
+    state: string;
+    pincode: string;
+  };
+  order: {
+    items: CheckoutItem[];
+    subTotal: number;
+    discountTotal: number;
+    shipping: number;
+    tax: number;
+    grandTotal: number;
+  };
+  meta: {
+    source: "cart" | "buy-now";  
+  };
+};
+
+export async function createBill(params: Bill) {
+  try {
+    const { data } = await api.post(`/api/payment/create-bill`, {
+      bill: params
+    });
+    
+    if (!data.success) {
+      throw new Error(data.error || "Failed to create bill");
+    }
+    
+    return data;
+  } catch (error) {
+    
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error("Failed to create bill");
   }
 }

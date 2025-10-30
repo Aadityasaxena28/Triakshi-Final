@@ -1,4 +1,5 @@
 
+
 import { getBill } from "@/API/OrderAndBill";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { CheckCircle, Download, XCircle } from "lucide-react";
@@ -502,4 +503,3 @@ const PaymentStatusPage: React.FC = () => {
 };
 
 export default PaymentStatusPage;
-
