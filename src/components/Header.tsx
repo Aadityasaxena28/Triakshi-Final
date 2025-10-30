@@ -92,7 +92,7 @@ const Header: React.FC = () => {
 
   const aboutItems: MenuItem[] = [
     { name: "About Us", path: "/about-us" },
-    // { name: "Our Blogs", path: "/blogs" },
+    { name: "Our Blogs", path: "/blogs" },
   ];
 
   const profileItems = [
