@@ -8,7 +8,8 @@ const PaymentStatusPage = () => {
   const [showAnimation, setShowAnimation] = useState(true);
   const [animationProgress, setAnimationProgress] = useState(0);
   const { id } = useParams();
-
+ 
+  
   // Fetch bill data
   const { data, isLoading, isError } = useQuery({
     queryKey: ["getOrderBill", id],
