@@ -1,7 +1,7 @@
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Share2, Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
 
-const Blogs = () => {
+const BlogSection = () => {
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
 
@@ -16,7 +16,7 @@ const Blogs = () => {
       id: 1,
       title: "The Timeless Elegance of Yellow Sapphires",
       excerpt: "Discover the rich history and astrological significance of yellow sapphires, one of the most coveted gemstones in Vedic traditions. Learn how these radiant gems bring prosperity and wisdom...",
-      image: "",
+      image: "https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=800&q=80",
       author: "Dr. Priya Sharma",
       date: "October 25, 2025",
       fullContent: `Yellow sapphires, known as Pukhraj in Hindi, have captivated humanity for millennia with their warm, golden glow. These precious gemstones belong to the corundum family and are second only to diamonds in hardness, making them both beautiful and durable.
@@ -33,7 +33,7 @@ Whether you're drawn to yellow sapphires for their astrological benefits or simp
       id: 2,
       title: "How to Identify Authentic Gemstones",
       excerpt: "In a market flooded with synthetic alternatives, knowing how to identify genuine gemstones is crucial. Our expert guide walks you through professional techniques and simple tests you can perform...",
-      image: "",
+      image: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=800&q=80",
       author: "Rajesh Kumar",
       date: "October 20, 2025",
       fullContent: `The gemstone market has evolved significantly, with sophisticated treatments and synthetics becoming increasingly common. Understanding how to identify authentic gemstones protects your investment and ensures you receive genuine pieces.
@@ -175,11 +175,11 @@ Remember, the investment in authentic gemstones is not just financial—it's abo
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-12 text-center relative z-10">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <Sparkles className="text-yellow-500 animate-pulse" size={28} />
+          <Sparkles className="text-yellow-500 animate-pulse w-8 h-8 md:w-10 md:h-10" />
           <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-amber-500 to-yellow-600 tracking-tight drop-shadow-lg">
             Triakshi Gems
           </h1>
-          <Sparkles className="text-amber-500 animate-pulse" size={28} />
+          <Sparkles className="text-amber-500 animate-pulse w-8 h-8 md:w-10 md:h-10" />
         </div>
         <div className="relative inline-block">
           <h2 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 mb-3 animate-pulse tracking-wider">
@@ -236,4 +236,4 @@ Remember, the investment in authentic gemstones is not just financial—it's abo
   );
 };
 
-export default Blogs;
+export default BlogSection;
