@@ -12,7 +12,7 @@ import ContactUs from "./components/ContactUs";
 import GemstonesPage from "./components/gemstones-category-page";
 import Home from "./components/Home";
 import Mala_listing from "./components/Mala_listing";
-import PaymentStatusPage from "./components/payment-status-page";
+import PaymentStatusPage from "./components/Payment-Status-Page";
 import PaymentsRefund from "./components/Payments_refund";
 import PrivacyPolicy from "./components/Privacypolicy";
 import ProductDetailView from "./components/Product-view";
