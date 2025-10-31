@@ -131,7 +131,7 @@ Our Indian politics will see many changes and there may be difference of opinion
 It will be tough year as india will be facing economical crisis along with border issues.
 Even our neighboring countries will try to unsettle the government.
 Government may face tough challenges in 2023.`
-    }
+    },
     {
       id: 3,
       title: "शंख के बारह चमत्कारिक रहस्य",
