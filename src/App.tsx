@@ -23,7 +23,7 @@ import RudrakshPage from "./components/rudraksha-category";
 import TermsConditions from "./components/Terms_conditions";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import shipping-policy from "./components/shipping-policy";
+import shippingpolicy from "./components/shippingpolicy";
 
 const queryClient = new QueryClient();
 
