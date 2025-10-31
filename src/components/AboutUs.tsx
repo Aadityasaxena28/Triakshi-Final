@@ -7,7 +7,7 @@ export default function AboutUs() {
   useEffect(() => {
     setAnimateCards(true);
   }, []);
-
+   
   const offerings = [
     {
       icon: "💎",

@@ -6,7 +6,7 @@ const Footer = () => {
       { name: "About Us", href: "about-us" },
       // { name: "Our Story", href: "our-story" },
       // { name: "Certifications", href: "#" },
-      // { name: "Blog", href: "#" }
+      { name: "Blog", href: "/blogs" }
     ],
     products: [
       { name: "Gemstones", href: "/gemstones" },

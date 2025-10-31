@@ -165,7 +165,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const [benefits, setBenefits] = React.useState<string[] >([]);
-  const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
+  // const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
   const navigate= useNavigate();
   const BDK = import.meta.env.VITE_BUY_DRAFT_KEY;
   const theme = THEME[category] ?? THEME.gemstone;
@@ -304,13 +304,13 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                   <div className={`absolute inset-0 ${theme.overlayPulse} blur-3xl rounded-full animate-pulse`}></div>
                   {Array.isArray(product.images) && product.images.length > 0 ? (
                   <img
-                    src={`${baseUrl}${product.images[0]}`}
+                    src={`${product.images[0]}`}
                     alt={product.name}
                     className="w-[22rem] h-[22rem] object-contain relative z-10 drop-shadow-2xl rounded"
                   />
                 ) : product.image ? (
                   <img
-                    src={`${baseUrl}${product.image}`}
+                    src={`${product.image}`}
                     alt={product.name}
                     className="w-[22rem] h-[22rem] object-contain relative z-10 drop-shadow-2xl rounded"
                   />

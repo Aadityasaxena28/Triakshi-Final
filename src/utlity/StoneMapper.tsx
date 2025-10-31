@@ -8,6 +8,7 @@ import Pearl from '@/assets/Stones/Pearl.png';
 import RedCoral from '@/assets/Stones/Red_Coral.png';
 import Ruby from '@/assets/Stones/Ruby.png';
 import YellowSapphire from '@/assets/Stones/YellowSapphire.png';
+
 export interface StoneInfo {
   englishName: string;
   hindiName?: string;
@@ -26,6 +27,11 @@ export const STONE_MAPPING: Record<string, StoneInfo> = {
     englishName: 'Pearl',
     image: Pearl,
     productUrl: '/gemstone/pearl',
+  },
+  'Diamond':{
+    englishName: 'Diamond',
+    image: Opal,
+    productUrl: '/gemstone/opal',
   },
   'Opal':{
     englishName: 'Opal',

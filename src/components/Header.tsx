@@ -1,6 +1,9 @@
+import { TokenValidation } from "@/API/Auth";
 import { Button } from "@/components/ui/button";
-import { Gem, LogOut, Menu, Share2, ShoppingCart, User, UserCircle, X, ChevronDown, ChevronUp } from "lucide-react";
-import React, { useRef, useState } from "react";
+import { toastInfo } from "@/utlity/AlertSystem";
+import { useQuery } from "@tanstack/react-query";
+import { ChevronDown, ChevronUp, Gem, LogOut, Menu, Share2, ShoppingCart, User, UserCircle, X } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface MenuItem {
@@ -22,11 +25,56 @@ const Header: React.FC = () => {
   const calcTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const aboutTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const profileTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isLoggedIn, setLoggedIn] = useState<boolean>(false);
+  // const isLoggedIn: boolean = !!localStorage.getItem("tg_user");
+  const token = localStorage.getItem("tg_token");
+  const hasUser = !!localStorage.getItem("tg_user");
 
-  const isLoggedIn: boolean = !!localStorage.getItem("tg_user");
+  const {
+    data,
+    isError,
+    isSuccess,
+    refetch,
+  } = useQuery({
+    queryKey: ["validateToken", token],
+    queryFn: async () => {
+      if (!token) throw new Error("Missing token");
+      return TokenValidation(token);
+    },
+    enabled: hasUser && !!token, // only run if user exists
+    retry: false,                // don’t spam backend on invalid tokens
+  });
+
+  useEffect(() => {
+    if (isError) {
+      toastInfo("Error validating token. Please re-login.");
+      localStorage.removeItem("tg_user");
+      localStorage.removeItem("tg_token");
+      setIsProfileOpen(false);
+      setMobileProfileOpen(false);
+      setIsMenuOpen(false);
+      window.location.reload();
+    }
+
+    if (isSuccess && data) {
+      if (!data.success) {
+        toastInfo("Token has expired, please re-login.");
+        localStorage.removeItem("tg_user");
+        localStorage.removeItem("tg_token");
+        setIsProfileOpen(false);
+        setMobileProfileOpen(false);
+        setIsMenuOpen(false);
+        window.location.reload();
+      } else {
+        setLoggedIn(true);
+        // optional: toastInfo(`Welcome Back ${localStorage.getItem("tg_user")}`)
+      }
+    }
+  }, [isError, isSuccess, data]);
+
   const navigate = useNavigate();
 
-  // 🟢 Updated menu items (Bracelets removed, Mala renamed)
+
   const menuItems: MenuItem[] = [
     { name: "Gemstones", path: "/gemstones" },
     { name: "Rudraksh", path: "/rudraksha" },
@@ -44,7 +92,7 @@ const Header: React.FC = () => {
 
   const aboutItems: MenuItem[] = [
     { name: "About Us", path: "/about-us" },
-    // { name: "Our Blogs", path: "/blogs" },
+    { name: "Our Blogs", path: "/blogs" },
   ];
 
   const profileItems = [
@@ -60,10 +108,11 @@ const Header: React.FC = () => {
 
   const handleLogout = (): void => {
     localStorage.removeItem("tg_user");
+    localStorage.removeItem("tg_token");
     setIsProfileOpen(false);
     setMobileProfileOpen(false);
     setIsMenuOpen(false);
-    navigate("/");
+    window.location.reload()
   };
 
   const handleCalcMouseEnter = (): void => {

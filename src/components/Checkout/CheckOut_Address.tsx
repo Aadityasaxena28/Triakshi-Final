@@ -1,5 +1,5 @@
 import { MapPin } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   fullName: string;
@@ -14,6 +14,9 @@ type Props = {
   setState: Dispatch<SetStateAction<string>>;
   pincode: string;
   setPincode: Dispatch<SetStateAction<string>>;
+  addressErrors: Record<string, boolean>;
+  setAddressErrors: Dispatch<SetStateAction<Record<string, boolean>>>;
+  handleAddressContinue: () => void;
   setCurrentStep: (s: "contact" | "address" | "payment") => void;
 };
 
@@ -31,21 +34,10 @@ const CheckOut_Address = ({
   pincode,
   setPincode,
   setCurrentStep,
+  handleAddressContinue,
+  addressErrors,
+  setAddressErrors,
 }: Props) => {
-  const [addressErrors, setAddressErrors] = useState<Record<string, boolean>>({});
-
-  const handleAddressContinue = () => {
-    const errors: Record<string, boolean> = {};
-    if (!fullName.trim()) errors.fullName = true;
-    if (!addressLine1.trim()) errors.addressLine1 = true;
-    if (!city.trim()) errors.city = true;
-    if (!state.trim()) errors.state = true;
-    if (!/^\d{6}$/.test(pincode)) errors.pincode = true;
-
-    setAddressErrors(errors);
-    // if (Object.keys(errors).length === 0) setCurrentStep("payment");
-  };
-
   return (
     <div className="max-w-xl">
       <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">

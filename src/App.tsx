@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AboutUs from "./components/AboutUs";
 import Auth from "./components/Auth";
+import Blogs from "./components/Blogs";
 import LifeCalPage from "./components/Calculator/LifeCalPage";
 import LuckyStoneCalculator from "./components/Calculator/LuckyStoneCalculator";
 import CheckoutPage from "./components/Checkout/checkout_page";
@@ -12,6 +13,7 @@ import ContactUs from "./components/ContactUs";
 import GemstonesPage from "./components/gemstones-category-page";
 import Home from "./components/Home";
 import Mala_listing from "./components/Mala_listing";
+import PaymentStatusPage from "./components/Payment-Status-Page";
 import PaymentsRefund from "./components/Payments_refund";
 import PrivacyPolicy from "./components/Privacypolicy";
 import ProductDetailView from "./components/Product-view";
@@ -22,10 +24,10 @@ import TermsConditions from "./components/Terms_conditions";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
-// ✅ React Query Client setup
+
 const queryClient = new QueryClient();
 
-// ✅ Base name (for GitHub/Vercel deployment)
+
 const base = "";
 
 const App = () => (
@@ -52,7 +54,7 @@ const App = () => (
           <Route path="mala" element={<Mala_listing/>} />
           <Route path="bracelet" element={<Mala_listing/>} />
           <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="mala"/>}/>
-
+          <Route path="/payment-status/:id" element= {<PaymentStatusPage/>}/>
 
 
           {/*------------- Calculators------------------- */}
@@ -66,7 +68,7 @@ const App = () => (
           <Route path ="/terms-&-conditions" element= {<TermsConditions/>}/>
           <Route path ="/refund-policy" element= {<PaymentsRefund/>}/>
           <Route path="contact-us" element={<ContactUs/>}/>
-
+          <Route path="/blogs" element={<Blogs/>} />
 
 
           {/* --------------Protected Pages-------------------- */}

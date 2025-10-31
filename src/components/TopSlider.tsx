@@ -83,8 +83,8 @@ const TopSlider = () => {
               </>
             )}
 
-            {/* Slides 2 & 3 (Image-only, Responsive Fit) */}
-            {(slide.id === 2 || slide.id === 3) && (
+            {/* Slides 2–4 (Image-only) */}
+            {slide.type === "image-only" && (
               <div className="flex items-center justify-center h-full bg-white px-2 sm:px-6">
                 <img
                   src={slide.image}
@@ -106,6 +106,7 @@ const TopSlider = () => {
       >
         <ChevronLeft className="h-5 w-5" />
       </Button>
+
       <Button
         variant="outline"
         size="icon"

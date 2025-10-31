@@ -33,7 +33,7 @@ export async function Signup(params: SignupData) {
 export async function Login(params: LoginData) {
   try {
     const response = await api.post("/api/users/signin", params);
-    console.log("Login response:", response.data);
+    // console.log("Login response:", response.data);
     
     if (response.data && response.data.success) {
       return response.data; // Return the API response for further handling
@@ -56,5 +56,16 @@ export async function Login(params: LoginData) {
     
     // Generic error
     throw error.message || "Login failed";
+  }
+}
+
+
+export async function TokenValidation(token:string) {
+  try {
+    const {data} = await api.get("/api/users/validate")
+    return data;
+  } 
+  catch (error) {
+    throw new Error("Something went wrong while validating token")
   }
 }
