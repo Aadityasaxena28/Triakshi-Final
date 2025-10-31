@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Share2, Sparkles } from 'lucide-react';
+import slideImage4 from "@/assets/slide4.jpg";
 
 const BlogSection = () => {
   const [selectedBlog, setSelectedBlog] = useState(null);
@@ -14,43 +15,120 @@ const BlogSection = () => {
   const blogs = [
     {
       id: 1,
-      title: "The Timeless Elegance of Yellow Sapphires",
-      excerpt: "Discover the rich history and astrological significance of yellow sapphires, one of the most coveted gemstones in Vedic traditions. Learn how these radiant gems bring prosperity and wisdom...",
+      title: "तिलक लगाने के लाभ",
+      excerpt: "Discover the sacred benefits of applying a Tilak on forehead",
       image: "",
-      author: "Dr. Priya Sharma",
-      date: "October 25, 2025",
-      fullContent: `Yellow sapphires, known as Pukhraj in Hindi, have captivated humanity for millennia with their warm, golden glow. These precious gemstones belong to the corundum family and are second only to diamonds in hardness, making them both beautiful and durable.
+      author: "आचार्य अशोक नारायण",
+      date: "October 31, 2025",
+      fullContent: `तिलक लगाने के लाभ
 
-In Vedic astrology, yellow sapphires are associated with Jupiter (Guru), the planet of wisdom, prosperity, and spiritual growth. Wearing a natural yellow sapphire is believed to enhance one's intellect, bring financial stability, and promote overall well-being.
+🔶 तिलक लगाने के लाभ :
+🌿 चंदन का तिलक :
 
-The finest yellow sapphires come from Kashmir, Sri Lanka, and Madagascar. Their color ranges from pale lemon to deep golden honey, with the most valuable specimens displaying a rich, saturated hue without any secondary colors.
+चंदन का तिलक लगाने से पापों का नाश होता है, व्यक्ति संकटों से बचता है, उस पर लक्ष्मी की कृपा हमेशा बनी रहती है, ज्ञानतंतु संयमित व सक्रिय रहते हैं।
+चंदन का तिलक ताजगी लाता है और ज्ञान तंतुओं की क्रियाशीलता बढ़ाता है।
 
-When selecting a yellow sapphire, consider the 4Cs: Color (vivid and even), Clarity (minimal inclusions), Cut (well-proportioned for brilliance), and Carat weight. At Triakshi Gems, we ensure each yellow sapphire meets the highest standards of quality and authenticity.
+चंदन के प्रकार :
+हरि चंदन, गोपी चंदन, सफेद चंदन, लाल चंदन, गोमती और गोकुल चंदन।
 
-Whether you're drawn to yellow sapphires for their astrological benefits or simply their stunning beauty, these gems make exceptional additions to any jewelry collection. Their warm radiance complements both traditional and contemporary designs, making them versatile choices for rings, pendants, and earrings.`
+🔴 कुमकुम का तिलक :
+
+कुमकुम का तिलक तेजस्विता प्रदान करता है।
+
+🪶 मिट्टी का तिलक :
+
+विशुद्ध मिट्टी के तिलक से बुद्धि-वृद्धि और पुण्य फल की प्राप्ति होती है।
+
+🟠 केसर का तिलक :
+
+केसर का तिलक लगाने से सात्विक गुणों और सदाचार की भावना बढ़ती है।
+इससे बृहस्पति ग्रह का बल भी बढ़ जाता है और भाग्यवृद्धि होती है।
+
+💛 हल्दी का तिलक :
+
+हल्दी से युक्त तिलक लगाने से त्वचा शुद्ध होती है।
+
+⚪ दही का तिलक :
+
+दही का तिलक लगाने से चंद्र बल बढ़ता है और मन-मस्तिष्क में शीतलता प्रदान होती है।
+
+🌸 इत्र का तिलक :
+
+इत्र कई प्रकार के होते हैं। अलग-अलग इत्र के अलग-अलग फायदे होते हैं।
+इत्र का तिलक लगाने से शुक्र बल बढ़ता हैं और व्यक्ति के मन-मस्तिष्क में शांति और प्रसन्नता रहती है।
+
+🕉️ तिलकों का मिश्रण :
+
+अष्टगन्ध में आठ पदार्थ होते हैं — कुंकुम, अगर, कस्तुरी, चन्द्रभाग, त्रिपुरा, गोरोचन, तमाल, जल आदि।
+पंचगंध में गोरोचन, चंदन, केसर, कस्तूरी और देशी कपूर मिलाया जाता है।
+गंधत्रय में सिंदूर, हल्दी और कुमकुम मिलाया जाता है।
+यक्षकर्दम में अगर, केसर, कपूर, कस्तूरी, चंदन, गोरोचन, हिंगुल, रतांजनी, अम्बर, स्वर्णपत्र, मिर्च और कंकोल सम्मिलित होते हैं।
+
+🐄 गोरोचन :
+
+गोरोचन आज के जमाने में एक दुर्लभ वस्तु हो गई है।
+गोरोचन गाय के शरीर से प्राप्त होता है। कुछ विद्वानों का मत है कि यह गाय के मस्तक में पाया जाता है, किंतु वस्तुतः इसका नाम 'गोपित्त' है, यानी कि गाय का पित्त।
+
+हल्की लालिमायुक्त पीले रंग का यह एक अति सुगंधित पदार्थ है, जो मोम की तरह जमा हुआ सा होता है।
+अनेक औषधियों में इसका प्रयोग होता है। यंत्र लेखन, तंत्र साधना तथा सामान्य पूजा में भी अष्टगंध-चंदन निर्माण में गोरोचन की अहम भूमिका है।
+
+गोरोचन का नियमित तिलक लगाने से समस्त ग्रहदोष नष्ट होते हैं।
+आध्यात्मिक साधनाओं के लिए गोरोचन बहुत लाभदायी है।
+
+🙏 जय मां बगलामुखी
+
+`
     },
     {
       id: 2,
-      title: "How to Identify Authentic Gemstones",
-      excerpt: "In a market flooded with synthetic alternatives, knowing how to identify genuine gemstones is crucial. Our expert guide walks you through professional techniques and simple tests you can perform...",
+      title: "Year 2023 Predictions Danger of COVID, World War, Fortune of Politics - Acharya Ashok Narayann",
+      excerpt: "Astrological Predictions  Danger of COVID, World War, Fortune of Politics ",
       image: "",
-      author: "Rajesh Kumar",
-      date: "October 20, 2025",
-      fullContent: `The gemstone market has evolved significantly, with sophisticated treatments and synthetics becoming increasingly common. Understanding how to identify authentic gemstones protects your investment and ensures you receive genuine pieces.
+      author: "आचार्य अशोक नारायण",
+      date: "October 31, 2025",
+      fullContent: `The most dreadful disease Covid which we all are facing from last 2 year and its effect not only in India but throughout the world is dreadful.
 
-Visual Inspection: Natural gemstones often contain minor inclusions or irregularities that are actually signs of authenticity. Perfect clarity in certain gemstone types should raise questions. Use a jeweler's loupe to examine the stone's internal characteristics.
+I remember in 2019 when I was predicting about 2020 there were some planetary combinations which was pointing towards a disease which will spread throughout the world. Reference is their on our Life is Divine Fb Page:
+🔗 https://www.facebook.com/AstrologerAshokNarayann/
 
-Weight and Temperature: Natural gemstones are typically denser than glass or plastic imitations. They also feel cool to the touch and take longer to warm up compared to synthetic materials.
+Now again while predicting about 2023, still I see Corona Virus in one form or other will remain their and we will see some restrictions and preventions but virus will not be that scary as it was in 2020.
+But it doesn’t mean we should not follow the restrictions.
+We should start all the precautions from January onwards.
 
-Certification: Always insist on certification from recognized gemological laboratories like GIA, IGI, or national gem testing laboratories. These certificates provide detailed analysis of the stone's characteristics and authenticity.
+🌡️ Environmental and Climatic Changes
 
-The Scratch Test: While not recommended for valuable pieces, the Mohs hardness scale can help identify gemstones. However, this should only be performed by professionals to avoid damaging the stone.
+Now let us consider some more areas - There might be rise in temperatures and radiation levels, with extreme environmental changes. Global Warming.
+As the temperature will rise, we will see rise in water level of Sea.
 
-UV Light Reaction: Many gemstones display characteristic fluorescence under UV light. This can be a useful indicator, though it requires knowledge of specific gemstone properties.
+Some Indian state may experience drought like situation.
 
-Professional Assessment: When in doubt, consult with certified gemologists. At Triakshi Gems, we provide complete transparency with certification and encourage customers to verify their purchases through independent testing.
+☣️ Threats of Bio Weapons and Wars
 
-Remember, the investment in authentic gemstones is not just financial—it's about owning a piece of Earth's natural beauty that has taken millions of years to form.`
+There is a probability of testing Bio Weapons and even use of bio weapons by some big countries.
+There is a probability of more wars as the one we are witnessing between Russia and Ukraine or it may escalate.
+
+After the Covid pandemic and Russia Ukraine conflict we witnessed, world is witnessing economic crisis.
+In Indian context we will experience worst period.
+
+🇺🇸 Situation in the United States
+
+United state will witness heinous violent crimes, its society will become Unsafe, unlivable, uncivilized and extreme ideologies will lead to conflict with more racial attacks.
+
+United states and European people will move towards other older religion and ancient Indian Yoga.
+People around the world will demand Ban on Islamic ideology as it will be a threat to civilized society and humans evolution.
+
+Thousands of people will migrate away from USA to other countries due to extreme ideologies, clashes, corruption and high cost of living.
+
+⚔️ The New Kind of Wars
+
+Though there will be No world War 3, but there will be changed battlefields to economic, cyber, space, technology wars between nations.
+
+🇮🇳 Indian Political and Economic Outlook
+
+Our Indian politics will see many changes and there may be difference of opinion with in the ruling party.
+It will be tough year as india will be facing economical crisis along with border issues.
+Even our neighboring countries will try to unsettle the government.
+Government may face tough challenges in 2023.`
     }
   ];
 
