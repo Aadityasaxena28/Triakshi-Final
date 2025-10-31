@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Share2, Sparkles } from 'lucide-react';
-import blog01 from "../../assets/Stones/blog01.png";
-import blog02 from "../../assets/blog02.png";
+import blog01 from "@/assets/Stones/blog01.png";
+import blog02 from "@/assets/blog02.png";
 const BlogSection = () => {
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
