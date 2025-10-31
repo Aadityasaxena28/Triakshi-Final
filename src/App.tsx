@@ -23,10 +23,10 @@ import RudrakshPage from "./components/rudraksha-category";
 import TermsConditions from "./components/Terms_conditions";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import shippingpolicy from "./components/shippingpolicy";
+import ShippingPolicy from "./components/Shippingpolicy";
 
 const queryClient = new QueryClient();
-
+ 
 
 const base = "";
 
