@@ -11,9 +11,6 @@ const Marquee = () => {
         <span className="text-white font-semibold text-lg mx-8">
           JAI MAA PITAMBARA, WELCOME TO TRIAKSHI GEMS, HAPPY SHOPPING
         </span>
-        <span className="text-white font-semibold text-lg mx-8">
-          JAI MAA PITAMBARA, WELCOME TO TRIAKSHI GEMS, HAPPY SHOPPING
-        </span>
       </div>
     </div>
   );
