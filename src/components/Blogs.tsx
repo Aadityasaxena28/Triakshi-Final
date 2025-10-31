@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Share2, Sparkles } from 'lucide-react';
-import slideImage4 from "@/assets/slide4.jpg";
+import blog01.png from "@/assets/Stones/blog01.png";
+import blog02.png from "@/assets/blog02.png";
 
 const BlogSection = () => {
   const [selectedBlog, setSelectedBlog] = useState(null);
@@ -17,7 +18,7 @@ const BlogSection = () => {
       id: 1,
       title: "तिलक लगाने के लाभ",
       excerpt: "Discover the sacred benefits of applying a Tilak on forehead",
-      image: "",
+      image: blog01,
       author: "आचार्य अशोक नारायण",
       date: "October 31, 2025",
       fullContent: `तिलक लगाने के लाभ
@@ -83,7 +84,7 @@ const BlogSection = () => {
       id: 2,
       title: "Year 2023 Predictions Danger of COVID, World War, Fortune of Politics - Acharya Ashok Narayann",
       excerpt: "Astrological Predictions  Danger of COVID, World War, Fortune of Politics ",
-      image: "",
+      image: blog02,
       author: "आचार्य अशोक नारायण",
       date: "October 31, 2025",
       fullContent: `The most dreadful disease Covid which we all are facing from last 2 year and its effect not only in India but throughout the world is dreadful.
