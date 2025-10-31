@@ -23,7 +23,7 @@ const Footer = () => {
     legal: [
       { name: "Privacy Policy", href: "/privacy-policy" },
       { name: "Terms And Conditions", href: "/terms-&-conditions" },
-      { name: "Shipping Policy", href: "/shipping-policy" },
+      { name: "shipping-Policy", href: "/shipping-policy" },
       { name: "Refund Policy", href: "/refund-policy" }
     ]
   };
@@ -71,12 +71,12 @@ const Footer = () => {
                 <Gem className="h-6 w-6 text-white" />
               </div>
               <span className="text-xl font-bold">
-                Triyakshi Gems
+                Triakshi Gems
               </span>
             </div>
             
             <p className="text-white/80 mb-6 leading-relaxed">
-              For over 25 years, we've been India's trusted source for authentic gemstones, 
+              We are India's trusted source for authentic gemstones, 
               spiritual accessories, and personalized astrological guidance.
             </p>
 
@@ -84,15 +84,15 @@ const Footer = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-3">
                 <MapPin className="h-4 w-4 text-gold" />
-                <span className="text-white/80">123 Gem Street, Mumbai, India</span>
+                <span className="text-white/80">15-116, Express Greens Plaza, Sector 1, Vaishali, Ghaziabad - 201010 </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-gold" />
-                <span className="text-white/80">+91 98765 43210</span>
+                <span className="text-white/80"> +91 8130268434</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-gold" />
-                <span className="text-white/80">info@triyakshigems.com</span>
+                <span className="text-white/80">acharyaashoknarayann@gmail.com</span>
               </div>
             </div>
           </div>
@@ -186,9 +186,9 @@ const Footer = () => {
 
             {/* Certifications */}
             <div className="flex items-center space-x-4 text-xs text-white/60">
-              <span>Certified by GIA</span>
+              <span>Certified by GLI</span>
               <span>•</span>
-              <span>Trusted by 10K+ Customers</span>
+              <span>Trusted by 1000+ Customers</span>
               <span>•</span>
               <span>25+ Years Experience</span>
             </div>
@@ -200,8 +200,8 @@ const Footer = () => {
       <div className="border-t border-white/10 bg-black/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col md:flex-row items-center justify-between text-sm text-white/60">
-            <p>© 2024 Triyakshi Gems. All rights reserved.</p>
-            {/* <p>Made with ❤️ for spiritual wellness</p> */}
+            <p>© 2025 Triyakshi Gems. All rights reserved.</p>
+            {/* <p>Made with  for spiritual wellness</p> */}
           </div>
         </div>
       </div>
