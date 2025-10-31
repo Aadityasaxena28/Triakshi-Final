@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { toastError } from "@/utlity/AlertSystem";
 import { Calculator, Circle, CircleDot, Gem, Heart, ShoppingBag, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+ 
 const Categories = () => {
   const categories = [
     {
