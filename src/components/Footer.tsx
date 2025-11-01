@@ -200,7 +200,7 @@ const Footer = () => {
       <div className="border-t border-white/10 bg-black/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col md:flex-row items-center justify-between text-sm text-white/60">
-            <p>© 2025 Triyakshi Gems. All rights reserved.</p>
+            <p>© 2025 Triakshi Gems. All rights reserved.</p>
             {/* <p>Made with  for spiritual wellness</p> */}
           </div>
         </div>
