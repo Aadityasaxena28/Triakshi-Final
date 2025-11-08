@@ -87,26 +87,22 @@ const NewArrivals = () => {
   };
 
   const handleAddToCart = async (product: Product) => {
-        try {
-  
-        const param:CartItem= {
-          productId: product.id,
-          quantity: 1
-        };
-        const isAdded = await addToCart(param);
-        if (isAdded){
-          toastSuccess("Item Successfully Added to cart")
-        }
-      } 
-      catch (error) {
-        toastError(error||"Failed To Add Product")
-      }
-  
+    try {
+      const param: CartItem = {
+        productId: product.id,
+        quantity: 1
       };
+      const isAdded = await addToCart(param);
+      if (isAdded) {
+        toastSuccess("Item Successfully Added to cart");
+      }
+    } 
+    catch (error) {
+      toastError(error || "Failed To Add Product");
+    }
+  };
 
   const getProductImage = (product: Product) => {
-    // const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
-    
     if (product.images && product.images[0]) {
       return `${product.images[0]}`;
     } else if (product.image) {
@@ -133,7 +129,7 @@ const NewArrivals = () => {
 
   if (isLoading) {
     return (
-      <section className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
+      <section id="new-arrivals" className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
@@ -146,7 +142,7 @@ const NewArrivals = () => {
 
   if (isError) {
     return (
-      <section className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
+      <section id="new-arrivals" className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-red-600">
             <p>Failed to load products. Please try again later.</p>
@@ -158,7 +154,7 @@ const NewArrivals = () => {
 
   if (!validProducts || validProducts.length === 0) {
     return (
-      <section className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
+      <section id="new-arrivals" className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-gray-600">
             <p>No new arrivals at the moment.</p>
@@ -169,7 +165,7 @@ const NewArrivals = () => {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 relative overflow-hidden">
+    <section id="new-arrivals" className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full opacity-10">
         <div className="absolute top-10 right-10 w-20 h-20 bg-orange-400 rounded-full blur-3xl animate-pulse"></div>
