@@ -23,7 +23,7 @@ import RudrakshPage from "./components/rudraksha-category";
 import TermsConditions from "./components/Terms_conditions";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import ShippingPolicy from "./components/Shippingpolicy";
+
 
 const queryClient = new QueryClient();
  
@@ -69,7 +69,7 @@ const App = () => (
           <Route path ="/refund-policy" element= {<PaymentsRefund/>}/>
           <Route path="contact-us" element={<ContactUs/>}/>
           <Route path="/blogs" element={<Blogs/>} />
-          <Route path="/Shippingpolicy" element={<Shippingpolicy/>}/>
+        
  
 
           {/* --------------Protected Pages-------------------- */}
