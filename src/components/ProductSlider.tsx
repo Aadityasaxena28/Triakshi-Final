@@ -200,7 +200,7 @@ const ProductSlider = () => {
                   animation: 'gradient 3s ease infinite',
                 }}
               >
-                Diwali Sale
+                On Sale
               </span>
             </h2>
             <Sparkles className="w-8 h-8 text-orange-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
