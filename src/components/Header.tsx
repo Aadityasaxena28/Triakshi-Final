@@ -44,26 +44,34 @@ const Header: React.FC = () => {
     retry: false,
   });
 
-  // Fetch cart items count
-  useEffect(() => {
-    const fetchCartCount = async () => {
+  // Import the cart API function at the top
+  // Fetch cart items count using React Query
+  const { data: cartData } = useQuery({
+    queryKey: ["cart-count"],
+    queryFn: async () => {
       try {
-        const cartData = localStorage.getItem("cart");
-        if (cartData) {
-          const cart = JSON.parse(cartData);
-          const count = cart.items?.reduce((sum: number, item: any) => sum + (item.qty || 0), 0) || 0;
-          setCartItemCount(count);
-        }
+        const { getCartItems } = await import("@/API/Cart");
+        const result = await getCartItems();
+        return result;
       } catch (error) {
-        console.error("Error fetching cart count:", error);
+        console.error("Error fetching cart:", error);
+        return null;
       }
-    };
+    },
+    enabled: isLoggedIn,
+    refetchInterval: 5000, // Refetch every 5 seconds
+    staleTime: 3000,
+  });
 
-    fetchCartCount();
-    // Listen for cart updates
-    window.addEventListener("storage", fetchCartCount);
-    return () => window.removeEventListener("storage", fetchCartCount);
-  }, []);
+  // Update cart count when data changes
+  useEffect(() => {
+    if (cartData?.success && cartData?.items) {
+      const count = cartData.items.reduce((sum: number, item: any) => sum + (item.qty || 0), 0);
+      setCartItemCount(count);
+    } else {
+      setCartItemCount(0);
+    }
+  }, [cartData]);
 
   useEffect(() => {
     if (isError) {
