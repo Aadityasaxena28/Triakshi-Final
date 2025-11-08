@@ -1,5 +1,6 @@
 import { Facebook, Gem, Instagram, Mail, MapPin, Phone, Twitter, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
+
 const Footer = () => {
   const footerLinks = {
     company: [
@@ -23,7 +24,7 @@ const Footer = () => {
     legal: [
       { name: "Privacy Policy", href: "/privacy-policy" },
       { name: "Terms And Conditions", href: "/terms-&-conditions" },
-      { name: "Shippingpolicy",href: "/Shippingpolicy"},
+      { name: "Shippingpolicy", href: "/Shippingpolicy" },
       { name: "Refund Policy", href: "/refund-policy" }
     ]
   };
@@ -36,7 +37,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-primary to-primary-light text-white">
+    <footer className="bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900 text-white">
       {/* Newsletter Section */}
       {/* <div className="border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

@@ -69,7 +69,8 @@ const App = () => (
           <Route path ="/refund-policy" element= {<PaymentsRefund/>}/>
           <Route path="contact-us" element={<ContactUs/>}/>
           <Route path="/blogs" element={<Blogs/>} />
-
+          <Route path="/Shippingpolicy" element={<Shippingpolicy/>}/>
+ 
 
           {/* --------------Protected Pages-------------------- */}
           <Route element={<RequireAuth/>}>
