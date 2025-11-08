@@ -200,7 +200,7 @@ const ProductSlider = () => {
                   animation: 'gradient 3s ease infinite',
                 }}
               >
-                On Sale
+                The Shine Affair
               </span>
             </h2>
             <Sparkles className="w-8 h-8 text-orange-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
