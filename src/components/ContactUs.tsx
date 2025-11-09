@@ -1,5 +1,5 @@
 import { AlertCircle, CheckCircle, Mail, MessageSquare, Phone, Send } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function ContactUs() {
   const [queryType, setQueryType] = useState('');
@@ -8,6 +8,13 @@ export default function ContactUs() {
   const [issueText, setIssueText] = useState('');
   const [querySubmitted, setQuerySubmitted] = useState(false);
   const [issueSubmitted, setIssueSubmitted] = useState(false);
+  const [animateCards, setAnimateCards] = useState(false);
+
+  // 👇 Added useEffect for scroll + animation
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setAnimateCards(true);
+  }, []);
 
   const handleQuerySubmit = () => {
     if (queryType && queryText) {
@@ -42,7 +49,7 @@ export default function ContactUs() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
+        <div className={`grid md:grid-cols-2 gap-8 mb-12 transition-all duration-700 ${animateCards ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
           
           {/* Queries Section */}
           <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-orange-200">
@@ -182,7 +189,7 @@ export default function ContactUs() {
         </div>
 
         {/* Contact Information Section */}
-        <div className="bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl shadow-2xl p-12 text-white">
+        <div className={`bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl shadow-2xl p-12 text-white transition-all duration-700 ${animateCards ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl font-bold mb-4">Triakshi Gems</h2>
             <p className="text-xl mb-8 opacity-90">Your Trusted Partner in Fine Jewelry</p>
