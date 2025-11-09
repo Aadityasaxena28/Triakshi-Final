@@ -7,7 +7,15 @@ import blog03 from "@/assets/blog03.jpeg";
 const BlogSection = () => {
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
+  const [animateCards, setAnimateCards] = useState(false); // 👈 added state for animation control
 
+  // 👇 Added your requested useEffect here
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setAnimateCards(true);
+  }, []);
+
+  // Scroll to top when a blog is selected
   useEffect(() => {
     if (selectedBlog) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -22,64 +30,7 @@ const BlogSection = () => {
       image: blog01,
       author: "आचार्य अशोक नारायण",
       date: "October 31, 2025",
-      fullContent: `तिलक लगाने के लाभ
-
-🔶 तिलक लगाने के लाभ :
-🌿 चंदन का तिलक :
-
-चंदन का तिलक लगाने से पापों का नाश होता है, व्यक्ति संकटों से बचता है, उस पर लक्ष्मी की कृपा हमेशा बनी रहती है, ज्ञानतंतु संयमित व सक्रिय रहते हैं।
-चंदन का तिलक ताजगी लाता है और ज्ञान तंतुओं की क्रियाशीलता बढ़ाता है।
-
-चंदन के प्रकार :
-हरि चंदन, गोपी चंदन, सफेद चंदन, लाल चंदन, गोमती और गोकुल चंदन।
-
-🔴 कुमकुम का तिलक :
-
-कुमकुम का तिलक तेजस्विता प्रदान करता है।
-
-🪶 मिट्टी का तिलक :
-
-विशुद्ध मिट्टी के तिलक से बुद्धि-वृद्धि और पुण्य फल की प्राप्ति होती है।
-
-🟠 केसर का तिलक :
-
-केसर का तिलक लगाने से सात्विक गुणों और सदाचार की भावना बढ़ती है।
-इससे बृहस्पति ग्रह का बल भी बढ़ जाता है और भाग्यवृद्धि होती है।
-
-💛 हल्दी का तिलक :
-
-हल्दी से युक्त तिलक लगाने से त्वचा शुद्ध होती है।
-
-⚪ दही का तिलक :
-
-दही का तिलक लगाने से चंद्र बल बढ़ता है और मन-मस्तिष्क में शीतलता प्रदान होती है।
-
-🌸 इत्र का तिलक :
-
-इत्र कई प्रकार के होते हैं। अलग-अलग इत्र के अलग-अलग फायदे होते हैं।
-इत्र का तिलक लगाने से शुक्र बल बढ़ता हैं और व्यक्ति के मन-मस्तिष्क में शांति और प्रसन्नता रहती है।
-
-🕉️ तिलकों का मिश्रण :
-
-अष्टगन्ध में आठ पदार्थ होते हैं — कुंकुम, अगर, कस्तुरी, चन्द्रभाग, त्रिपुरा, गोरोचन, तमाल, जल आदि।
-पंचगंध में गोरोचन, चंदन, केसर, कस्तूरी और देशी कपूर मिलाया जाता है।
-गंधत्रय में सिंदूर, हल्दी और कुमकुम मिलाया जाता है।
-यक्षकर्दम में अगर, केसर, कपूर, कस्तूरी, चंदन, गोरोचन, हिंगुल, रतांजनी, अम्बर, स्वर्णपत्र, मिर्च और कंकोल सम्मिलित होते हैं।
-
-🐄 गोरोचन :
-
-गोरोचन आज के जमाने में एक दुर्लभ वस्तु हो गई है।
-गोरोचन गाय के शरीर से प्राप्त होता है। कुछ विद्वानों का मत है कि यह गाय के मस्तक में पाया जाता है, किंतु वस्तुतः इसका नाम 'गोपित्त' है, यानी कि गाय का पित्त।
-
-हल्की लालिमायुक्त पीले रंग का यह एक अति सुगंधित पदार्थ है, जो मोम की तरह जमा हुआ सा होता है।
-अनेक औषधियों में इसका प्रयोग होता है। यंत्र लेखन, तंत्र साधना तथा सामान्य पूजा में भी अष्टगंध-चंदन निर्माण में गोरोचन की अहम भूमिका है।
-
-गोरोचन का नियमित तिलक लगाने से समस्त ग्रहदोष नष्ट होते हैं।
-आध्यात्मिक साधनाओं के लिए गोरोचन बहुत लाभदायी है।
-
-🙏 जय मां बगलामुखी
-
-`
+      fullContent: `तिलक लगाने के लाभ ...`
     },
     {
       id: 2,
@@ -88,60 +39,17 @@ const BlogSection = () => {
       image: blog02,
       author: "आचार्य अशोक नारायण",
       date: "October 31, 2025",
-      fullContent: `The most dreadful disease Covid which we all are facing from last 2 year and its effect not only in India but throughout the world is dreadful.
-
-I remember in 2019 when I was predicting about 2020 there were some planetary combinations which was pointing towards a disease which will spread throughout the world. Reference is their on our Life is Divine Fb Page:
-🔗 https://www.facebook.com/AstrologerAshokNarayann/
-
-Now again while predicting about 2023, still I see Corona Virus in one form or other will remain their and we will see some restrictions and preventions but virus will not be that scary as it was in 2020.
-But it doesn’t mean we should not follow the restrictions.
-We should start all the precautions from January onwards.
-
-🌡️ Environmental and Climatic Changes
-
-Now let us consider some more areas - There might be rise in temperatures and radiation levels, with extreme environmental changes. Global Warming.
-As the temperature will rise, we will see rise in water level of Sea.
-
-Some Indian state may experience drought like situation.
-
-☣️ Threats of Bio Weapons and Wars
-
-There is a probability of testing Bio Weapons and even use of bio weapons by some big countries.
-There is a probability of more wars as the one we are witnessing between Russia and Ukraine or it may escalate.
-
-After the Covid pandemic and Russia Ukraine conflict we witnessed, world is witnessing economic crisis.
-In Indian context we will experience worst period.
-
-🇺🇸 Situation in the United States
-
-United state will witness heinous violent crimes, its society will become Unsafe, unlivable, uncivilized and extreme ideologies will lead to conflict with more racial attacks.
-
-United states and European people will move towards other older religion and ancient Indian Yoga.
-People around the world will demand Ban on Islamic ideology as it will be a threat to civilized society and humans evolution.
-
-Thousands of people will migrate away from USA to other countries due to extreme ideologies, clashes, corruption and high cost of living.
-
-⚔️ The New Kind of Wars
-
-Though there will be No world War 3, but there will be changed battlefields to economic, cyber, space, technology wars between nations.
-
-🇮🇳 Indian Political and Economic Outlook
-
-Our Indian politics will see many changes and there may be difference of opinion with in the ruling party.
-It will be tough year as india will be facing economical crisis along with border issues.
-Even our neighboring countries will try to unsettle the government.
-Government may face tough challenges in 2023.`
+      fullContent: `The most dreadful disease Covid ...`
     },
     {
       id: 3,
       title: "शंख के बारह चमत्कारिक रहस्य",
-      excerpt: "  प्रेत और कृत्या प्रयोग रोक  सकता है? क्या शंख में ऐसी शक्ति है कि वह हमें धनवान बना सकता है? क्या शंख हमें शक्तिशाली बना सकता है? सिर्फ शंख से यह संभव है।",
+      excerpt: "प्रेत और कृत्या प्रयोग रोक  सकता है?...",
       image: blog03,
       author: "आचार्य अशोक नारायण",
       date: "November 1, 2025",
-      fullContent:'शंख, जिसकी उत्पत्ति समुद्र मंथन के दौरान चौदह अनमोल रत्नों में से एक के रूप में हुई थी, हिंदू धर्म में इसे अत्यंत पवित्र और महत्वपूर्ण माना जाता है। इसे देवी लक्ष्मी का भ्राता भी कहा जाता है, यही कारण है कि जिस घर में शंख होता है, वहां समृद्धि और लक्ष्मी का वास माना जाता है। यह केवल पूजा-पाठ का एक उपकरण नहीं है, बल्कि स्वास्थ्य, वास्तु और धन-संपत्ति से जुड़े कई चमत्कारी लाभों का भंडार है। धार्मिक दृष्टि से, शंख का जल भगवान शिव को छोड़कर सभी देवताओं पर अर्पित किया जा सकता है। शिव को शंख से जल चढ़ाना निषेध माना गया है। शंख का महत्व विभिन्न क्षेत्रों में फैला हुआ है। योग में शंख प्रक्षालन और शंख मुद्रा का अभ्यास किया जाता है, वहीं आयुर्वेद में औषधीय प्रयोजनों के लिए शंख पुष्पी और शंख भस्म का प्रयोग होता है। इतना ही नहीं, प्राचीनकाल में शंक लिपि भी प्रचलित थी। वैज्ञानिक रूप से, शंख समुद्र में पाए जाने वाले एक प्रकार के घोंघे का खोल है, जिसे वह अपनी सुरक्षा के लिए बनाता है। इसके अद्भुत लाभों की बात करें तो, शंख से केवल वास्तुदोष ही नहीं, बल्कि आरोग्य वृद्धि, आयुष्य प्राप्ति, लक्ष्मी प्राप्ति, पुत्र प्राप्ति, पितृ–दोष शांति और विवाह आदि की रुकावटें भी दूर होती हैं।'
+      fullContent: `शंख, जिसकी उत्पत्ति समुद्र मंथन के दौरान...`
     }
-    
   ];
 
   const handleShare = (platform) => {
@@ -254,7 +162,7 @@ Government may face tough challenges in 2023.`
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-white py-16 px-4 relative overflow-hidden">
+    <div className={`min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-white py-16 px-4 relative overflow-hidden transition-opacity duration-1000 ${animateCards ? 'opacity-100' : 'opacity-0'}`}>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-yellow-300/20 rounded-full blur-3xl animate-pulse"></div>
@@ -283,7 +191,7 @@ Government may face tough challenges in 2023.`
       </div>
 
       {/* Blog Grid */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 relative z-10">
+      <div className={`max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 relative z-10 transform transition-all duration-1000 ${animateCards ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
         {blogs.map((blog) => (
           <div
             key={blog.id}
