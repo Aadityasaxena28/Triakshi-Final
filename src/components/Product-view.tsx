@@ -13,6 +13,7 @@ type Props = {
   category?: "gemstone" | "rudraksha" | string;
 };
 
+
 const THEME: Record<
   string,
   {
