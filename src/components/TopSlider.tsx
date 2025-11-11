@@ -38,7 +38,7 @@ const TopSlider = () => {
     type: "image-only",
     image: slideImage4,
     // cosmic blue-purple gradient like in the uploaded banner
-    gradient: "linear-gradient(135deg, #0b0f28 0%, #1b1f49 40%, #2b1b52 100%)",
+    bgColor: "#0a1448",
   },
 ];
 
