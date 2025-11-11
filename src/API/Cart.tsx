@@ -24,7 +24,7 @@ export async function  getCartItems(){
     if(!data.success){
       throw new Error(data.error||"Failed To Fetch Cart Products");
     }
-    console.log(data);
+    // console.log(data);
     return data
   } 
   catch (error) {

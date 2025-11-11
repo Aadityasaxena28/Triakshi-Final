@@ -55,7 +55,7 @@ const Header: React.FC = () => {
       }
     },
     enabled: isLoggedIn,
-    refetchInterval: 5000,
+    refetchInterval: 1000*60, // Refetch every 5 seconds
     staleTime: 3000,
   });
 

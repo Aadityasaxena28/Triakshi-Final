@@ -20,7 +20,10 @@ import ProductDetailView from "./components/Product-view";
 import ProfilePage from "./components/Profile/profile_page";
 import { RequireAuth } from "./components/RequireAuth";
 import RudrakshPage from "./components/rudraksha-category";
+import ShippingPolicy from "./components/shippingpolicy";
 import TermsConditions from "./components/Terms_conditions";
+import TribhuvaniPage from "./components/tribhuvani-page";
+import YantraPage from "./components/YantraPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -39,7 +42,7 @@ const App = () => (
       {/* Router setup */}
       <BrowserRouter >
         <Routes>
-        {/* --------------Authentication Pages */}
+        {/* --------------Authentication Pages -----------------*/}
         <Route path="/login" element={<Auth  state="login"/>} />
         <Route path="/signup" element={<Auth  state="signup"/>} />
 
@@ -51,12 +54,17 @@ const App = () => (
           <Route path="gem-view/:id" element={<ProductDetailView category= "gemstone"/>}/>
           <Route path="rudraksha" element= {<RudrakshPage/>}/>
           <Route path="rudra-view/:id" element={<ProductDetailView category= "rudraksha"/>}/>
+
           <Route path="mala" element={<Mala_listing/>} />
           <Route path="bracelet" element={<Mala_listing/>} />
           <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="mala"/>}/>
           <Route path="/payment-status/:id" element= {<PaymentStatusPage/>}/>
-
-
+          {/* <Route path="/books"element ={<BooksPage/>}/> */}
+          <Route path="/tribhuvani" element ={<TribhuvaniPage/>}/>
+          <Route path ="/tribhuvani-view/:id" element= {<ProductDetailView category="tribhuvani"/>}/>
+          
+          <Route path="/yantra" element={<YantraPage/>}/>
+          <Route path ="/yantra-view/:id" element= {<ProductDetailView category="yantra"/>}/>
           {/*------------- Calculators------------------- */}
           <Route path = "/life-calculator" element={<LifeCalPage/>}/>
           <Route path="lucky-stone-calculator" element={<LuckyStoneCalculator />} />
@@ -69,7 +77,7 @@ const App = () => (
           <Route path ="/refund-policy" element= {<PaymentsRefund/>}/>
           <Route path="contact-us" element={<ContactUs/>}/>
           <Route path="/blogs" element={<Blogs/>} />
-        
+          <Route path="/Shippingpolicy" element={<ShippingPolicy/>}/>
  
 
           {/* --------------Protected Pages-------------------- */}
@@ -83,11 +91,10 @@ const App = () => (
           <Route path="/refer-earn" element={<ProfilePage option="refer"/>}/>
           </Route>
 
-
           
           </Route>
 
-          {/* Handle any invalid URL */}
+          {/*---------------- Handle any invalid URL -----------------*/}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

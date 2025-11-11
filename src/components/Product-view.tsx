@@ -153,6 +153,66 @@ const THEME: Record<
     dotActive: "bg-orange-500",
     dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
+  tribhuvani: {
+  pageBgFrom: "from-purple-50/40",
+  pageBgTo: "to-indigo-50/40",
+
+  headerFrom: "from-purple-600",
+  headerTo: "to-indigo-600",
+
+  bandFrom: "from-purple-50",
+  bandVia: "via-white",
+  bandTo: "to-indigo-100",
+  overlayPulse: "bg-purple-400/20",
+
+  badgeWrap: "bg-gradient-to-r from-purple-500 to-indigo-600",
+  badgeText: "text-white",
+
+  catChip: "bg-purple-50 text-purple-800 border-2 border-purple-200",
+  sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
+
+  priceFrom: "from-purple-600",
+  priceTo: "to-indigo-600",
+
+  qtyBorder: "border-purple-100",
+
+  outlineText: "text-purple-700",
+  outlineBorder: "border-purple-500 hover:border-indigo-600",
+
+  dotActive: "bg-purple-500",
+  dotIdle: "bg-gray-300 hover:bg-gray-400",
+},
+  yantra: {
+    pageBgFrom: "from-amber-50/30",
+    pageBgTo: "to-orange-50/30",
+
+    headerFrom: "from-amber-600",
+    headerTo: "to-orange-600",
+
+    bandFrom: "from-amber-50",
+    bandVia: "via-white",
+    bandTo: "to-orange-100",
+    overlayPulse: "bg-amber-400/20",
+
+    badgeWrap: "bg-gradient-to-r from-amber-500 to-orange-600",
+    badgeText: "text-white",
+
+    catChip: "bg-amber-50 text-amber-800 border-2 border-amber-200",
+    sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
+
+    priceFrom: "from-amber-600",
+    priceTo: "to-orange-600",
+
+    qtyBorder: "border-amber-100",
+
+    outlineText: "text-amber-600",
+    outlineBorder: "border-amber-500 hover:border-orange-600",
+
+    dotActive: "bg-amber-500",
+    dotIdle: "bg-gray-300 hover:bg-gray-400",
+  },
+
+
 };
 
 
