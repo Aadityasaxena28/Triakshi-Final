@@ -1,7 +1,7 @@
 import { getProducts } from "@/API/Product";
 import { useQuery } from "@tanstack/react-query";
-import { Filter, Search, X } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { ChevronLeft, ChevronRight, Filter, Search, X } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Product_card from "./Product_card";
 
@@ -12,6 +12,7 @@ const GemstonesPage = () => {
   const [page, setPage] = useState(1);
   const [productCount] = useState(40);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
   const baseUrl = import.meta.env.VITE_api_url || "https://localhost:5000";
@@ -59,7 +60,7 @@ const GemstonesPage = () => {
         pukhraj: "Pukhraj",
         neelam: "Neelam",
         gomed: "Gomed",
-        vaidurya: "Vaidurya/Lahsuniya",
+        vaidurya: "Vaidurya",
       },
     },
     semiPrecious: {
@@ -68,15 +69,26 @@ const GemstonesPage = () => {
         sulemani: "Sulemani",
         safedPukhraj: "Safed Pukhraj",
         haritTurmali: "Harit Turmali",
-        chandrakant: "Chandrakant Mani",
+        chandrakant: "Chandrakant",
         gomedak: "Gomedak",
         sunehla: "Sunehla",
         jamuniya: "Jamuniya",
         santreeGomed: "Santree Gomed",
-        vaiduryaUpratna: "Vaidurya Uparatna",
+        vaiduryaUpratna: "Vaidurya Upratna",
       },
     },
   };
+
+  // Create flat array of all categories for mobile icons
+  const allMobileCategories = useMemo(() => {
+    const cats = [{ key: 'all', label: 'All', parent: 'all' }];
+    Object.entries(categories).forEach(([parentKey, category]) => {
+      Object.entries(category.subcategories).forEach(([subKey, subLabel]) => {
+        cats.push({ key: subKey, label: subLabel, parent: parentKey });
+      });
+    });
+    return cats;
+  }, []);
 
   const handleViewDetails = (id: string) => {
     navigate(`/gem-view/${id}`);
@@ -84,6 +96,29 @@ const GemstonesPage = () => {
 
   const handleFilterSelect = () => {
     setMobileFilterOpen(false);
+  };
+
+  const handleCategoryClick = (catKey: string, parentKey: string) => {
+    if (catKey === 'all') {
+      setSelectedCategory('all');
+      setSelectedSubcategory('all');
+    } else {
+      setSelectedCategory(parentKey);
+      setSelectedSubcategory(catKey);
+    }
+    setPage(1);
+  };
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -96,15 +131,91 @@ const GemstonesPage = () => {
         </div>
       </div>
 
-      {/* Mobile Filter Button */}
-      <div className="lg:hidden sticky top-0 z-40 bg-white shadow-md px-4 py-3">
-        <button
-          onClick={() => setMobileFilterOpen(true)}
-          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white py-3 px-4 rounded-xl font-semibold shadow-lg active:scale-95 transition-transform"
-        >
-          <Filter className="w-5 h-5" />
-          Filters & Search
-        </button>
+      {/* Mobile Category Icons Section */}
+      <div className="lg:hidden sticky top-0 z-40 bg-white shadow-md">
+        <div className="relative flex items-center">
+          {/* Left Scroll Button */}
+          <button
+            onClick={scrollLeft}
+            className="absolute left-0 z-10 bg-gradient-to-r from-white to-transparent h-full px-2 flex items-center"
+          >
+            <div className="bg-yellow-400 rounded-full p-1.5 shadow-lg">
+              <ChevronLeft className="w-4 h-4 text-white" />
+            </div>
+          </button>
+
+          {/* Scrollable Categories */}
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-3 overflow-x-auto px-12 py-3 scrollbar-hide"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {allMobileCategories.map((cat) => (
+              <button
+                key={cat.key}
+                onClick={() => handleCategoryClick(cat.key, cat.parent)}
+                className={`flex flex-col items-center justify-center min-w-[70px] transition-all ${
+                  (cat.key === 'all' && selectedCategory === 'all') ||
+                  (cat.key === selectedSubcategory)
+                    ? 'opacity-100'
+                    : 'opacity-60'
+                }`}
+              >
+                <div
+                  className={`w-14 h-14 rounded-full flex items-center justify-center mb-1.5 transition-all ${
+                    (cat.key === 'all' && selectedCategory === 'all') ||
+                    (cat.key === selectedSubcategory)
+                      ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 shadow-lg scale-105'
+                      : 'bg-gray-100'
+                  }`}
+                >
+                  <span
+                    className={`text-lg font-bold ${
+                      (cat.key === 'all' && selectedCategory === 'all') ||
+                      (cat.key === selectedSubcategory)
+                        ? 'text-white'
+                        : 'text-gray-600'
+                    }`}
+                  >
+                    {cat.label.substring(0, 2).toUpperCase()}
+                  </span>
+                </div>
+                <span
+                  className={`text-xs font-medium text-center leading-tight ${
+                    (cat.key === 'all' && selectedCategory === 'all') ||
+                    (cat.key === selectedSubcategory)
+                      ? 'text-yellow-600'
+                      : 'text-gray-600'
+                  }`}
+                >
+                  {cat.label}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Right Scroll Button */}
+          <button
+            onClick={scrollRight}
+            className="absolute right-0 z-10 bg-gradient-to-l from-white to-transparent h-full px-2 flex items-center"
+          >
+            <div className="bg-yellow-400 rounded-full p-1.5 shadow-lg">
+              <ChevronRight className="w-4 h-4 text-white" />
+            </div>
+          </button>
+        </div>
+
+        {/* Filter and Search Button */}
+        <div className="px-4 pb-3">
+          <button
+            onClick={() => setMobileFilterOpen(true)}
+            className="w-full flex items-center justify-center gap-2 bg-gray-100 text-gray-700 py-2.5 px-4 rounded-lg font-medium shadow-sm active:scale-95 transition-transform"
+          >
+            <Filter className="w-4 h-4" />
+            <Search className="w-4 h-4" />
+            Advanced Filters & Search
+          </button>
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
@@ -351,6 +462,12 @@ const GemstonesPage = () => {
           </main>
         </div>
       </div>
+
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };
