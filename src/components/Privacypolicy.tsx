@@ -279,7 +279,7 @@ export default function PrivacyPolicy() {
                   href="mailto:acharyaashoknarayann@gmail.com"
                   className="text-amber-50 hover:text-yellow-200 transition-colors text-lg break-all"
                 >
-                  acharyaashoknarayann@gmail.com
+                  triakshijewels@gmail.com 
                 </a>
               </div>
 

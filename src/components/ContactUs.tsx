@@ -213,7 +213,7 @@ export default function ContactUs() {
                     <Mail className="w-6 h-6 flex-shrink-0" />
                   </div>
                   <a href="mailto:acharyaashoknarayann@gmail.com" className="text-xl font-semibold hover:underline break-all">
-                    acharyaashoknarayann@gmail.com
+                    triakshijewels@gmail.com 
                   </a>
                 </div>
               </div>
@@ -230,7 +230,7 @@ export default function ContactUs() {
       {/* Footer */}
       <footer className="bg-white border-t-2 border-orange-200 mt-12">
         <div className="max-w-7xl mx-auto px-4 py-6 text-center text-gray-600">
-          <p className="font-medium">© 2024 Triakshi Gems. All rights reserved.</p>
+          <p className="font-medium">© 2025 Triakshi Gems. All rights reserved.</p>
         </div>
       </footer>
     </div>

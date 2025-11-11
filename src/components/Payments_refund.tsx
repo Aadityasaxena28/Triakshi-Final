@@ -80,7 +80,7 @@ export default function PaymentsRefund() {
         "You made a payment but did not receive any confirmation or service within the expected timeframe",
       ],
       footer:
-        "If you believe you are eligible for a refund, please contact us within 48 hours of the transaction at acharyaashoknarayann@gmail.com.",
+        "If you believe you are eligible for a refund, please contact us within 48 hours of the transaction at triakshijewels@gmail.com .",
     },
     {
       id: 5,

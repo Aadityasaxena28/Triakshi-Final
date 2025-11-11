@@ -85,7 +85,7 @@ const Footer = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-3">
                 <MapPin className="h-4 w-4 text-gold" />
-                <span className="text-white/80">15-116, Express Greens Plaza, Sector 1, Vaishali, Ghaziabad - 201010 </span>
+                <span className="text-white/80">115-116, Express Greens Plaza, Sector 1, Vaishali, Ghaziabad - 201010 </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-gold" />
@@ -93,7 +93,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-gold" />
-                <span className="text-white/80">acharyaashoknarayann@gmail.com</span>
+                <span className="text-white/80">triakshijewels@gmail.com </span>
               </div>
             </div>
           </div>
