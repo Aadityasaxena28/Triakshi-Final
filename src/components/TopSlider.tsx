@@ -21,24 +21,24 @@ const TopSlider = () => {
     description:
       "Discover the mystical power of premium gemstones, carefully curated for healing, prosperity, and spiritual growth.",
   },
-  // Using the same deep brown background as your attached examples
   {
     id: 2,
     type: "image-only",
     image: slideImage2,
-    bgColor: "#3b1f0f", // rich dark brown tone
+    bgColor: "#3b1f0f", // brown tone for slide 2
   },
   {
     id: 3,
     type: "image-only",
     image: slideImage3,
-    bgColor: "#3b1f0f", // same brown for consistency
+    bgColor: "#3b1f0f", // same brown tone for slide 3
   },
   {
     id: 4,
     type: "image-only",
     image: slideImage4,
-    bgColor: "#3b1f0f", // same brown for uniform look
+    // cosmic blue-purple gradient like in the uploaded banner
+    gradient: "linear-gradient(135deg, #0b0f28 0%, #1b1f49 40%, #2b1b52 100%)",
   },
 ];
 
