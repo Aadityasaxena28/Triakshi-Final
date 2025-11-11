@@ -11,20 +11,37 @@ const TopSlider = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const slides = [
-    {
-      id: 1,
-      type: "hero",
-      image: heroImage,
-      bgColor: "from-black/40 to-black/30",
-      title: "Gemstone",
-      subtitle: "Collection",
-      description:
-        "Discover the mystical power of premium gemstones, carefully curated for healing, prosperity, and spiritual growth.",
-    },
-    { id: 2, type: "image-only", image: slideImage2, bgColor: "#e8d4c4" },
-    { id: 3, type: "image-only", image: slideImage3, bgColor: "#d4c4b8" },
-    { id: 4, type: "image-only", image: slideImage4, bgColor: "#c9b8a8" },
-  ];
+  {
+    id: 1,
+    type: "hero",
+    image: heroImage,
+    bgColor: "from-black/40 to-black/30",
+    title: "Gemstone",
+    subtitle: "Collection",
+    description:
+      "Discover the mystical power of premium gemstones, carefully curated for healing, prosperity, and spiritual growth.",
+  },
+  // Using the same deep brown background as your attached examples
+  {
+    id: 2,
+    type: "image-only",
+    image: slideImage2,
+    bgColor: "#3b1f0f", // rich dark brown tone
+  },
+  {
+    id: 3,
+    type: "image-only",
+    image: slideImage3,
+    bgColor: "#3b1f0f", // same brown for consistency
+  },
+  {
+    id: 4,
+    type: "image-only",
+    image: slideImage4,
+    bgColor: "#3b1f0f", // same brown for uniform look
+  },
+];
+
 const nextSlide = useCallback(() => {
   if (!isTransitioning) {
     setIsTransitioning(true);
