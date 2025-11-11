@@ -20,9 +20,9 @@ const TopSlider = () => {
       subtitle: "Collection",
       description: "Discover the mystical power of premium gemstones, carefully curated for healing, prosperity, and spiritual growth."
     },
-    { id: 2, type: "image-only", image: slideImage2, bgColor: "#f8f9fa" },
-    { id: 3, type: "image-only", image: slideImage3, bgColor: "#f5f5f5" },
-    { id: 4, type: "image-only", image: slideImage4, bgColor: "#fafafa" },
+    { id: 2, type: "image-only", image: slideImage2, bgColor: "#e8d4c4" },
+    { id: 3, type: "image-only", image: slideImage3, bgColor: "#d4c4b8" },
+    { id: 4, type: "image-only", image: slideImage4, bgColor: "#c9b8a8" },
   ];
 
   const nextSlide = () => {
@@ -55,7 +55,7 @@ const TopSlider = () => {
   }, [currentSlide, isTransitioning]);
 
   return (
-    <section className="relative h-[35vh] sm:h-[37vh] md:h-[42vh] overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
+    <section className="relative h-[42vh] sm:h-[44vh] md:h-[50vh] overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
           <div
