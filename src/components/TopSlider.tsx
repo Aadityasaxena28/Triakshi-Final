@@ -4,7 +4,7 @@ import slideImage3 from "@/assets/slide3.jpg";
 import slideImage4 from "@/assets/slide4.jpg";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -25,36 +25,38 @@ const TopSlider = () => {
     { id: 3, type: "image-only", image: slideImage3, bgColor: "#d4c4b8" },
     { id: 4, type: "image-only", image: slideImage4, bgColor: "#c9b8a8" },
   ];
+const nextSlide = useCallback(() => {
+  if (!isTransitioning) {
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setTimeout(() => setIsTransitioning(false), 700);
+  }
+}, [isTransitioning, slides.length]);
 
-  const nextSlide = () => {
-    if (!isTransitioning) {
-      setIsTransitioning(true);
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-      setTimeout(() => setIsTransitioning(false), 700);
-    }
-  };
+const prevSlide = useCallback(() => {
+  if (!isTransitioning) {
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setTimeout(() => setIsTransitioning(false), 700);
+  }
+}, [isTransitioning, slides.length]);
 
-  const prevSlide = () => {
-    if (!isTransitioning) {
-      setIsTransitioning(true);
-      setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-      setTimeout(() => setIsTransitioning(false), 700);
-    }
-  };
-
-  const goToSlide = (index) => {
+const goToSlide = useCallback(
+  (index: number) => {
     if (!isTransitioning && index !== currentSlide) {
       setIsTransitioning(true);
       setCurrentSlide(index);
       setTimeout(() => setIsTransitioning(false), 700);
     }
-  };
+  },
+  [isTransitioning, currentSlide]
+);
 
-  useEffect(() => {
-    const timer = setInterval(nextSlide, 6000);
-    return () => clearInterval(timer);
-  }, [currentSlide, isTransitioning]);
-
+// ✅ Fixed useEffect dependency
+useEffect(() => {
+  const timer = setInterval(nextSlide, 6000);
+  return () => clearInterval(timer);
+}, [nextSlide]);
   return (
     // 🔼 Increased slider height by 20%
     <section className="relative h-[50vh] sm:h-[53vh] md:h-[60vh] overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
@@ -176,7 +178,7 @@ const TopSlider = () => {
       </div>
 
       {/* Same animation styles retained */}
-      <style jsx>{`
+      <style>{`
         @keyframes shimmer {
           0%, 100% {
             background-position: 0% 50%;
