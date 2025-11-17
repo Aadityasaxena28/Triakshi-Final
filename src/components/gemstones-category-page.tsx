@@ -86,7 +86,7 @@ const GemstonesPage = () => {
     panna: `${baseUrl}/images/categories/panna.jpg`,
     moti: `${baseUrl}/images/categories/moti.jpg`,
     manik: `${baseUrl}/images/categories/manik.jpg`,
-    pukhraj: `${baseUrl}/images/categories/pukhraj.jpg`,
+    pukhraj: `/assets/Stones/YellowSapphire.png`,
     neelam: `${baseUrl}/images/categories/neelam.jpg`,
     gomed: `${baseUrl}/images/categories/gomed.jpg`,
     vaidurya: `${baseUrl}/images/categories/vaidurya.jpg`,
