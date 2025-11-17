@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, Filter, Search, X, Sparkles } from 'lucide-r
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Product_card from "./Product_card";
-
+import pukhrajimage from "@/assets/Stones/YellowSapphire.png";
 const GemstonesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSubcategory, setSelectedSubcategory] = useState("all");
@@ -86,7 +86,7 @@ const GemstonesPage = () => {
     panna: `${baseUrl}/images/categories/panna.jpg`,
     moti: `${baseUrl}/images/categories/moti.jpg`,
     manik: `${baseUrl}/images/categories/manik.jpg`,
-    pukhraj: `/assets/Stones/YellowSapphire.png`,
+    pukhraj: pukhrajimage,
     neelam: `${baseUrl}/images/categories/neelam.jpg`,
     gomed: `${baseUrl}/images/categories/gomed.jpg`,
     vaidurya: `${baseUrl}/images/categories/vaidurya.jpg`,
