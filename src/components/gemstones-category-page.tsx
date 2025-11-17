@@ -5,6 +5,13 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Product_card from "./Product_card";
 import pukhrajimage from "@/assets/Stones/YellowSapphire.png";
+import moongaimage from "@/assets/Stones/Red_Coral.png";
+import manikimage from "@/assets/Stones/Ruby.png";
+import motiimage from "@/assets/Stones/Pearl.png";
+import neelamimage from "@/assets/neelam.png";
+import pannaimage from "@/assets/Stones/Emerald.jpg";
+import opalimage from "@/assets/Stones/Opal.png";
+import catseyeimage from "@/assets/Stones/CatsEye.png";
 const GemstonesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSubcategory, setSelectedSubcategory] = useState("all");
@@ -53,14 +60,14 @@ const GemstonesPage = () => {
       label: "Precious (Ratna)",
       subcategories: {
         moonga: "Moonga",
-        heera: "Heera",
+        opal: "Opal",
         panna: "Panna",
         moti: "Moti",
         manik: "Manik",
         pukhraj: "Pukhraj",
         neelam: "Neelam",
         gomed: "Gomed",
-        vaidurya: "Vaidurya",
+        catseye:"Cat's Eye",
       },
     },
     semiPrecious: {
@@ -71,34 +78,28 @@ const GemstonesPage = () => {
         haritTurmali: "Harit Turmali",
         chandrakant: "Chandrakant",
         gomedak: "Gomedak",
-        sunehla: "Sunehla",
         jamuniya: "Jamuniya",
-        santreeGomed: "Santree Gomed",
-        vaiduryaUpratna: "Vaidurya Upratna",
       },
     },
   };
 
   const categoryImages = {
     all: null,
-    moonga: `${baseUrl}/images/categories/moonga.jpg`,
-    heera: `${baseUrl}/images/categories/heera.jpg`,
-    panna: `${baseUrl}/images/categories/panna.jpg`,
-    moti: `${baseUrl}/images/categories/moti.jpg`,
-    manik: `${baseUrl}/images/categories/manik.jpg`,
+    moonga: moongaimage,
+    opal: opalimage,
+    panna: pannaimage,
+    moti: motiimage,
+    manik: manikimage,
     pukhraj: pukhrajimage,
-    neelam: `${baseUrl}/images/categories/neelam.jpg`,
+    neelam: neelamimage,
+    catseye:catseyeimage,
     gomed: `${baseUrl}/images/categories/gomed.jpg`,
-    vaidurya: `${baseUrl}/images/categories/vaidurya.jpg`,
     sulemani: `${baseUrl}/images/categories/sulemani.jpg`,
     safedPukhraj: `${baseUrl}/images/categories/safed-pukhraj.jpg`,
     haritTurmali: `${baseUrl}/images/categories/harit-turmali.jpg`,
     chandrakant: `${baseUrl}/images/categories/chandrakant.jpg`,
     gomedak: `${baseUrl}/images/categories/gomedak.jpg`,
-    sunehla: `${baseUrl}/images/categories/sunehla.jpg`,
     jamuniya: `${baseUrl}/images/categories/jamuniya.jpg`,
-    santreeGomed: `${baseUrl}/images/categories/santree-gomed.jpg`,
-    vaiduryaUpratna: `${baseUrl}/images/categories/vaidurya-upratna.jpg`,
   };
 
   const allMobileCategories = useMemo(() => {
