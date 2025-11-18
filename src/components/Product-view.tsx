@@ -5,7 +5,7 @@ import { CheckoutDraft, CheckoutItem } from "@/DataTypes/Checkout";
 import type { Product } from "@/DataTypes/product";
 import { toastError, toastSuccess } from "@/utlity/AlertSystem";
 import { setWithExpiry } from "@/utlity/Storage";
-import { ArrowLeft, ChevronLeft, ChevronRight, Heart, Minus, Plus, ShoppingCart, Sparkles, Star } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Heart, Minus, Plus, ShoppingCart, Sparkles, Star, AlertCircle } from "lucide-react";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -297,6 +297,9 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     navigate("/checkout", { state: { from: "buy-now" } });
   }
 
+  const handleRefundPolicyClick = () => {
+    navigate("/payments-refund");
+  };
 
   const onBack = () => window.history.back();
 
@@ -427,6 +430,21 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                     <span className="text-2xl text-gray-400 line-through">₹{originalPrice.toLocaleString()}</span>
                   )}
                 </div>
+              </div>
+
+              {/* No Return/Exchange Button & Color Variation Message */}
+              <div className="px-8 pb-8 space-y-3">
+                <button
+                  onClick={handleRefundPolicyClick}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-2 text-sm"
+                >
+                  <AlertCircle className="w-4 h-4" />
+                  No Return, No Exchange
+                </button>
+                
+                <p className="text-red-600 text-xs text-center leading-relaxed">
+                  Minor color variations or appearance differences may occur due to lighting, photography or screen display settings.
+                </p>
               </div>
             </div>
           </div>
