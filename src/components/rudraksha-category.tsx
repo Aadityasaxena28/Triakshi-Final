@@ -150,14 +150,18 @@ const RudrakshPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
 
+      {/* ⭐ RESTORED SAFFRON TITLE */}
+      <h1 className="text-center text-3xl font-extrabold text-orange-600 tracking-wide py-6">
+        Rudraksha Collection
+      </h1>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
         <div className="flex gap-8">
 
-          {/* UPDATED SIDEBAR */}
+          {/* SIDEBAR */}
           <aside className="hidden lg:block w-64 bg-white rounded-2xl shadow-card sticky top-6"
             style={{ height: "calc(100vh - 6rem)" }}>
 
-            {/* Header */}
             <div className="p-6 border-b border-gray-100">
               <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <Filter className="w-5 h-5 text-orange-500" />
@@ -165,7 +169,6 @@ const RudrakshPage = () => {
               </h2>
             </div>
 
-            {/* FIXED SCROLL AREA */}
             <div className="overflow-y-auto p-6 space-y-4"
               style={{ maxHeight: "calc(100vh - 10rem)" }}>
 
