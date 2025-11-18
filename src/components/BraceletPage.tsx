@@ -9,7 +9,7 @@ import {
   X
 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
-
+import neelamimage from "@/assets/neelam.png";
 const braceletData = {
   // (same bracelet data as your original)
 };
@@ -36,11 +36,11 @@ const BraceletPage = () => {
 
   const categoryImages = {
     all: null,
-    career: `${baseUrl}/images/categories/career.jpg`,
+    career: ,
     education: `${baseUrl}/images/categories/education.jpg`,
-    "love-life": `${baseUrl}/images/categories/love-life.jpg`,
+    love-life: `${baseUrl}/images/categories/love-life.jpg`,
     finance: `${baseUrl}/images/categories/finance.jpg`,
-    health: `${baseUrl}/images/categories/health.jpg`,
+    health: ,
   };
 
   const allMobileCategories = useMemo(() => {
@@ -56,7 +56,7 @@ const BraceletPage = () => {
   }, []);
 
   const getFilteredProducts = () => {
-    let filtered: any[] = [];
+    let filtered: unknown[] = [];
 
     if (selectedCategory === "all") {
       Object.values(braceletData).forEach((products: any) =>
