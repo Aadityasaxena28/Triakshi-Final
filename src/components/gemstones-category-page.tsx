@@ -77,7 +77,7 @@ const GemstonesPage = () => {
         manik: "Manik",
         pukhraj: "Pukhraj",
         neelam: "Neelam",
-        gomed: "Gomed",
+        //gomed: "Gomed",
         catseye:"Cat's Eye",
       },
     },
