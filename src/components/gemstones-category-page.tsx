@@ -12,6 +12,17 @@ import neelamimage from "@/assets/neelam.png";
 import pannaimage from "@/assets/Stones/Emerald.jpg";
 import opalimage from "@/assets/Stones/Opal.png";
 import catseyeimage from "@/assets/Stones/CatsEye.png";
+import tigereyeimage from "@/assets/Stones/tigereye.png";
+import jadeimage from "@/assets/Stones/jade.png";
+import sulemaniimage from "@/assets/Stones/sulemani.png";
+import amethystimage from "@/assets/Stones/amethyst.png";
+import roseimage from "@/assets/Stones/rosequartz.png";
+import citrineimage from "@/assets/Stones/citrine.png";
+import lapizimage from "@/assets/Stones/lapiz.png";
+import moonstoneimage from "@/assets/Stones/moonstone.png";
+import pyriteimage from "@/assets/Stones/pyrite.png";
+import sodaimage from "@/assets/Stones/sodalite.png";
+import topazimage from "@/assets/Stones/topaz.png";
 const GemstonesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSubcategory, setSelectedSubcategory] = useState("all");
@@ -73,12 +84,17 @@ const GemstonesPage = () => {
     semiPrecious: {
       label: "Semi-Precious (Upratna)",
       subcategories: {
-        sulemani: "Sulemani",
-        safedPukhraj: "Safed Pukhraj",
-        haritTurmali: "Harit Turmali",
-        chandrakant: "Chandrakant",
-        gomedak: "Gomedak",
-        jamuniya: "Jamuniya",
+        sulemani: "Sulemani hakik",
+        tigereye:"Tiger's Eye",
+        jade:"Jade",
+        amethyst:"Amethyst",
+        rosequartz:"Rose Quartz",
+        citrine:"Citrine",
+        lapizlazuli:"Lapiz Lazuli",
+        moonstone:"Moonstone",
+        pyrite:"Pyrite",
+        sodalite:"Sodalite",
+        topaz:"Topaz",
       },
     },
   };
@@ -93,13 +109,18 @@ const GemstonesPage = () => {
     pukhraj: pukhrajimage,
     neelam: neelamimage,
     catseye:catseyeimage,
-    gomed: `${baseUrl}/images/categories/gomed.jpg`,
-    sulemani: `${baseUrl}/images/categories/sulemani.jpg`,
-    safedPukhraj: `${baseUrl}/images/categories/safed-pukhraj.jpg`,
-    haritTurmali: `${baseUrl}/images/categories/harit-turmali.jpg`,
-    chandrakant: `${baseUrl}/images/categories/chandrakant.jpg`,
-    gomedak: `${baseUrl}/images/categories/gomedak.jpg`,
-    jamuniya: `${baseUrl}/images/categories/jamuniya.jpg`,
+    tigereye:tigereyeimage,
+    jade:jadeimage,
+    //gomed: `${baseUrl}/images/categories/gomed.jpg`,
+    sulemani: sulemaniimage,
+    amethyst:amethystimage,
+    rosequartz:roseimage,
+    citrine:citrineimage,
+    lapizlazuli:lapizimage,
+    moonstone:moonstoneimage,
+    pyrite: pyriteimage,
+    sodalite:sodaimage,
+    topaz:topazimage,
   };
 
   const allMobileCategories = useMemo(() => {
