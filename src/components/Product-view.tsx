@@ -298,7 +298,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   }
 
   const handleRefundPolicyClick = () => {
-    navigate("/PaymentsRefund");
+    navigate("/refund-policy");
   };
 
   const onBack = () => window.history.back();
