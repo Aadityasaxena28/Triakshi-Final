@@ -298,7 +298,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   }
 
   const handleRefundPolicyClick = () => {
-    navigate("/payments-refund");
+    navigate("/payments");
   };
 
   const onBack = () => window.history.back();
@@ -344,14 +344,14 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
             <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
               <div
                 className={[
-                  "relative h-96 sm:h-[500px] bg-gradient-to-br flex items-center justify-center p-8",
+                  "relative h-72 sm:h-96 bg-gradient-to-br flex items-center justify-center p-4 sm:p-6",
                   theme.bandFrom,
                   theme.bandVia ?? "",
                   theme.bandTo,
                 ].join(" ")}
               >
                 {discount > 0 && (
-                  <div className={`absolute top-6 right-6 ${theme.badgeWrap} ${theme.badgeText} px-5 py-2.5 rounded-full text-lg font-bold shadow-lg z-10`}>
+                  <div className={`absolute top-3 right-3 sm:top-6 sm:right-6 ${theme.badgeWrap} ${theme.badgeText} px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-sm sm:text-lg font-bold shadow-lg z-10`}>
                     {discount}% OFF
                   </div>
                 )}
@@ -370,16 +370,16 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                   <img
                     src={`${product.images[0]}`}
                     alt={product.name}
-                    className="w-[22rem] h-[22rem] object-contain relative z-10 drop-shadow-2xl rounded"
+                    className="w-48 h-48 sm:w-64 sm:h-64 object-contain relative z-10 drop-shadow-2xl rounded"
                   />
                 ) : product.image ? (
                   <img
                     src={`${product.image}`}
                     alt={product.name}
-                    className="w-[22rem] h-[22rem] object-contain relative z-10 drop-shadow-2xl rounded"
+                    className="w-48 h-48 sm:w-64 sm:h-64 object-contain relative z-10 drop-shadow-2xl rounded"
                   />
                 ) : (
-                  <Star className="w-72 h-72 text-black/10 relative z-10 drop-shadow-2xl" />
+                  <Star className="w-48 h-48 sm:w-64 sm:h-64 text-black/10 relative z-10 drop-shadow-2xl" />
                 )}
 
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-4 py-2 rounded-full text-sm">
@@ -407,36 +407,36 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
               </div>
 
               {/* Basic Info */}
-              <div className="p-8 border-t border-gray-100">
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">{product.name}</h2>
-                <p className={`${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"} font-semibold text-lg mb-5`}>
+              <div className="p-4 sm:p-6 border-t border-gray-100">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{product.name}</h2>
+                <p className={`${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"} font-semibold text-base sm:text-lg mb-4`}>
                   Product ID: {product.id}
                 </p>
 
-                <div className="flex flex-wrap gap-3 mb-6">
-                  <span className={`px-4 py-2 rounded-full text-sm font-medium ${theme.catChip}`}>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium ${theme.catChip}`}>
                     {categoryLabel}
                   </span>
-                  <span className={`px-4 py-2 rounded-full text-sm font-medium ${theme.sizeChip}`}>
+                  <span className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium ${theme.sizeChip}`}>
                     Size / Qty: {product.quantity}
                   </span>
                 </div>
 
-                <div className="flex items-baseline gap-4 mb-4">
-                  <span className={`text-5xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent`}>
+                <div className="flex items-baseline gap-3 mb-3">
+                  <span className={`text-3xl sm:text-4xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent`}>
                     ₹{discountedPrice.toLocaleString()}
                   </span>
                   {discount > 0 && originalPrice > discountedPrice && (
-                    <span className="text-2xl text-gray-400 line-through">₹{originalPrice.toLocaleString()}</span>
+                    <span className="text-xl sm:text-2xl text-gray-400 line-through">₹{originalPrice.toLocaleString()}</span>
                   )}
                 </div>
               </div>
 
               {/* No Return/Exchange Button & Color Variation Message */}
-              <div className="px-8 pb-8 space-y-3">
+              <div className="px-4 sm:px-6 pb-4 sm:pb-6 space-y-2">
                 <button
                   onClick={handleRefundPolicyClick}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-2 text-sm"
+                  className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-2 text-sm"
                 >
                   <AlertCircle className="w-4 h-4" />
                   No Return, No Exchange
@@ -452,45 +452,45 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
           {/* Right Column */}
           <div className="space-y-6">
             {/* Description */}
-            <div className="bg-white rounded-3xl shadow-xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Description</h3>
-              <p className="text-gray-600 leading-relaxed">{product.description || "—"}</p>
+            <div className="bg-white rounded-3xl shadow-xl p-4 sm:p-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">Description</h3>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{product.description || "—"}</p>
             </div>
 
             {/* Quantity & Actions */}
-            <div className={`bg-gradient-to-br from-white to-white rounded-3xl shadow-xl p-8 border-2 ${theme.qtyBorder}`}>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Select Quantity</h3>
-              <div className="flex items-center justify-center gap-6 mb-6">
+            <div className={`bg-gradient-to-br from-white to-white rounded-3xl shadow-xl p-4 sm:p-6 border-2 ${theme.qtyBorder}`}>
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Select Quantity</h3>
+              <div className="flex items-center justify-center gap-4 mb-4">
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="w-14 h-14 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
                 >
-                  <Minus className="w-6 h-6 text-gray-700" />
+                  <Minus className="w-5 h-5 text-gray-700" />
                 </button>
-                <span className="text-4xl font-bold text-gray-900 w-20 text-center">{quantity}</span>
+                <span className="text-3xl font-bold text-gray-900 w-16 text-center">{quantity}</span>
                 <button
                   onClick={() => setQuantity((q) => Math.min(product.quantity, q + 1))}
-                  className="w-14 h-14 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
                 >
-                  <Plus className="w-6 h-6 text-gray-700" />
+                  <Plus className="w-5 h-5 text-gray-700" />
                 </button>
               </div>
-              <p className={`text-2xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent text-center mb-6`}>
+              <p className={`text-xl sm:text-2xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent text-center mb-4`}>
                 Total: ₹{totalPrice.toLocaleString()}
               </p>
 
-              <div className="space-y-3">
-                <button className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} hover:opacity-95 text-white font-bold py-5 px-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 text-lg transform hover:scale-105`}
+              <div className="space-y-2.5">
+                <button className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} hover:opacity-95 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 text-base sm:text-lg transform hover:scale-105`}
                 onClick={()=> handleBuyNow(product,quantity)}>
-                  <ShoppingCart className="w-6 h-6" />
+                  <ShoppingCart className="w-5 h-5" />
                   Buy Now
                 </button>
 
-                <button className={`w-full bg-white hover:bg-gray-50 ${theme.outlineText} font-bold py-5 px-8 rounded-2xl shadow-lg border-2 ${theme.outlineBorder} transition-all duration-300 flex items-center justify-center gap-3 text-lg transform hover:scale-105`} 
+                <button className={`w-full bg-white hover:bg-gray-50 ${theme.outlineText} font-bold py-4 px-6 rounded-2xl shadow-lg border-2 ${theme.outlineBorder} transition-all duration-300 flex items-center justify-center gap-2 text-base sm:text-lg transform hover:scale-105`} 
                 onClick={()=>{
                   handleAddToCart(product.id,quantity)
                 }}>
-                  <Heart className="w-6 h-6" />
+                  <Heart className="w-5 h-5" />
                   Add to Cart
                 </button>
               </div>
@@ -498,16 +498,16 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
             {/* Benefits */}
             {(benefits?.length ?? 0) > 0 && (
-              <div className={`bg-gradient-to-br ${category === "rudraksha" ? "from-orange-50" : "from-yellow-50"} to-white rounded-3xl shadow-xl p-8 border-2 ${theme.qtyBorder}`}>
-                <div className="flex items-center gap-3 mb-6">
-                  <Sparkles className={`w-8 h-8 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
-                  <h3 className="text-2xl font-bold text-gray-900">Benefits</h3>
+              <div className={`bg-gradient-to-br ${category === "rudraksha" ? "from-orange-50" : "from-yellow-50"} to-white rounded-3xl shadow-xl p-4 sm:p-6 border-2 ${theme.qtyBorder}`}>
+                <div className="flex items-center gap-2 mb-4">
+                  <Sparkles className={`w-6 h-6 sm:w-8 sm:h-8 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Benefits</h3>
                 </div>
-                <ul className="space-y-4">
+                <ul className="space-y-3">
                   {benefits.map((benefit: string, idx: number) => (
-                    <li key={idx} className="flex items-start gap-4">
-                      <div className={`w-2.5 h-2.5 rounded-full ${category === "rudraksha" ? "bg-orange-600" : "bg-yellow-600"} mt-2.5 flex-shrink-0`}></div>
-                      <span className="text-gray-700 text-lg leading-relaxed">{benefit}</span>
+                    <li key={idx} className="flex items-start gap-3">
+                      <div className={`w-2 h-2 rounded-full ${category === "rudraksha" ? "bg-orange-600" : "bg-yellow-600"} mt-2 flex-shrink-0`}></div>
+                      <span className="text-gray-700 text-sm sm:text-base leading-relaxed">{benefit}</span>
                     </li>
                   ))}
                 </ul>
