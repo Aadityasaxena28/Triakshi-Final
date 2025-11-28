@@ -8,6 +8,7 @@ import Auth from "./components/Auth";
 import Blogs from "./components/Blogs";
 import LifeCalPage from "./components/Calculator/LifeCalPage";
 import LuckyStoneCalculator from "./components/Calculator/LuckyStoneCalculator";
+import HealthStoneCalculator from "./components/Calculator/HealthStoneCalculator";
 import CheckoutPage from "./components/Checkout/checkout_page";
 import ContactUs from "./components/ContactUs";
 import GemstonesPage from "./components/gemstones-category-page";
@@ -68,6 +69,7 @@ const App = () => (
           {/*------------- Calculators------------------- */}
           <Route path = "/life-calculator" element={<LifeCalPage/>}/>
           <Route path="lucky-stone-calculator" element={<LuckyStoneCalculator />} />
+          <Route path="health-stone-calculator" element={<HealthStoneCalculator />} />
 
 
           {/*------------- Policies & Terms and Info pages------------------- */}
