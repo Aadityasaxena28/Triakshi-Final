@@ -183,8 +183,10 @@ export async function Calculator(params: CalculatorParams): Promise<string[]> {
       return [result.ninthHouse.stone];
     } else if (typ === "health") {
       return [result.fifthHouse.stone];
+    }else if (typ === "report") {
+      return [result.fifthHouse.stone,result.moonNakshatraLord.stone, result.firstHouse.stone,result.ninthHouse.stone];
     } else {
-      return [result.moonNakshatraLord.stone, result.fifthHouse.stone];
+      return [result.moonNakshatraLord.stone, result.firstHouse.stone];
     }
 
   } catch (error) {

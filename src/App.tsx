@@ -9,6 +9,7 @@ import Blogs from "./components/Blogs";
 import LifeCalPage from "./components/Calculator/LifeCalPage";
 import LuckyStoneCalculator from "./components/Calculator/LuckyStoneCalculator";
 import HealthStoneCalculator from "./components/Calculator/HealthStoneCalculator";
+import GemstoneReportGenerator from "./components/Calculator/GemstoneReportGenerator";
 import CheckoutPage from "./components/Checkout/checkout_page";
 import ContactUs from "./components/ContactUs";
 import GemstonesPage from "./components/gemstones-category-page";
@@ -70,7 +71,8 @@ const App = () => (
           <Route path = "/life-calculator" element={<LifeCalPage/>}/>
           <Route path="lucky-stone-calculator" element={<LuckyStoneCalculator />} />
           <Route path="health-stone-calculator" element={<HealthStoneCalculator />} />
-
+          <Route path="report" element={<GemstoneReportGenerator />} />
+ 
 
           {/*------------- Policies & Terms and Info pages------------------- */}
           <Route path= "/about-us" element={<AboutUs/>}/>
