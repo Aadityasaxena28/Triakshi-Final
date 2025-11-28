@@ -2,15 +2,12 @@
 
 .lifeCalculator_container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #10051a 0%, #1e0f31 50%, #301f4a 100%);
-  color: #fff;
+  background: #ffffff;
+  color: #000;
   min-height: 100vh;
   overflow-x: hidden;
-
-  /* max-width: 1200px; */
   margin: 0 auto;
   padding: 20px;
-
   position: relative;
 }
 
@@ -19,28 +16,28 @@
   position: fixed;
   inset: 0;
   background-image:
-    radial-gradient(2px 2px at 20% 30%, #e0e0ff, transparent),
-    radial-gradient(2px 2px at 60% 70%, #e0e0ff, transparent),
-    radial-gradient(1px 1px at 50% 50%, #e0e0ff, transparent),
-    radial-gradient(1px 1px at 80% 10%, #e0e0ff, transparent),
-    radial-gradient(2px 2px at 90% 60%, #e0e0ff, transparent);
+    radial-gradient(2px 2px at 20% 30%, #ffd75e, transparent),
+    radial-gradient(2px 2px at 60% 70%, #ffd75e, transparent),
+    radial-gradient(1px 1px at 50% 50%, #ffd75e, transparent),
+    radial-gradient(1px 1px at 80% 10%, #ffd75e, transparent),
+    radial-gradient(2px 2px at 90% 60%, #ffd75e, transparent);
   background-size: 200% 200%;
   animation: lifeCalculator_twinkle 8s ease-in-out infinite;
-  opacity: 0.3;
+  opacity: 0.25;
   pointer-events: none;
   z-index: 0;
 }
 
 @keyframes lifeCalculator_twinkle {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.6; }
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.5; }
 }
 
 /* Header */
 .lifeCalculator_header {
   text-align: center;
   padding: 30px 0;
-  background: rgba(180, 150, 255, 0.05);
+  background: rgba(255, 215, 0, 0.08);
   border-radius: 20px;
   margin-bottom: 40px;
   backdrop-filter: blur(10px);
@@ -51,46 +48,46 @@
 .lifeCalculator_logo {
   font-size: 2.5rem;
   font-weight: bold;
-  background: linear-gradient(135deg, #d8b4fe 0%, #ffffff 50%, #a78bfa 100%);
+  background: linear-gradient(135deg, #e6b800 0%, #ffffff 50%, #f5c842 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 10px;
-  text-shadow: 0 0 30px rgba(200, 162, 255, 0.5);
+  text-shadow: 0 0 25px rgba(255, 200, 0, 0.4);
 }
 
 .lifeCalculator_tagline {
   font-size: 1.2rem;
-  color: #d8b4fe;
+  color: #e6b800;
 }
 
 /* Input Section */
 .lifeCalculator_inputSection {
-  background: rgba(162, 108, 255, 0.1);
+  background: rgba(255, 215, 0, 0.08);
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(162, 108, 255, 0.2);
+  box-shadow: 0 20px 60px rgba(255, 215, 0, 0.25);
   margin-bottom: 50px;
   backdrop-filter: blur(10px);
-  border: 2px solid rgba(216, 180, 254, 0.2);
+  border: 2px solid rgba(255, 215, 0, 0.25);
   position: relative;
   z-index: 1;
 }
 
 .lifeCalculator_sectionTitle {
-  color: #d8b4fe;
+  color: #e6b800;
   font-size: 1.8rem;
   text-align: center;
   margin-bottom: 30px;
   font-weight: 600;
-  text-shadow: 0 0 20px rgba(162, 108, 255, 0.5);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
 }
 
 .lifeCalculator_formGroup { margin-bottom: 25px; }
 
 .lifeCalculator_formGroup label {
   display: block;
-  color: #d8b4fe;
+  color: #e6b800;
   font-weight: 600;
   margin-bottom: 8px;
   font-size: 1rem;
@@ -101,28 +98,28 @@
 #lifeCalculator_birthForm input[type="text"] {
   width: 100%;
   padding: 15px;
-  border: 1px solid rgba(216, 180, 254, 0.3);
+  border: 1px solid rgba(255, 215, 0, 0.3);
   border-radius: 10px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.6);
+  color: #000;
   backdrop-filter: blur(5px);
 }
 
 #lifeCalculator_birthForm input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 #lifeCalculator_birthForm input:focus {
   outline: none;
-  border-color: rgba(162, 108, 255, 0.6);
-  box-shadow: 0 0 15px rgba(162, 108, 255, 0.3);
-  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 215, 0, 0.7);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .lifeCalculator_errorMessage {
-  color: #ff7070;
+  color: #e63946;
   font-size: 0.875rem;
   margin-top: 5px;
   display: block;
@@ -132,8 +129,8 @@
 .lifeCalculator_calculateBtn {
   width: 100%;
   padding: 18px;
-  background: linear-gradient(135deg, #a78bfa 0%, #6d28d9 100%);
-  color: white;
+  background: linear-gradient(135deg, #f5c842 0%, #d4a300 100%);
+  color: black;
   border: none;
   border-radius: 12px;
   font-size: 1.2rem;
@@ -141,14 +138,14 @@
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 20px;
-  box-shadow: 0 8px 20px rgba(162, 108, 255, 0.25);
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.35);
   backdrop-filter: blur(10px);
 }
 
 .lifeCalculator_calculateBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(162, 108, 255, 0.35);
-  background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+  box-shadow: 0 12px 30px rgba(255, 215, 0, 0.45);
+  background: linear-gradient(135deg, #ffdd55 0%, #e6b800 100%);
 }
 
 .lifeCalculator_calculateBtn:active { transform: translateY(0); }
@@ -159,16 +156,16 @@
 }
 
 .lifeCalculator_loading {
-  background: linear-gradient(135deg, #999 0%, #666 100%);
+  background: linear-gradient(135deg, #ccc 0%, #999 100%);
 }
 
 .lifeCalculator_loadingSpinner {
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
+  border: 3px solid rgba(0, 0, 0, 0.2);
   border-radius: 50%;
-  border-top-color: white;
+  border-top-color: black;
   animation: lifeCalculator_spin 1s ease-in-out infinite;
   margin-left: 10px;
   vertical-align: middle;
@@ -192,8 +189,8 @@
   text-align: center;
   font-size: 2rem;
   margin-bottom: 40px;
-  color: #d8b4fe;
-  text-shadow: 0 0 20px rgba(162, 108, 255, 0.5);
+  color: #e6b800;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
 }
 
 .lifeCalculator_stonesGrid {
@@ -205,19 +202,19 @@
 
 /* Card */
 .lifeCalculator_stoneCard {
-  background: rgba(255, 255, 255, 0.95);
+  background: #ffffff;
   border-radius: 20px;
   padding: 30px;
   text-align: center;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   border: 3px solid transparent;
 }
 
 .lifeCalculator_stoneCard:hover {
   transform: translateY(-10px);
-  box-shadow: 0 20px 50px rgba(162, 108, 255, 0.4);
-  border-color: #a78bfa;
+  box-shadow: 0 20px 50px rgba(255, 215, 0, 0.4);
+  border-color: #e6b800;
 }
 
 .lifeCalculator_stoneImage {
@@ -226,12 +223,12 @@
   margin: 0 auto 20px;
   border-radius: 50%;
   object-fit: cover;
-  border: 5px solid #d8b4fe;
-  box-shadow: 0 10px 30px rgba(162, 108, 255, 0.3);
+  border: 5px solid #e6b800;
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
 }
 
 .lifeCalculator_stoneCategory {
-  color: #a78bfa;
+  color: #d4a300;
   font-size: 0.9rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -240,7 +237,7 @@
 }
 
 .lifeCalculator_stoneName {
-  color: #2d1b4e;
+  color: #a67c00;
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 15px;
@@ -257,18 +254,18 @@
 .lifeCalculator_exploreBtn {
   display: inline-block;
   padding: 12px 30px;
-  background: linear-gradient(135deg, #a78bfa 0%, #6d28d9 100%);
-  color: white;
+  background: linear-gradient(135deg, #f5c842 0%, #d4a300 100%);
+  color: black;
   text-decoration: none;
   border-radius: 25px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(162, 108, 255, 0.3);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
 }
 
 .lifeCalculator_exploreBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(162, 108, 255, 0.5);
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
 }
 
 /* Responsive */
