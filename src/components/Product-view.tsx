@@ -13,7 +13,6 @@ type Props = {
   category?: "gemstone" | "rudraksha" | string;
 };
 
-
 const THEME: Record<
   string,
   {
@@ -96,7 +95,6 @@ const THEME: Record<
     dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
 
-  // Same look as Rudraksha / Mala view
   mala: {
     pageBgFrom: "from-orange-50/30",
     pageBgTo: "to-yellow-50/30",
@@ -155,34 +153,34 @@ const THEME: Record<
     dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
   tribhuvani: {
-  pageBgFrom: "from-purple-50/40",
-  pageBgTo: "to-indigo-50/40",
+    pageBgFrom: "from-purple-50/40",
+    pageBgTo: "to-indigo-50/40",
 
-  headerFrom: "from-purple-600",
-  headerTo: "to-indigo-600",
+    headerFrom: "from-purple-600",
+    headerTo: "to-indigo-600",
 
-  bandFrom: "from-purple-50",
-  bandVia: "via-white",
-  bandTo: "to-indigo-100",
-  overlayPulse: "bg-purple-400/20",
+    bandFrom: "from-purple-50",
+    bandVia: "via-white",
+    bandTo: "to-indigo-100",
+    overlayPulse: "bg-purple-400/20",
 
-  badgeWrap: "bg-gradient-to-r from-purple-500 to-indigo-600",
-  badgeText: "text-white",
+    badgeWrap: "bg-gradient-to-r from-purple-500 to-indigo-600",
+    badgeText: "text-white",
 
-  catChip: "bg-purple-50 text-purple-800 border-2 border-purple-200",
-  sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
+    catChip: "bg-purple-50 text-purple-800 border-2 border-purple-200",
+    sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
 
-  priceFrom: "from-purple-600",
-  priceTo: "to-indigo-600",
+    priceFrom: "from-purple-600",
+    priceTo: "to-indigo-600",
 
-  qtyBorder: "border-purple-100",
+    qtyBorder: "border-purple-100",
 
-  outlineText: "text-purple-700",
-  outlineBorder: "border-purple-500 hover:border-indigo-600",
+    outlineText: "text-purple-700",
+    outlineBorder: "border-purple-500 hover:border-indigo-600",
 
-  dotActive: "bg-purple-500",
-  dotIdle: "bg-gray-300 hover:bg-gray-400",
-},
+    dotActive: "bg-purple-500",
+    dotIdle: "bg-gray-300 hover:bg-gray-400",
+  },
   yantra: {
     pageBgFrom: "from-amber-50/30",
     pageBgTo: "to-orange-50/30",
@@ -212,10 +210,7 @@ const THEME: Record<
     dotActive: "bg-amber-500",
     dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
-
-
 };
-
 
 const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const params = useParams();
@@ -225,9 +220,10 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const [discountedPrice, setDiscountedPrice] = React.useState(0);
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-  const [benefits, setBenefits] = React.useState<string[] >([]);
-  // const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
-  const navigate= useNavigate();
+  const [benefits, setBenefits] = React.useState<string[]>([]);
+  const [displayImages, setDisplayImages] = React.useState<string[]>([]);
+  
+  const navigate = useNavigate();
   const BDK = import.meta.env.VITE_BUY_DRAFT_KEY;
   const theme = THEME[category] ?? THEME.gemstone;
 
@@ -236,6 +232,15 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       const fetchedProduct = await getProductById(params.id || "MTI001");
       setProduct(fetchedProduct);
 
+      // Set up images array
+      let imagesToDisplay: string[] = [];
+      if (Array.isArray(fetchedProduct.images) && fetchedProduct.images.length > 0) {
+        imagesToDisplay = fetchedProduct.images;
+      } else if (fetchedProduct.image) {
+        imagesToDisplay = [fetchedProduct.image];
+      }
+      setDisplayImages(imagesToDisplay);
+
       const d = Math.max(0, Math.min(100, fetchedProduct.discount ?? 0));
       setDiscount(d);
 
@@ -243,7 +248,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       const discPrice = Math.round(safePrice * (1 - d / 100));
       setDiscountedPrice(discPrice);
       setBenefits(fetchedProduct.benefits || []);
-      // console.log(fetchedProduct);
+
       const initialQty = 1;
       setTotalPrice(discPrice * initialQty);
       setQuantity(1);
@@ -251,33 +256,36 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     };
     fetchProduct();
   }, [params.id]);
-  React.useEffect(()=>{
-    window.scrollTo({top:0, behavior:"smooth"});
-  },[]);
+
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   React.useEffect(() => {
     if (discountedPrice >= 0) {
       setTotalPrice(discountedPrice * quantity);
     }
   }, [quantity, discountedPrice]);
-  async function handleAddToCart(productId:string,quantity:number){
+
+  async function handleAddToCart(productId: string, quantity: number) {
     try {
-      const param:CartItem= {
+      const param: CartItem = {
         productId,
         quantity
       };
       const isAdded = await addToCart(param);
-      if (isAdded){
-        toastSuccess("Item Successfully Added to cart")
+      if (isAdded) {
+        toastSuccess("Item Successfully Added to cart");
       }
     } catch (error) {
-      toastError(error||"Failed To Add Product")
+      toastError(error || "Failed To Add Product");
     }
-  } ;
+  }
+
   function handleBuyNow(product: Product, qty: number) {
-    // Require login
     const isLoggedIn: boolean = !!localStorage.getItem("tg_user");
-    if(!isLoggedIn){
-      navigate("/login")
+    if (!isLoggedIn) {
+      navigate("/login");
     }
     const item: CheckoutItem = {
       productId: product.id,
@@ -288,12 +296,10 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       discount: product.discount ?? 0,
       type: product.type,
     };
-  
+
     const draft: CheckoutDraft = { items: [item], createdAt: Date.now() };
-  
+
     setWithExpiry(BDK, draft, 15 * 60 * 1000);
-    // console.log("[BUY-NOW] key:", BDK, "payload:", draft);
-    // console.log("[BUY-NOW] raw in storage:", sessionStorage.getItem(BDK));
     navigate("/checkout", { state: { from: "buy-now" } });
   }
 
@@ -311,16 +317,11 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     );
   }
 
-  // If you have real category/subcategory, plug them here.
   const categoryLabel = category === "rudraksha" ? "Rudraksha" : "Gemstone";
-  const subcategoryName = product.type?.split(":")[1]?.replace(/-/g, " ") || "—";
-
-  // Derive originalPrice for strike-through from discount
   const originalPrice = product.price;
 
-  const carouselImages = [0, 1, 2, 3];
-  const nextImage = () => setCurrentImageIndex((p) => (p + 1) % carouselImages.length);
-  const prevImage = () => setCurrentImageIndex((p) => (p - 1 + carouselImages.length) % carouselImages.length);
+  const nextImage = () => setCurrentImageIndex((p) => (p + 1) % displayImages.length);
+  const prevImage = () => setCurrentImageIndex((p) => (p - 1 + displayImages.length) % displayImages.length);
 
   return (
     <div className={`min-h-screen bg-gradient-to-br ${theme.pageBgFrom} ${theme.pageBgTo}`}>
@@ -344,67 +345,69 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
             <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
               <div
                 className={[
-                  "relative h-72 sm:h-96 bg-gradient-to-br flex items-center justify-center p-4 sm:p-6",
+                  "relative h-72 sm:h-96 bg-gradient-to-br flex items-center justify-center",
                   theme.bandFrom,
                   theme.bandVia ?? "",
                   theme.bandTo,
                 ].join(" ")}
               >
                 {discount > 0 && (
-                  <div className={`absolute top-3 right-3 sm:top-6 sm:right-6 ${theme.badgeWrap} ${theme.badgeText} px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-sm sm:text-lg font-bold shadow-lg z-10`}>
+                  <div className={`absolute top-2 right-2 sm:top-6 sm:right-6 ${theme.badgeWrap} ${theme.badgeText} px-2 py-1 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-lg font-bold shadow-lg z-10`}>
                     {discount}% OFF
                   </div>
                 )}
 
                 {/* Carousel Navigation */}
-                <button
-                  onClick={prevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all z-10"
-                >
-                  <ChevronLeft className="w-6 h-6 text-gray-800" />
-                </button>
+                {displayImages.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg transition-all z-10"
+                    >
+                      <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-gray-800" />
+                    </button>
 
-                <div className="relative">
-                  <div className={`absolute inset-0 ${theme.overlayPulse} blur-3xl rounded-full animate-pulse`}></div>
-                  {Array.isArray(product.images) && product.images.length > 0 ? (
-                  <img
-                    src={`${product.images[0]}`}
-                    alt={product.name}
-                    className="w-48 h-48 sm:w-64 sm:h-64 object-contain relative z-10 drop-shadow-2xl rounded"
-                  />
-                ) : product.image ? (
-                  <img
-                    src={`${product.image}`}
-                    alt={product.name}
-                    className="w-48 h-48 sm:w-64 sm:h-64 object-contain relative z-10 drop-shadow-2xl rounded"
-                  />
-                ) : (
-                  <Star className="w-48 h-48 sm:w-64 sm:h-64 text-black/10 relative z-10 drop-shadow-2xl" />
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg transition-all z-10"
+                    >
+                      <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-gray-800" />
+                    </button>
+                  </>
                 )}
 
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-4 py-2 rounded-full text-sm">
-                    {currentImageIndex + 1} / {carouselImages.length}
-                  </div>
-                </div>
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <div className={`absolute inset-0 ${theme.overlayPulse} blur-3xl rounded-full animate-pulse`}></div>
+                  {displayImages.length > 0 ? (
+                    <img
+                      src={displayImages[currentImageIndex]}
+                      alt={product.name}
+                      className="w-full h-full object-contain relative z-10 drop-shadow-2xl"
+                    />
+                  ) : (
+                    <Star className="w-48 h-48 sm:w-64 sm:h-64 text-black/10 relative z-10 drop-shadow-2xl" />
+                  )}
 
-                <button
-                  onClick={nextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all z-10"
-                >
-                  <ChevronRight className="w-6 h-6 text-gray-800" />
-                </button>
+                  {displayImages.length > 1 && (
+                    <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-2 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm">
+                      {currentImageIndex + 1} / {displayImages.length}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Thumbnail Indicators */}
-              <div className="flex gap-2 justify-center p-4 bg-gray-50">
-                {carouselImages.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImageIndex(index)}
-                    className={`h-3 rounded-full transition-all ${index === currentImageIndex ? `${theme.dotActive} w-8` : `${theme.dotIdle} w-3`}`}
-                  />
-                ))}
-              </div>
+              {displayImages.length > 1 && (
+                <div className="flex gap-2 justify-center p-4 bg-gray-50">
+                  {displayImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`h-3 rounded-full transition-all ${index === currentImageIndex ? `${theme.dotActive} w-8` : `${theme.dotIdle} w-3`}`}
+                    />
+                  ))}
+                </div>
+              )}
 
               {/* Basic Info */}
               <div className="p-4 sm:p-6 border-t border-gray-100">
@@ -441,7 +444,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                   <AlertCircle className="w-4 h-4" />
                   No Return, No Exchange
                 </button>
-                
+
                 <p className="text-red-600 text-xs text-center leading-relaxed">
                   Minor color variations or appearance differences may occur due to lighting, photography or screen display settings.
                 </p>
@@ -480,16 +483,20 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
               </p>
 
               <div className="space-y-2.5">
-                <button className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} hover:opacity-95 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 text-base sm:text-lg transform hover:scale-105`}
-                onClick={()=> handleBuyNow(product,quantity)}>
+                <button
+                  className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} hover:opacity-95 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 text-base sm:text-lg transform hover:scale-105`}
+                  onClick={() => handleBuyNow(product, quantity)}
+                >
                   <ShoppingCart className="w-5 h-5" />
                   Buy Now
                 </button>
 
-                <button className={`w-full bg-white hover:bg-gray-50 ${theme.outlineText} font-bold py-4 px-6 rounded-2xl shadow-lg border-2 ${theme.outlineBorder} transition-all duration-300 flex items-center justify-center gap-2 text-base sm:text-lg transform hover:scale-105`} 
-                onClick={()=>{
-                  handleAddToCart(product.id,quantity)
-                }}>
+                <button
+                  className={`w-full bg-white hover:bg-gray-50 ${theme.outlineText} font-bold py-4 px-6 rounded-2xl shadow-lg border-2 ${theme.outlineBorder} transition-all duration-300 flex items-center justify-center gap-2 text-base sm:text-lg transform hover:scale-105`}
+                  onClick={() => {
+                    handleAddToCart(product.id, quantity);
+                  }}
+                >
                   <Heart className="w-5 h-5" />
                   Add to Cart
                 </button>
