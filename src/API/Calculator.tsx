@@ -11,6 +11,8 @@ export type CalculatorParams = {
   dob: string;
   tob: string;
   place: string;
+  latitude: number;
+  longitude; number;
 };
 
 // ========= Helpers & Mappings =========

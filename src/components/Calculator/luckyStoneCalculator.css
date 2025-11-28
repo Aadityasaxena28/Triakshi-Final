@@ -74,8 +74,9 @@
   z-index: 1;
 }
 
+/* ⭐ TITLE — Updated to DARK GOLDEN */
 .lifeCalculator_sectionTitle {
-  color: #b8860b; /* UPDATED TO DARK GOLDEN */
+  color: #b8860b;
   font-size: 1.8rem;
   text-align: center;
   margin-bottom: 30px;
@@ -173,7 +174,7 @@
 
 @keyframes lifeCalculator_spin { to { transform: rotate(360deg); } }
 
-/* Results */
+/* Results Section */
 .lifeCalculator_resultsSection {
   animation: lifeCalculator_fadeIn 0.6s ease-in;
   position: relative;
@@ -185,11 +186,12 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ⭐ RESULTS TITLE — Updated to DARK GOLDEN */
 .lifeCalculator_resultsTitle {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 40px;
-  color: #b8860b; /* UPDATED TO DARK GOLDEN */
+  color: #b8860b;
   text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
 }
 
@@ -200,7 +202,6 @@
   margin-bottom: 50px;
 }
 
-/* Card */
 .lifeCalculator_stoneCard {
   background: #ffffff;
   border-radius: 20px;
@@ -250,7 +251,6 @@
   margin-bottom: 20px;
 }
 
-/* Explore CTA */
 .lifeCalculator_exploreBtn {
   display: inline-block;
   padding: 12px 30px;
