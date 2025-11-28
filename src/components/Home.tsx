@@ -42,6 +42,7 @@ const Home = () => {
           <Categories/>
           <NewCategories />
           <Testimonials />
+          
         </>
       )}
     </>

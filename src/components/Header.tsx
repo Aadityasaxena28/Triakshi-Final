@@ -109,7 +109,7 @@ const Header: React.FC = () => {
     { name: "Health Stone Calculator", path: "/health-stone-calculator" },
     { name: "Lucky Stone Calculator", path: "/lucky-stone-calculator" },
     { name: "Rudraksh Calculator", path: "/health-calculator" },
-    { name: "GemStone Report", path: "/health-calculator" },
+    { name: "GemStone Report", path: "/report" },
   ];
 
   const aboutItems: MenuItem[] = [
