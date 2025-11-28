@@ -327,13 +327,21 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
   const nextImage = () => {
     if (displayImages.length > 0) {
-      setCurrentImageIndex((p) => (p + 1) % displayImages.length);
+      setCurrentImageIndex((p) => {
+        const newIndex = (p + 1) % displayImages.length;
+        console.log('Next image - Current:', p, 'New:', newIndex, 'Total:', displayImages.length);
+        return newIndex;
+      });
     }
   };
   
   const prevImage = () => {
     if (displayImages.length > 0) {
-      setCurrentImageIndex((p) => (p - 1 + displayImages.length) % displayImages.length);
+      setCurrentImageIndex((p) => {
+        const newIndex = (p - 1 + displayImages.length) % displayImages.length;
+        console.log('Prev image - Current:', p, 'New:', newIndex, 'Total:', displayImages.length);
+        return newIndex;
+      });
     }
   };
 
@@ -375,15 +383,27 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                 {displayImages.length > 1 && (
                   <>
                     <button
-                      onClick={prevImage}
-                      className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg transition-all z-10"
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('Prev button clicked');
+                        prevImage();
+                      }}
+                      className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg transition-all z-20 cursor-pointer"
                     >
                       <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-gray-800" />
                     </button>
 
                     <button
-                      onClick={nextImage}
-                      className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg transition-all z-10"
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('Next button clicked');
+                        nextImage();
+                      }}
+                      className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg transition-all z-20 cursor-pointer"
                     >
                       <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-gray-800" />
                     </button>
@@ -421,8 +441,13 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                   {displayImages.map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`h-3 rounded-full transition-all ${index === currentImageIndex ? `${theme.dotActive} w-8` : `${theme.dotIdle} w-3`}`}
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        console.log('Thumbnail clicked - Index:', index);
+                        setCurrentImageIndex(index);
+                      }}
+                      className={`h-3 rounded-full transition-all cursor-pointer ${index === currentImageIndex ? `${theme.dotActive} w-8` : `${theme.dotIdle} w-3`}`}
                     />
                   ))}
                 </div>
