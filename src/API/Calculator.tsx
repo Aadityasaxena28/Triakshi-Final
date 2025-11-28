@@ -81,26 +81,33 @@ function parseTime(tob: string) {
 // ========= ⭐ DYNAMIC COORDINATES FUNCTION (Geocoding) ⭐ =========
 async function getCoordinates(place: string) {
   try {
-    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(place)}&count=1`;
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+      place
+    )}&format=json&limit=1`;
 
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      headers: {
+        "User-Agent": "Triakshi Astrology App" // required by Nominatim
+      }
+    });
 
-    if (!response.data.results || response.data.results.length === 0) {
+    if (!response.data || response.data.length === 0) {
       throw new Error("Location not found");
     }
 
-    const result = response.data.results[0];
+    const result = response.data[0];
 
     return {
-      lat: result.latitude,
-      lon: result.longitude,
-      tzone: result.timezone ? 0 : 5.5 // fallback if no timezone (rare)
+      lat: parseFloat(result.lat),
+      lon: parseFloat(result.lon),
+      tzone: 5.5 // we will calculate timezone next
     };
-  } catch (err) {
-    console.error("Geocoding failed:", err);
+  } catch (error) {
+    console.error("Geocoding failed:", error);
     throw new Error("Unable to get coordinates for this place");
   }
 }
+
 
 export async function Calculator(params: CalculatorParams): Promise<string[]> {
   try {
