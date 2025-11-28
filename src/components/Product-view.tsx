@@ -232,13 +232,18 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       const fetchedProduct = await getProductById(params.id || "MTI001");
       setProduct(fetchedProduct);
 
-      // Set up images array
+      // Set up images array - prioritize images array over single image
       let imagesToDisplay: string[] = [];
+      
       if (Array.isArray(fetchedProduct.images) && fetchedProduct.images.length > 0) {
-        imagesToDisplay = fetchedProduct.images;
+        // Use the images array
+        imagesToDisplay = [...fetchedProduct.images];
       } else if (fetchedProduct.image) {
+        // Fallback to single image
         imagesToDisplay = [fetchedProduct.image];
       }
+      
+      console.log('Images to display:', imagesToDisplay);
       setDisplayImages(imagesToDisplay);
 
       const d = Math.max(0, Math.min(100, fetchedProduct.discount ?? 0));
@@ -320,8 +325,17 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const categoryLabel = category === "rudraksha" ? "Rudraksha" : "Gemstone";
   const originalPrice = product.price;
 
-  const nextImage = () => setCurrentImageIndex((p) => (p + 1) % displayImages.length);
-  const prevImage = () => setCurrentImageIndex((p) => (p - 1 + displayImages.length) % displayImages.length);
+  const nextImage = () => {
+    if (displayImages.length > 0) {
+      setCurrentImageIndex((p) => (p + 1) % displayImages.length);
+    }
+  };
+  
+  const prevImage = () => {
+    if (displayImages.length > 0) {
+      setCurrentImageIndex((p) => (p - 1 + displayImages.length) % displayImages.length);
+    }
+  };
 
   return (
     <div className={`min-h-screen bg-gradient-to-br ${theme.pageBgFrom} ${theme.pageBgTo}`}>
@@ -380,9 +394,14 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                   <div className={`absolute inset-0 ${theme.overlayPulse} blur-3xl rounded-full animate-pulse`}></div>
                   {displayImages.length > 0 ? (
                     <img
+                      key={currentImageIndex}
                       src={displayImages[currentImageIndex]}
-                      alt={product.name}
+                      alt={`${product.name} - Image ${currentImageIndex + 1}`}
                       className="w-full h-full object-contain relative z-10 drop-shadow-2xl"
+                      onError={(e) => {
+                        console.error('Image failed to load:', displayImages[currentImageIndex]);
+                        e.currentTarget.src = product.image || '';
+                      }}
                     />
                   ) : (
                     <Star className="w-48 h-48 sm:w-64 sm:h-64 text-black/10 relative z-10 drop-shadow-2xl" />
