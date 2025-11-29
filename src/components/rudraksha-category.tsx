@@ -53,7 +53,7 @@ const RudrakshPage = () => {
     { key: '14-mukhi', label: '14 Mukhi' },
     { key: 'gauri-shankar', label: 'Gauri Shankar' },
     { key: 'ganesha', label: 'Ganesha' },
-    { key: 'trijuti', label: 'Trijuti Rudraksha' },
+    { key: 'trijuti', label: 'Saraswati Rudraksha' },
     { key: 'navdurga', label: 'Navdurga Rudraksha' },
     { key: 'laxmi', label: 'Laxmi Rudraksha' }
   ];
