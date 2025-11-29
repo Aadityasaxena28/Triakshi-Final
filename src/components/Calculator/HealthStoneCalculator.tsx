@@ -3,11 +3,11 @@ import { toastError } from "@/utlity/AlertSystem";
 import { getStoneInfo, StoneInfo } from "@/utlity/StoneMapper";
 import React, { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./luckyStoneCalculator.css"; // keep same file, or rename if you want
+import "./luckyStoneCalculator.css";
 
 interface Props {}
 
-const LifeStoneCalculator: React.FC<Props> = () => {
+const HealthStoneCalculator: React.FC<Props> = () => {
   const [dob, setDob] = useState("");
   const [tob, setTob] = useState("");
   const [pob, setPob] = useState("");
@@ -22,7 +22,7 @@ const LifeStoneCalculator: React.FC<Props> = () => {
   const navigate = useNavigate();
   const valid = useMemo(() => !!dob && !!tob && !!pob, [dob, tob, pob]);
 
-  // 🌍 Autocomplete logic (same)
+  // 🌍 Autocomplete logic
   useEffect(() => {
     if (pob.length < 3) {
       setSuggestions([]);
@@ -88,11 +88,11 @@ const LifeStoneCalculator: React.FC<Props> = () => {
     return Object.keys(e).length === 0;
   };
 
-  // 🔮 FETCH LIFE STONES
-  const fetchLifeStones = async (): Promise<StoneInfo[]> => {
+  // 🔮 FETCH HEALTH STONES
+  const fetchHealthStones = async (): Promise<StoneInfo[]> => {
     try {
       const data: CalculatorParams = {
-        type: "life", // CHANGED HERE
+        type: "health", // UPDATED HERE
         dob,
         tob,
         place: pob,
@@ -115,7 +115,7 @@ const LifeStoneCalculator: React.FC<Props> = () => {
 
       return stoneInfos;
     } catch (error) {
-      toastError("Unable to get your life stones");
+      toastError("Unable to get your health stones");
       return [];
     }
   };
@@ -127,7 +127,7 @@ const LifeStoneCalculator: React.FC<Props> = () => {
     setLoading(true);
 
     try {
-      const result = await fetchLifeStones();
+      const result = await fetchHealthStones();
       setStones(result);
 
       setTimeout(() => {
@@ -149,12 +149,12 @@ const LifeStoneCalculator: React.FC<Props> = () => {
       <header className="lifeCalculator_header">
         <div className="lifeCalculator_logo">त्रिakshi Gems ॐ</div>
         <div className="lifeCalculator_tagline">
-          Unlock Your True Life Path with Personalized Gemstones
+          Unlock Better Health with Your Personalized Healing Stones
         </div>
       </header>
 
       <section className="lifeCalculator_inputSection">
-        <h2 className="lifeCalculator_sectionTitle">Discover Your Life Stones</h2>
+        <h2 className="lifeCalculator_sectionTitle">Discover Your Health Stones</h2>
 
         <form id="lifeCalculator_birthForm" onSubmit={onSubmit}>
           <div className="lifeCalculator_formGroup">
@@ -204,18 +204,22 @@ const LifeStoneCalculator: React.FC<Props> = () => {
             className={`lifeCalculator_calculateBtn ${loading ? "lifeCalculator_loading" : ""}`}
             disabled={!valid || loading}
           >
-            {loading ? "Calculating..." : "Find My Life Stones"}
+            {loading ? "Calculating..." : "Find My Health Stones"}
           </button>
         </form>
       </section>
 
       {stones && stones.length > 0 && (
         <section className="lifeCalculator_resultsSection">
-          <h2 className="lifeCalculator_resultsTitle">Your Personal Life Stones</h2>
+          <h2 className="lifeCalculator_resultsTitle">Your Personal Health Stones</h2>
           <div className="lifeCalculator_stonesGrid">
             {stones.map((stone, index) => (
               <article key={index} className="lifeCalculator_stoneCard">
-                <img src={stone.image} alt={stone.englishName} className="lifeCalculator_stoneImage" />
+                <img
+                  src={stone.image}
+                  alt={stone.englishName}
+                  className="lifeCalculator_stoneImage"
+                />
 
                 <div className="lifeCalculator_stoneContent">
                   <h3 className="lifeCalculator_stoneName">{stone.englishName}</h3>
@@ -238,4 +242,4 @@ const LifeStoneCalculator: React.FC<Props> = () => {
   );
 };
 
-export default LifeStoneCalculator;
+export default HealthStoneCalculator;

@@ -1,7 +1,5 @@
 import axios from "axios";
 
-
-
 // ========= API info =========
 const api = 'planets';
 const userId = import.meta.env.VITE_planets_userId;
@@ -13,6 +11,8 @@ export type CalculatorParams = {
   dob: string;
   tob: string;
   place: string;
+  latitude: number;
+  longitude; number;
 };
 
 // ========= Helpers & Mappings =========
@@ -32,10 +32,10 @@ const SIGN_LORD = {
   Leo: 'Sun',
   Virgo: 'Mercury',
   Libra: 'Venus',
-  Scorpio: 'Mars',          // classical/traditional
+  Scorpio: 'Mars',
   Sagittarius: 'Jupiter',
   Capricorn: 'Saturn',
-  Aquarius: 'Saturn',       // classical/traditional
+  Aquarius: 'Saturn',
   Pisces: 'Jupiter',
 };
 
@@ -52,7 +52,7 @@ const LORD_TO_STONE = {
   Ketu: "Cat’s Eye (Lehsunia)",
 };
 
-// Compute the sign at the Nth house given ascendant sign (N is 1..12)
+// Compute the sign at the Nth house given ascendant sign
 function houseSignFromAsc(ascSign, houseNumber) {
   const base = SIGNS.indexOf(ascSign);
   if (base === -1) throw new Error(`Unknown ascendant sign: ${ascSign}`);
@@ -64,9 +64,8 @@ function stoneForLord(lord) {
   return LORD_TO_STONE[lord] || '—';
 }
 
-// Helper function to parse date string (e.g., "2002-09-10" or "10/09/2002")
+// Parse date
 function parseDate(dob: string) {
-  // Implement based on your date format
   const date = new Date(dob);
   return {
     day: date.getDate(),
@@ -75,73 +74,92 @@ function parseDate(dob: string) {
   };
 }
 
-// Helper function to parse time string (e.g., "07:28" or "7:28 AM")
+// Parse time
 function parseTime(tob: string) {
-  // Implement based on your time format
   const [hour, min] = tob.split(':').map(Number);
   return { hour, min };
 }
 
-// Helper function to get coordinates from place name
+// ========= ⭐ DYNAMIC COORDINATES FUNCTION (Geocoding) ⭐ =========
 async function getCoordinates(place: string) {
-  // You'll need to implement geocoding
-  // Could use Google Geocoding API or similar
-  return {
-    lat: 19.132,
-    lon: 72.342,
-    tzone: 5.5
-  };
+  try {
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+      place
+    )}&format=json&limit=1`;
+
+    const response = await axios.get(url, {
+      headers: {
+        "User-Agent": "Triakshi Astrology App" // required by Nominatim
+      }
+    });
+
+    if (!response.data || response.data.length === 0) {
+      throw new Error("Location not found");
+    }
+
+    const result = response.data[0];
+
+    return {
+      lat: parseFloat(result.lat),
+      lon: parseFloat(result.lon),
+      tzone: 5.5 // we will calculate timezone next
+    };
+  } catch (error) {
+    console.error("Geocoding failed:", error);
+    throw new Error("Unable to get coordinates for this place");
+  }
 }
+
+
 export async function Calculator(params: CalculatorParams): Promise<string[]> {
   try {
     console.log(params);
-    
-    // TODO: Parse the actual input parameters
-    // This is still hardcoded - you need to implement parsing
-    const {day,month,year} = parseDate(params.dob);
-    const {hour,min} = parseTime(params.tob);
+
+    const { day, month, year } = parseDate(params.dob);
+    const { hour, min } = parseTime(params.tob);
+
+    // ⭐ GET REAL LAT, LON, TZONE
+    const { lat, lon, tzone } = await getCoordinates(params.place);
 
     const data1 = {
-      day,    // Parse from params.dob (e.g., "2002-09-10")
-      month,   // Parse from params.dob
-      year, // Parse from params.dob
-      hour,    // Parse from params.tob (e.g., "07:28")
-      min,    // Parse from params.tob
-      lat: 19.132,  // Parse from params.place - you'll need geocoding
-      lon: 72.342,  // Parse from params.place - you'll need geocoding
-      tzone: 5.5,   // Calculate based on location
+      day,
+      month,
+      year,
+      hour,
+      min,
+      lat,
+      lon,
+      tzone,
     };
 
-    const auth = 'Basic ' +  btoa(`${userId}:${apiKey}`);
-    
-    // ADD AWAIT HERE - this was the main issue
-    const response = await axios.post(`https://json.astrologyapi.com/v1/${api}`, data1, {
-      headers: {
-        Authorization: auth,
-        'Content-Type': 'application/json',
-        'Accept-Language': language,
-      },
-    });
+    const auth = 'Basic ' + btoa(`${userId}:${apiKey}`);
 
-    const data = response.data; // Get the data from the response
+    const response = await axios.post(
+      `https://json.astrologyapi.com/v1/${api}`,
+      data1,
+      {
+        headers: {
+          Authorization: auth,
+          'Content-Type': 'application/json',
+          'Accept-Language': language,
+        },
+      }
+    );
+
+    const data = response.data;
 
     if (!Array.isArray(data)) {
       throw new Error('Unexpected API response: expected an array of planet objects');
     }
-    
-    console.log(data);
-    
-    // ... rest of your logic remains the same ...
+
     const asc = data.find(p => (p.name || '').toLowerCase() === 'ascendant');
-    if (!asc || !asc.sign) {
-      throw new Error('Ascendant sign not found in response');
-    }
+    if (!asc || !asc.sign) throw new Error('Ascendant sign not found in response');
+
     const ascSign = asc.sign;
 
     const moon = data.find(p => (p.name || '').toLowerCase() === 'moon');
-    if (!moon || !moon.nakshatraLord) {
-      throw new Error('Moon or its nakshatra lord not found in response');
-    }
+    if (!moon || !moon.nakshatraLord) throw new Error('Moon or its nakshatra lord not found');
+
     const moonNakshatraLord = moon.nakshatraLord;
 
     const sign1 = houseSignFromAsc(ascSign, 1);
@@ -153,40 +171,24 @@ export async function Calculator(params: CalculatorParams): Promise<string[]> {
     const lord9 = SIGN_LORD[sign9];
 
     const result = {
-      firstHouse: {
-        sign: sign1,
-        lord: lord1,
-        stone: stoneForLord(lord1),
-      },
-      fifthHouse: {
-        sign: sign5,
-        lord: lord5,
-        stone: stoneForLord(lord5),
-      },
-      ninthHouse: {
-        sign: sign9,
-        lord: lord9,
-        stone: stoneForLord(lord9),
-      },
-      moonNakshatraLord: {
-        lord: moonNakshatraLord,
-        stone: stoneForLord(moonNakshatraLord),
-      },
+      firstHouse: { sign: sign1, lord: lord1, stone: stoneForLord(lord1) },
+      fifthHouse: { sign: sign5, lord: lord5, stone: stoneForLord(lord5) },
+      ninthHouse: { sign: sign9, lord: lord9, stone: stoneForLord(lord9) },
+      moonNakshatraLord: { lord: moonNakshatraLord, stone: stoneForLord(moonNakshatraLord) },
     };
 
-    console.log(result);
-    const typ = params.type;
+    const typ = params.type.toLowerCase();
 
-    if (typ.toLowerCase() === "luck") {
+    if (typ === "luck") {
       return [result.ninthHouse.stone];
-    } 
-    else if (typ.toLowerCase() === "health") {
+    } else if (typ === "health") {
       return [result.fifthHouse.stone];
+    }else if (typ === "report") {
+      return [result.fifthHouse.stone,result.moonNakshatraLord.stone, result.firstHouse.stone,result.ninthHouse.stone];
+    } else {
+      return [result.moonNakshatraLord.stone, result.firstHouse.stone];
     }
-    else {
-      return [result.moonNakshatraLord.stone, result.fifthHouse.stone];
-    }
-    
+
   } catch (error) {
     console.error('Calculator error:', error);
     throw new Error(`Unable To Calculate Your ${params.type} Stone: ${error.message}`);

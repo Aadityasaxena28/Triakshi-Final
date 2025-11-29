@@ -4,6 +4,22 @@ import { ChevronLeft, ChevronRight, Filter, Search, Sparkles, X, XCircle } from 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Product_card from './Product_card';
+import ekmukhi from '@/assets/1 mukhi.png';
+import domukhi from '@/assets/2 mukhi.png';
+import teenmukhi from '@/assets/3 mukhi.png';
+import charmukhi from '@/assets/4 mukhi.png';
+import pachmukhi from '@/assets/5 mukhi.png';
+import sixmukhi from '@/assets/6 mukhi.png';
+import satmukhi from '@/assets/7 mukhi.png';
+import eightmukhi from '@/assets/8 mukhi.png';
+import ninemukhi from '@/assets/9 mukhi.png';
+import dasmukhi from '@/assets/10 mukhi.png';
+import elevenmukhi from '@/assets/11 mukhi.png';
+import baramukhi from '@/assets/12 mukhi.png';
+import teramukhi from '@/assets/13 mukhi.png';
+import chaudamukhi from '@/assets/14 mukhi.png';
+import gaurishankar from '@/assets/Gauri Shankar.png';
+import ganesha from '@/assets/ganehsa.png';
 
 const RudrakshPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -36,30 +52,30 @@ const RudrakshPage = () => {
     { key: '14-mukhi', label: '14 Mukhi' },
     { key: 'gauri-shankar', label: 'Gauri Shankar' },
     { key: 'ganesha', label: 'Ganesha' },
-    { key: 'trijuti', label: 'Trijuti' },
-    { key: 'garbha-gauri', label: 'Garbha Gauri' }
+    //{ key: 'trijuti', label: 'Trijuti' },
+    //{ key: 'garbha-gauri', label: 'Garbha Gauri' }
   ];
 
   const categoryImages = {
     all: null,
-    '1-mukhi': `${baseUrl}/images/categories/1-mukhi.jpg`,
-    '2-mukhi': `${baseUrl}/images/categories/2-mukhi.jpg`,
-    '3-mukhi': `${baseUrl}/images/categories/3-mukhi.jpg`,
-    '4-mukhi': `${baseUrl}/images/categories/4-mukhi.jpg`,
-    '5-mukhi': `${baseUrl}/images/categories/5-mukhi.jpg`,
-    '6-mukhi': `${baseUrl}/images/categories/6-mukhi.jpg`,
-    '7-mukhi': `${baseUrl}/images/categories/7-mukhi.jpg`,
-    '8-mukhi': `${baseUrl}/images/categories/8-mukhi.jpg`,
-    '9-mukhi': `${baseUrl}/images/categories/9-mukhi.jpg`,
-    '10-mukhi': `${baseUrl}/images/categories/10-mukhi.jpg`,
-    '11-mukhi': `${baseUrl}/images/categories/11-mukhi.jpg`,
-    '12-mukhi': `${baseUrl}/images/categories/12-mukhi.jpg`,
-    '13-mukhi': `${baseUrl}/images/categories/13-mukhi.jpg`,
-    '14-mukhi': `${baseUrl}/images/categories/14-mukhi.jpg`,
-    'gauri-shankar': `${baseUrl}/images/categories/gauri-shankar.jpg`,
-    'ganesha': `${baseUrl}/images/categories/ganesha.jpg`,
-    'trijuti': `${baseUrl}/images/categories/trijuti.jpg`,
-    'garbha-gauri': `${baseUrl}/images/categories/garbha-gauri.jpg`,
+    '1-mukhi': ekmukhi,
+    '2-mukhi': domukhi,
+    '3-mukhi': teenmukhi,
+    '4-mukhi': charmukhi,
+    '5-mukhi': pachmukhi,
+    '6-mukhi': sixmukhi,
+    '7-mukhi': satmukhi,
+    '8-mukhi': eightmukhi,
+    '9-mukhi': ninemukhi,
+    '10-mukhi': dasmukhi,
+    '11-mukhi': elevenmukhi,
+    '12-mukhi': baramukhi,
+    '13-mukhi': teramukhi,
+    '14-mukhi': chaudamukhi,
+    'gauri-shankar': gaurishankar,
+    'ganesha': ganesha,
+    //'trijuti': `${baseUrl}/images/categories/trijuti.jpg`,
+    //'garbha-gauri': `${baseUrl}/images/categories/garbha-gauri.jpg`,
   };
 
   const allMobileCategories = useMemo(() => {

@@ -7,7 +7,7 @@ import Categories from "./Categories";
 import Loader from "./General/Loader";
 import NewArrivals from "./NewArrivals";
 import NewCategories from "./NewCategories";
-
+import FAQ from "./faq";
 const Home = () => {
   const [isLoading, setLoading] = useState(true);
 
@@ -42,6 +42,8 @@ const Home = () => {
           <Categories/>
           <NewCategories />
           <Testimonials />
+          <FAQ />
+          
         </>
       )}
     </>

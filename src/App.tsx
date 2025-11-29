@@ -6,8 +6,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AboutUs from "./components/AboutUs";
 import Auth from "./components/Auth";
 import Blogs from "./components/Blogs";
+import BooksPage from "./components/BooksPage";
 import LifeCalPage from "./components/Calculator/LifeCalPage";
 import LuckyStoneCalculator from "./components/Calculator/LuckyStoneCalculator";
+import HealthStoneCalculator from "./components/Calculator/HealthStoneCalculator";
+import GemstoneReportGenerator from "./components/Calculator/GemstoneReportGenerator";
 import CheckoutPage from "./components/Checkout/checkout_page";
 import ContactUs from "./components/ContactUs";
 import GemstonesPage from "./components/gemstones-category-page";
@@ -54,12 +57,11 @@ const App = () => (
           <Route path="gem-view/:id" element={<ProductDetailView category= "gemstone"/>}/>
           <Route path="rudraksha" element= {<RudrakshPage/>}/>
           <Route path="rudra-view/:id" element={<ProductDetailView category= "rudraksha"/>}/>
-
+          <Route path="/books"element ={<BooksPage/>}/>
           <Route path="mala" element={<Mala_listing/>} />
           <Route path="bracelet" element={<Mala_listing/>} />
           <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="mala"/>}/>
           <Route path="/payment-status/:id" element= {<PaymentStatusPage/>}/>
-          {/* <Route path="/books"element ={<BooksPage/>}/> */}
           <Route path="/tribhuvani" element ={<TribhuvaniPage/>}/>
           <Route path ="/tribhuvani-view/:id" element= {<ProductDetailView category="tribhuvani"/>}/>
           
@@ -68,7 +70,9 @@ const App = () => (
           {/*------------- Calculators------------------- */}
           <Route path = "/life-calculator" element={<LifeCalPage/>}/>
           <Route path="lucky-stone-calculator" element={<LuckyStoneCalculator />} />
-
+          <Route path="health-stone-calculator" element={<HealthStoneCalculator />} />
+          <Route path="report" element={<GemstoneReportGenerator />} />
+ 
 
           {/*------------- Policies & Terms and Info pages------------------- */}
           <Route path= "/about-us" element={<AboutUs/>}/>
