@@ -5,8 +5,10 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from './General/Loader';
 import Product_card from './Product_card';
-import ekmukhi from '@/assets/1 mukhi.png';
-
+import carer  from '@/assets/career (2).png';
+import love from '@/assets/love life.png';
+import health from '@/assets/health.png';
+import finance from '@/assets/finance.png';
 const Mala_listing = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -47,11 +49,10 @@ const Mala_listing = () => {
   }, [selectedCategory]);
 
   const categories = [
-    { key: 'career', label: 'Career', image: ekmukhi },
-    { key: 'education', label: 'Education', image: null },
-    { key: 'love life', label: 'Love Life', image: null },
-    { key: 'finance', label: 'Finance', image: null },
-    { key: 'health', label: 'Health', image: null }
+    { key: 'career', label: 'Career', image: carer },
+    { key: 'love life', label: 'Love Life', image: love },
+    { key: 'finance', label: 'Finance', image: finance },
+    { key: 'health', label: 'Health', image: health }
   ];
 
   const allMobileCategories = useMemo(() => {
