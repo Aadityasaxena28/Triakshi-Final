@@ -73,33 +73,33 @@ const TribhuvaniPage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-orange-50">
         <div className="text-center">
-          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32 mb-4 mx-auto"></div>
-          <h2 className="text-xl font-semibold text-gray-700">Loading Products...</h2>
-          <p className="text-gray-500">Please wait while we fetch the best Tribhuvani items for you.</p>
+          <div className="loader ease-linear rounded-full border-8 border-t-8 border-orange-200 h-32 w-32 mb-4 mx-auto"></div>
+          <h2 className="text-xl font-semibold text-orange-900">Loading Products...</h2>
+          <p className="text-orange-600">Please wait while we fetch the best Tribhuvani items for you.</p>
         </div>
       </div>
     );
   } else if (isError) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-orange-50">
         <div className="text-center">
           <XCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-gray-700">Failed to Load Products</h2>
-          <p className="text-gray-500">There was an error fetching the products. Please try again later.</p>
+          <h2 className="text-xl font-semibold text-orange-900">Failed to Load Products</h2>
+          <p className="text-orange-600">There was an error fetching the products. Please try again later.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-8 px-6 shadow-lg">
+    <div className="min-h-screen bg-orange-50">
+      {/* Header - Orange Gradient matching the image */}
+      <div className="bg-gradient-to-r from-orange-500 via-orange-400 to-yellow-400 text-white py-8 px-6 shadow-lg">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl font-bold mb-2">Tribhuvani Collection</h1>
-          <p className="text-purple-50">Discover sacred items for spiritual awakening and divine blessings</p>
+          <p className="text-orange-50">Discover sacred items for spiritual awakening and divine blessings</p>
         </div>
       </div>
 
@@ -107,9 +107,9 @@ const TribhuvaniPage = () => {
         <div className="flex gap-8">
           {/* Sidebar Filter */}
           <aside className="w-64 bg-white rounded-2xl shadow-card sticky top-8 h-[calc(100vh-6rem)] flex flex-col">
-            <div className="p-6 border-b border-gray-100">
-              <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                <Filter className="w-5 h-5 text-purple-500" />
+            <div className="p-6 border-b border-orange-100">
+              <h2 className="text-xl font-bold text-orange-900 flex items-center gap-2">
+                <Filter className="w-5 h-5 text-orange-500" />
                 Filters
               </h2>
             </div>
@@ -118,13 +118,13 @@ const TribhuvaniPage = () => {
               {/* Search */}
               <div className="mb-6">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-400 w-4 h-4" />
                   <input
                     type="text"
                     placeholder="Search..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none"
+                    className="w-full pl-9 pr-3 py-2.5 text-sm border border-orange-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none"
                   />
                 </div>
               </div>
@@ -135,8 +135,8 @@ const TribhuvaniPage = () => {
                   onClick={() => setSelectedCategory('all')}
                   className={`w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                     selectedCategory === 'all'
-                      ? 'bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg'
-                      : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                      ? 'bg-gradient-to-r from-orange-500 to-yellow-400 text-white shadow-lg'
+                      : 'bg-orange-50 text-orange-900 hover:bg-orange-100'
                   }`}
                 >
                   All Tribhuvani Items
@@ -151,8 +151,8 @@ const TribhuvaniPage = () => {
                     onClick={() => setSelectedCategory(category.key)}
                     className={`w-full text-left px-3 py-2.5 rounded-lg text-xs transition-all ${
                       selectedCategory === category.key
-                        ? 'bg-purple-100 text-purple-800 font-semibold'
-                        : 'text-gray-600 hover:bg-gray-50'
+                        ? 'bg-orange-100 text-orange-800 font-semibold'
+                        : 'text-orange-700 hover:bg-orange-50'
                     }`}
                   >
                     {category.label}
@@ -166,12 +166,12 @@ const TribhuvaniPage = () => {
           <main className="flex-1">
             {/* Results Header */}
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">
+              <h2 className="text-2xl font-bold text-orange-900">
                 {selectedCategory === 'all'
                   ? 'All Tribhuvani Items'
                   : categories.find(c => c.key === selectedCategory)?.label}
               </h2>
-              <span className="text-gray-600">{filteredProducts.length} products</span>
+              <span className="text-orange-700">{filteredProducts.length} products</span>
             </div>
 
             {/* Products Grid */}
@@ -188,11 +188,11 @@ const TribhuvaniPage = () => {
               </div>
             ) : (
               <div className="text-center py-16">
-                <div className="text-gray-400 mb-4">
+                <div className="text-orange-300 mb-4">
                   <Search className="w-16 h-16 mx-auto" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-700 mb-2">No products found</h3>
-                <p className="text-gray-500">Try adjusting your filters or search query</p>
+                <h3 className="text-xl font-semibold text-orange-900 mb-2">No products found</h3>
+                <p className="text-orange-600">Try adjusting your filters or search query</p>
               </div>
             )}
           </main>
