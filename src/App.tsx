@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AboutUs from "./components/AboutUs";
 import Auth from "./components/Auth";
 import Blogs from "./components/Blogs";
+import BooksPage from "./components/BooksPage";
 import LifeCalPage from "./components/Calculator/LifeCalPage";
 import LuckyStoneCalculator from "./components/Calculator/LuckyStoneCalculator";
 import HealthStoneCalculator from "./components/Calculator/HealthStoneCalculator";
@@ -61,7 +62,7 @@ const App = () => (
           <Route path="bracelet" element={<Mala_listing/>} />
           <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="mala"/>}/>
           <Route path="/payment-status/:id" element= {<PaymentStatusPage/>}/>
-          {/* <Route path="/books"element ={<BooksPage/>}/> */}
+          <Route path="/books"element ={<BooksPage/>}/>
           <Route path="/tribhuvani" element ={<TribhuvaniPage/>}/>
           <Route path ="/tribhuvani-view/:id" element= {<ProductDetailView category="tribhuvani"/>}/>
           
