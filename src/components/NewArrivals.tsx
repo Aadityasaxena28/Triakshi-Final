@@ -77,12 +77,16 @@ const NewArrivals = () => {
   };
 
   const handleViewDetails = (product: Product) => {
-    if (product.category === 'gemstone') {
-      navigate(`/gemstone/${product.id}`);
-    } else if (product.category === 'mala' || product.category === 'bracelet') {
+    console.log('Viewing details for:', product);
+    if (product.category.toLowerCase() === 'gemstone'||product.category.toLowerCase() === 'gemstones') {
+      navigate(`/gem-view/${product.id}`);
+    } else if (product.category.toLowerCase() === 'mala' || product.category === 'bracelet') {
       navigate(`/mala-brace-view/${product.id}`);
-    } else {
-      navigate(`/product/${product.id}`);
+    } else if (product.category.toLowerCase() === 'rudraksha' ){
+      navigate(`/rudra-view/${product.id}`);
+    }
+    else {
+      navigate(`/rudra-view/${product.id}`);
     }
   };
 
