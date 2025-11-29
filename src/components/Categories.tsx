@@ -52,13 +52,45 @@ const Categories = () => {
       link: "/lucky-store"
     },
     {
-      title: "Health Calculator",
+      title: "Health Stone Calculator",
       description: "Personalized recommendations based on your birth chart",
       image: healthCalculatorImg,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
       link: "/life-calculator"
-    }
+    },
+    {
+      title: "Life Stone Calculator",
+      description: "Personalized recommendations based on your birth chart",
+      image: healthCalculatorImg,
+      icon: Calculator,
+      color: "from-amber-500 to-orange-600",
+      link: "/life-calculator"
+    },
+    {
+      title: "Gemstone report Calculator",
+      description: "Personalized recommendations based on your birth chart",
+      image: healthCalculatorImg,
+      icon: Calculator,
+      color: "from-amber-500 to-orange-600",
+      link: "/life-calculator"
+    },
+    {
+      title: "Yantra",
+      description: "Personalized recommendations based on your birth chart",
+      image: healthCalculatorImg,
+      icon: Calculator,
+      color: "from-amber-500 to-orange-600",
+      link: "/life-calculator"
+    },
+    {
+      title: "Tribhuvani",
+      description: "Personalized recommendations based on your birth chart",
+      image: healthCalculatorImg,
+      icon: Calculator,
+      color: "from-amber-500 to-orange-600",
+      link: "/life-calculator"
+    },
   ];
   const navigate = useNavigate();
   const handleExplore = (link:string)=>{
