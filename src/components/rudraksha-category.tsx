@@ -297,7 +297,7 @@ const RudrakshPage = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
             <div className="flex gap-8">
               {/* Desktop Sidebar Filter - FIXED WITH PROPER SCROLLING */}
-              <aside className="hidden lg:block w-64 bg-white rounded-2xl shadow-card sticky top-8 h-[calc(100vh-6rem)] flex flex-col">
+              <aside className="hidden lg:block w-64 bg-white rounded-2xl shadow-card sticky top-8 flex flex-col" style={{ height: 'calc(100vh - 4rem)', maxHeight: '600px' }}>
                 {/* Fixed Header */}
                 <div className="p-6 border-b border-gray-100 flex-shrink-0">
                   <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
@@ -307,7 +307,7 @@ const RudrakshPage = () => {
                 </div>
                 
                 {/* Fixed Search Box */}
-                <div className="p-6 pb-4 flex-shrink-0">
+                <div className="px-6 pt-4 pb-3 flex-shrink-0">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                     <input
@@ -321,7 +321,7 @@ const RudrakshPage = () => {
                 </div>
 
                 {/* Scrollable Category List */}
-                <div className="flex-1 overflow-y-auto px-6 pb-6 custom-scrollbar">
+                <div className="flex-1 overflow-y-scroll px-6 pb-6 custom-scrollbar" style={{ minHeight: 0 }}>
                   <div className="mb-3">
                     <button
                       onClick={() => setSelectedCategory('all')}
@@ -335,7 +335,7 @@ const RudrakshPage = () => {
                     </button>
                   </div>
 
-                  <div className="space-y-1">
+                  <div className="space-y-1 pb-2">
                     {categories.map((category) => (
                       <button
                         key={category.key}
