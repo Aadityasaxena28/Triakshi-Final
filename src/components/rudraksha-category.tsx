@@ -20,7 +20,9 @@ import teramukhi from '@/assets/13 mukhi.png';
 import chaudamukhi from '@/assets/14 mukhi.png';
 import gaurishankar from '@/assets/Gauri Shankar.png';
 import ganesha from '@/assets/ganehsa.png';
-
+import trijuti from '@/assets/trijuti.webp';
+import navdurga from '@/assets/navdurga.webp';
+import laxmi from '@/assets/laxmi.webp';
 const RudrakshPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,7 +38,6 @@ const RudrakshPage = () => {
   const productCount = import.meta.env.VITE_product_count;
 
   const categories = [
-    { key: '1-mukhi', label: '1 Mukhi' },
     { key: '2-mukhi', label: '2 Mukhi' },
     { key: '3-mukhi', label: '3 Mukhi' },
     { key: '4-mukhi', label: '4 Mukhi' },
@@ -52,13 +53,14 @@ const RudrakshPage = () => {
     { key: '14-mukhi', label: '14 Mukhi' },
     { key: 'gauri-shankar', label: 'Gauri Shankar' },
     { key: 'ganesha', label: 'Ganesha' },
-    //{ key: 'trijuti', label: 'Trijuti' },
-    //{ key: 'garbha-gauri', label: 'Garbha Gauri' }
+    { key: 'trijuti', label: 'Trijuti Rudraksha' },
+    { key: 'navdurga', label: 'Navdurga Rudraksha' },
+    { key: 'laxmi', label: 'Laxmi Rudraksha' }
   ];
 
   const categoryImages = {
     all: null,
-    '1-mukhi': ekmukhi,
+    //'1-mukhi': ekmukhi,
     '2-mukhi': domukhi,
     '3-mukhi': teenmukhi,
     '4-mukhi': charmukhi,
@@ -74,7 +76,9 @@ const RudrakshPage = () => {
     '14-mukhi': chaudamukhi,
     'gauri-shankar': gaurishankar,
     'ganesha': ganesha,
-    //'trijuti': `${baseUrl}/images/categories/trijuti.jpg`,
+    'trijuti': trijuti,
+    'navdurga': navdurga,
+    'laxmi': laxmi,
     //'garbha-gauri': `${baseUrl}/images/categories/garbha-gauri.jpg`,
   };
 
