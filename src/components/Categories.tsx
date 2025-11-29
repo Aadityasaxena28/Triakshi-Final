@@ -91,6 +91,14 @@ const Categories = () => {
       color: "from-amber-500 to-orange-600",
       link: "/life-calculator"
     },
+    {
+      title: "Books",
+      description: "Personalized recommendations based on your birth chart",
+      image: healthCalculatorImg,
+      icon: Calculator,
+      color: "from-amber-500 to-orange-600",
+      link: "/life-calculator"
+    },
   ];
   const navigate = useNavigate();
   const handleExplore = (link:string)=>{
