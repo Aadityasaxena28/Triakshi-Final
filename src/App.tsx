@@ -57,12 +57,11 @@ const App = () => (
           <Route path="gem-view/:id" element={<ProductDetailView category= "gemstone"/>}/>
           <Route path="rudraksha" element= {<RudrakshPage/>}/>
           <Route path="rudra-view/:id" element={<ProductDetailView category= "rudraksha"/>}/>
-
+          <Route path="/books"element ={<BooksPage/>}/>
           <Route path="mala" element={<Mala_listing/>} />
           <Route path="bracelet" element={<Mala_listing/>} />
           <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="mala"/>}/>
           <Route path="/payment-status/:id" element= {<PaymentStatusPage/>}/>
-          <Route path="/books"element ={<BooksPage/>}/>
           <Route path="/tribhuvani" element ={<TribhuvaniPage/>}/>
           <Route path ="/tribhuvani-view/:id" element= {<ProductDetailView category="tribhuvani"/>}/>
           
