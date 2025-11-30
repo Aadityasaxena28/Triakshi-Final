@@ -4,6 +4,11 @@ import healthCalculatorImg from "@/assets/health.jpg";
 import lucky from "@/assets/lucky.jpg";
 import malaImg from "@/assets/mala-category.jpg";
 import rudrakshImg from "@/assets/rudraksha-category.jpg";
+import books from "@/assets/books.png";
+import life from "@/assets/life stone calcultor.png";
+import repor from "@/assets/gemstone report pic.png";
+import yantra from "@/assets/yantra.png";
+import tribh from "@/assets/tribhuvani incense.png";
 import { Button } from "@/components/ui/button";
 import { toastError } from "@/utlity/AlertSystem";
 import { Calculator, Circle, CircleDot, Gem, Heart, ShoppingBag, Sparkles } from "lucide-react";
@@ -49,7 +54,7 @@ const Categories = () => {
       image: lucky,
       icon: ShoppingBag,
       color: "from-yellow-500 to-orange-500",
-      link: "/lucky-store"
+      link: "/lucky-stone-calculator"
     },
     {
       title: "Health Stone Calculator",
@@ -57,12 +62,12 @@ const Categories = () => {
       image: healthCalculatorImg,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
-      link: "/life-calculator"
+      link: "/health-stone-calculator"
     },
     {
       title: "Life Stone Calculator",
       description: "Personalized recommendations based on your birth chart",
-      image: healthCalculatorImg,
+      image: life,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
       link: "/life-calculator"
@@ -70,34 +75,34 @@ const Categories = () => {
     {
       title: "Gemstone report Calculator",
       description: "Personalized recommendations based on your birth chart",
-      image: healthCalculatorImg,
+      image: repor,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
-      link: "/life-calculator"
+      link: "/report"
     },
     {
       title: "Yantra",
       description: "Personalized recommendations based on your birth chart",
-      image: healthCalculatorImg,
+      image: yantra,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
-      link: "/life-calculator"
+      link: "/yantra"
     },
     {
       title: "Tribhuvani",
       description: "Personalized recommendations based on your birth chart",
-      image: healthCalculatorImg,
+      image: tribh,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
-      link: "/life-calculator"
+      link: "/tribhuvani"
     },
     {
       title: "Books",
       description: "Personalized recommendations based on your birth chart",
-      image: healthCalculatorImg,
+      image: books,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
-      link: "/life-calculator"
+      link: "/books"
     },
   ];
   const navigate = useNavigate();
