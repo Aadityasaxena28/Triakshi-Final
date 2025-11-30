@@ -20,6 +20,9 @@ import teramukhi from '@/assets/13 mukhi.png';
 import chaudamukhi from '@/assets/14 mukhi.png';
 import gaurishankar from '@/assets/Gauri Shankar.png';
 import ganesha from '@/assets/ganehsa.png';
+import trijuti from '@/assets/trijuti.webp';
+import navdurga from '@/assets/navdurga.webp';
+import laxmi from '@/assets/laxmi.webp';
 
 const RudrakshPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -36,7 +39,6 @@ const RudrakshPage = () => {
   const productCount = import.meta.env.VITE_product_count;
 
   const categories = [
-    { key: '1-mukhi', label: '1 Mukhi' },
     { key: '2-mukhi', label: '2 Mukhi' },
     { key: '3-mukhi', label: '3 Mukhi' },
     { key: '4-mukhi', label: '4 Mukhi' },
@@ -52,13 +54,13 @@ const RudrakshPage = () => {
     { key: '14-mukhi', label: '14 Mukhi' },
     { key: 'gauri-shankar', label: 'Gauri Shankar' },
     { key: 'ganesha', label: 'Ganesha' },
-    //{ key: 'trijuti', label: 'Trijuti' },
-    //{ key: 'garbha-gauri', label: 'Garbha Gauri' }
+    { key: 'trijuti', label: 'Saraswati Rudraksha' },
+    { key: 'navdurga', label: 'Navdurga Rudraksha' },
+    { key: 'laxmi', label: 'Laxmi Rudraksha' }
   ];
 
   const categoryImages = {
     all: null,
-    '1-mukhi': ekmukhi,
     '2-mukhi': domukhi,
     '3-mukhi': teenmukhi,
     '4-mukhi': charmukhi,
@@ -74,8 +76,9 @@ const RudrakshPage = () => {
     '14-mukhi': chaudamukhi,
     'gauri-shankar': gaurishankar,
     'ganesha': ganesha,
-    //'trijuti': `${baseUrl}/images/categories/trijuti.jpg`,
-    //'garbha-gauri': `${baseUrl}/images/categories/garbha-gauri.jpg`,
+    'trijuti': trijuti,
+    'navdurga': navdurga,
+    'laxmi': laxmi,
   };
 
   const allMobileCategories = useMemo(() => {
@@ -293,30 +296,33 @@ const RudrakshPage = () => {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
             <div className="flex gap-8">
-              {/* Desktop Sidebar Filter */}
-              <aside className="hidden lg:block w-64 bg-white rounded-2xl shadow-card sticky top-8 h-[calc(100vh-6rem)] flex flex-col">
-                <div className="p-6 border-b border-gray-100">
+              {/* Desktop Sidebar Filter - FIXED WITH PROPER SCROLLING */}
+              <aside className="hidden lg:block w-64 bg-white rounded-2xl shadow-card sticky top-8 flex flex-col" style={{ height: 'calc(100vh - 4rem)', maxHeight: '600px' }}>
+                {/* Fixed Header */}
+                <div className="p-6 border-b border-gray-100 flex-shrink-0">
                   <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                     <Filter className="w-5 h-5 text-orange-500" />
                     Filters
                   </h2>
                 </div>
                 
-                <div className="flex-1 overflow-y-auto p-6">
-                  <div className="mb-6">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none"
-                      />
-                    </div>
+                {/* Fixed Search Box */}
+                <div className="px-6 pt-4 pb-3 flex-shrink-0">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none"
+                    />
                   </div>
+                </div>
 
-                  <div className="mb-4">
+                {/* Scrollable Category List */}
+                <div className="flex-1 overflow-y-scroll px-6 pb-6 custom-scrollbar" style={{ minHeight: 0 }}>
+                  <div className="mb-3">
                     <button
                       onClick={() => setSelectedCategory('all')}
                       className={`w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${
@@ -329,7 +335,7 @@ const RudrakshPage = () => {
                     </button>
                   </div>
 
-                  <div className="space-y-1">
+                  <div className="space-y-1 pb-2">
                     {categories.map((category) => (
                       <button
                         key={category.key}
@@ -474,6 +480,33 @@ const RudrakshPage = () => {
       <style>{`
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
+        }
+        
+        /* Custom scrollbar for desktop sidebar */
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 8px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #f8f9fa;
+          border-radius: 10px;
+          margin: 4px 0;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: linear-gradient(180deg, #fb923c 0%, #fbbf24 100%);
+          border-radius: 10px;
+          border: 2px solid #f8f9fa;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(180deg, #f97316 0%, #f59e0b 100%);
+        }
+        
+        /* For Firefox */
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: #fb923c #f8f9fa;
         }
       `}</style>
     </div>

@@ -58,6 +58,7 @@ const App = () => (
           <Route path="rudraksha" element= {<RudrakshPage/>}/>
           <Route path="rudra-view/:id" element={<ProductDetailView category= "rudraksha"/>}/>
           <Route path="/books"element ={<BooksPage/>}/>
+          <Route path="books-view/:id" element={<ProductDetailView category= "books"/>}/>
           <Route path="mala" element={<Mala_listing/>} />
           <Route path="bracelet" element={<Mala_listing/>} />
           <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="mala"/>}/>
