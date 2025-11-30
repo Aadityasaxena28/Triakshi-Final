@@ -20,7 +20,7 @@ const LuckyStoneCalculator: React.FC<Props> = () => {
 
   const navigate = useNavigate();
   const valid = useMemo(() => !!dob && !!tob && !!pob, [dob, tob, pob]);
-
+   
   // 🌍 Fetch autocomplete suggestions from OpenStreetMap (Nominatim)
   useEffect(() => {
     if (pob.length < 3) {

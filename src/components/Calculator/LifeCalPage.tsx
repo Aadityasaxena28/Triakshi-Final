@@ -7,6 +7,8 @@ import "./luckyStoneCalculator.css"; // keep same file, or rename if you want
 
 interface Props {}
 
+
+
 const LifeStoneCalculator: React.FC<Props> = () => {
   const [dob, setDob] = useState("");
   const [tob, setTob] = useState("");
