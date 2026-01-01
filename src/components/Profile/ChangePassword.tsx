@@ -1,3 +1,5 @@
+import { changePassParams, changePasswordAPI } from "@/API/Profile";
+import { toastError, toastInfo } from "@/utlity/AlertSystem";
 import { useState } from "react";
 
 const ChangePassword = () => {
@@ -9,11 +11,26 @@ const ChangePassword = () => {
   const [passwordSaved, setPasswordSaved] = useState(false);
   
 
-  const handlePasswordSave = () => {
-    if (passwordData.new && passwordData.new === passwordData.confirm) {
-      setPasswordSaved(true);
-      setPasswordData({ current: '', new: '', confirm: '' });
-      setTimeout(() => setPasswordSaved(false), 3000);
+  const handlePasswordSave = async () => {
+    try {
+      if (passwordData.new && passwordData.new === passwordData.confirm) {
+        const data:changePassParams={
+          oldPass: passwordData.current,
+          newPass: passwordData.new
+        }
+        const changePassApi = await changePasswordAPI(data);
+        
+          setPasswordSaved(true);
+          setPasswordData({ current: '', new: '', confirm: '' });
+          setTimeout(() => setPasswordSaved(false), 2000);
+
+      }
+
+      else{
+        toastInfo("New Password And Confirm Password Don't Match.")
+      }
+    } catch (error) {
+      toastError("Failed To Change Password.\nPlease Try Again");
     }
   };
   return (

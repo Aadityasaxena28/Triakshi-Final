@@ -29,3 +29,13 @@ export async function updateProfile(params: Omit<UserProfile, "id">) {
     throw new Error(err?.message || "Failed to update profile");
   }
 }
+export type changePassParams = {
+  oldPass: string;
+  newPass:string;
+}
+export async function changePasswordAPI(params:changePassParams) {
+  const resp = await api.put("/api/users/change-password",params)
+  const payload = resp.data;
+  if(!payload.success) return Promise.reject(payload.message);
+  return payload;
+}
