@@ -4,13 +4,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AboutUs from "./components/AboutUs";
-import Auth from "./components/Auth";
+import Auth from "./components/Auth/Auth";
+import ResetPasswordPage from "./components/Auth/ResetPassword";
 import Blogs from "./components/Blogs";
 import BooksPage from "./components/BooksPage";
+import GemstoneReportGenerator from "./components/Calculator/GemstoneReportGenerator";
+import HealthStoneCalculator from "./components/Calculator/HealthStoneCalculator";
 import LifeCalPage from "./components/Calculator/LifeCalPage";
 import LuckyStoneCalculator from "./components/Calculator/LuckyStoneCalculator";
-import HealthStoneCalculator from "./components/Calculator/HealthStoneCalculator";
-import GemstoneReportGenerator from "./components/Calculator/GemstoneReportGenerator";
 import CheckoutPage from "./components/Checkout/checkout_page";
 import ContactUs from "./components/ContactUs";
 import GemstonesPage from "./components/gemstones-category-page";
@@ -48,7 +49,8 @@ const App = () => (
         {/* --------------Authentication Pages -----------------*/}
         <Route path="/login" element={<Auth  state="login"/>} />
         <Route path="/signup" element={<Auth  state="signup"/>} />
-
+        <Route path="/reset-password" element={<ResetPasswordPage/>}/>
+        
           {/* --------------Main Pages-------------------- */}
           <Route path="/" element={<Index />} >
           <Route path="" element={<Home />} />
