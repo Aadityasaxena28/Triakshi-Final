@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "./Auth.css";
 import ForgetPassword from "./ForgetPassword";
 import Login from "./Login";
-import Signup from "./Signup";
+import Signup from "./SignUp";
 
 type props = {
   state: string;
