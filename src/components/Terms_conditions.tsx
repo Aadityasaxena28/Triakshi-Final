@@ -10,6 +10,7 @@ export default function TermsConditions() {
     setAnimateCards(true);
   }, []);
 
+  
   const toggleSection = (id) => {
     setExpandedSections(prev => ({
       ...prev,
