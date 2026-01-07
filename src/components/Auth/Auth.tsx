@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "./Auth.css";
 import ForgetPassword from "./ForgetPassword";
 import Login from "./Login";
-import Signup from "./SignUp";
+import SignUp from "./SignUp";
 
 type props = {
   state: string;
@@ -90,7 +90,7 @@ const Auth: React.FC<props> = ({ state }) => {
           onForgetPassword={handleForgetPassword}
         />
 
-        <Signup 
+        <SignUp 
           isActive={activeTab === "signup"}
           isLoading={isSignupLoading}
           setIsLoading={setIsSignupLoading}

@@ -150,7 +150,7 @@
   text-align: center;
   margin-top: 20px;
 }
-
+/* 
 .auth-forgot-link a {
   color: #d97706;
   text-decoration: none;
@@ -160,7 +160,7 @@
 
 .auth-forgot-link a:hover {
   text-decoration: underline;
-}
+} */
 
 /* Spinner animation */
 .auth-spinner {
@@ -213,13 +213,14 @@
 
 /* Text button styling (for back to login) */
 .auth-text-btn {
+  color: #d97706;
+  text-decoration: none;
+  font-weight: 500;
   background: none;
   border: none;
-  color: #8b5cf6;
   cursor: pointer;
   font-size: 0.9rem;
   padding: 0;
-  text-decoration: none;
   transition: color 0.3s ease;
 }
 
