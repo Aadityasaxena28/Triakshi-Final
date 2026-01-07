@@ -6,6 +6,7 @@ import ForgetPassword from "./ForgetPassword";
 import Login from "./Login";
 import SignUp from "./SignUp";
 
+
 type props = {
   state: string;
 };
