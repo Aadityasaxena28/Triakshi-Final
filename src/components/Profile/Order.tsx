@@ -30,10 +30,11 @@ interface DisplayOrder {
 function transformBillToOrder(bill: IBill): DisplayOrder {
   // Map payment status to delivery status
   const getStatus = (billStatus: string, transaction: ITransaction | null): OrderStatus => {
-    if (billStatus === 'delivered') return 'delivered';
-    if (billStatus === 'dispatched') return 'dispatched';
-    if (billStatus === 'not_paid' ) return 'pending';
-    if(billStatus== "yet to be dispatched"||billStatus=="paid") return "yet to be dispatched";
+    const status= billStatus.toLowerCase();
+    if (status === 'delivered') return 'delivered';
+    if (status === 'dispatched') return 'dispatched';
+    if (status === 'not_paid' ) return 'pending';
+    if(status=== "yet to be dispatched"||status==="paid") return "yet to be dispatched";
     return 'pending';
   };
 
