@@ -20,7 +20,12 @@ const LuckyStoneCalculator: React.FC<Props> = () => {
 
   const navigate = useNavigate();
   const valid = useMemo(() => !!dob && !!tob && !!pob, [dob, tob, pob]);
-   
+  
+  // 🔼 SCROLL TO TOP ON ROUTE LOAD (ONLY ADDITION)
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
   // 🌍 Fetch autocomplete suggestions from OpenStreetMap (Nominatim)
   useEffect(() => {
     if (pob.length < 3) {
