@@ -10,6 +10,7 @@ import repor from "@/assets/gemstone report pic.png";
 import yantra from "@/assets/yantra.png";
 import tribh from "@/assets/tribhuvani incense.png";
 import blog from "@/assets/blogpic.png";
+import luckystone from "@/assets/luckstone.png";
 import { Button } from "@/components/ui/button";
 import { toastError } from "@/utlity/AlertSystem";
 import { Calculator, Circle, CircleDot, Gem, Heart, ShoppingBag, Sparkles } from "lucide-react";
@@ -52,7 +53,7 @@ const Categories = () => {
     {
       title: "Lucky Gemstone",
       description: "Personalized Lucky Gemstone recommendations based on your birth chart",
-      image: lucky,
+      image: luckystone,
       icon: ShoppingBag,
       color: "from-yellow-500 to-orange-500",
       link: "/lucky-stone-calculator"
