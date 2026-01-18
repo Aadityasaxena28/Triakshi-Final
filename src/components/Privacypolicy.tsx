@@ -28,7 +28,7 @@ export default function PrivacyPolicy() {
         {
           subtitle: "Personal Information",
           description:
-            "We may collect personal details that you voluntarily provide when booking a consultation or astrology session, submitting a contact form, subscribing to our newsletter, or making a purchase.",
+            "We may collect personal details while processing gemstone reports or recommendations as per different calculators.",
           details: [
             "Full name",
             "Email address",
@@ -55,7 +55,7 @@ export default function PrivacyPolicy() {
       title: "How We Use Your Information",
       color: "from-orange-400/20 to-red-500/10",
       usage: [
-        "Provide personalized astrology services and consultations",
+        "Provide personalized gemstone recommendations",
         "Respond to your inquiries and support needs",
         "Send you confirmations, updates, and newsletters (with your consent)",
         "Analyze and improve our website's performance and user experience",
@@ -150,7 +150,7 @@ export default function PrivacyPolicy() {
             <p className="text-amber-50 text-lg leading-relaxed">
               Welcome to{" "}
               <span className="font-bold text-yellow-300">
-                astroashoknarayan.com
+                triakshi.co.in
               </span>{" "}
               ("we", "our", "us"). We respect your privacy and are committed to
               protecting the personal information you share with us. This Privacy

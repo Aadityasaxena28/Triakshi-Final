@@ -24,7 +24,7 @@ export default function TermsConditions() {
       icon: "⚡",
       title: "Services Provided",
       color: "from-yellow-400/20 to-orange-500/10",
-      content: "We offer astrological content, readings, consultations, and related services for informational and entertainment purposes only. Our services do not constitute medical, legal, or financial advice."
+      content: "We offer personlized gemstone recommendation. Our services do not constitute medical, legal, or financial advice."
     },
     {
       id: 2,
@@ -124,10 +124,10 @@ export default function TermsConditions() {
         <div className="max-w-4xl mx-auto px-6 mb-12">
           <div className="bg-gradient-to-br from-orange-900/50 to-red-900/50 backdrop-blur-sm border-2 border-yellow-400/30 rounded-2xl p-10 shadow-2xl">
             <p className="text-amber-50 text-lg leading-relaxed mb-4">
-              Welcome to our website <span className="font-bold text-yellow-300">astroashoknarayan.com</span>. 
+              Welcome to our website <span className="font-bold text-yellow-300">triakshi.co.in</span>. 
             </p>
             <p className="text-amber-100 text-lg leading-relaxed">
-              By accessing or using our website located at <span className="font-bold text-orange-200">https://astroashoknarayan.com</span> (the "Site"), you agree to be bound by these Terms and Conditions (the "Terms"). Please read them carefully before using our services.
+              By accessing or using our website located at <span className="font-bold text-orange-200">triakshi.co.in</span> (the "Site"), you agree to be bound by these Terms and Conditions (the "Terms"). Please read them carefully before using our services.
             </p>
           </div>
         </div>
