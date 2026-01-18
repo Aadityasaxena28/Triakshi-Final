@@ -30,7 +30,7 @@ const Footer = () => {
     legal: [
       { name: "Privacy Policy", href: "/privacy-policy" },
       { name: "Terms And Conditions", href: "/terms-&-conditions" },
-      { name: "Shippingpolicy", href: "/Shippingpolicy" },
+      { name: "Shipping Policy", href: "/Shippingpolicy" },
       { name: "Refund Policy", href: "/refund-policy" }
     ]
   };
