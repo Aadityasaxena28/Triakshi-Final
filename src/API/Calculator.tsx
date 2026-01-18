@@ -46,7 +46,7 @@ const LORD_TO_STONE = {
   Mars: 'Red Coral',
   Mercury: 'Emerald',
   Jupiter: 'Yellow Sapphire',
-  Venus: 'Diamond',
+  Venus: 'Opal',
   Saturn: 'Blue Sapphire',
   Rahu: 'Hessonite (Gomed)',
   Ketu: "Cat’s Eye (Lehsunia)",
