@@ -69,3 +69,16 @@ export async function TokenValidation(token:string) {
     throw new Error("Something went wrong while validating token")
   }
 }
+
+
+export async function ForgetPasswordAPI(email:string){
+  try {
+    const redirectLink = `${window.location.origin}/reset-password`;
+    const resp = await api.put("/api/users/forget-password",{email,redirectLink});
+    const payload = resp.data;
+    if(!payload.success) return Promise.reject(payload.message);
+    return payload;
+  } catch (error) {
+    throw new Error("Something went wrong while requesting password reset")
+  }
+}

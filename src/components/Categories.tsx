@@ -9,6 +9,7 @@ import life from "@/assets/life stone calcultor.png";
 import repor from "@/assets/gemstone report pic.png";
 import yantra from "@/assets/yantra.png";
 import tribh from "@/assets/tribhuvani incense.png";
+import blog from "@/assets/blogpic.png";
 import { Button } from "@/components/ui/button";
 import { toastError } from "@/utlity/AlertSystem";
 import { Calculator, Circle, CircleDot, Gem, Heart, ShoppingBag, Sparkles } from "lucide-react";
@@ -50,7 +51,7 @@ const Categories = () => {
     },
     {
       title: "Lucky Gemstone",
-      description: "Feng shui items and lucky charms for prosperity",
+      description: "Personalized Lucky Gemstone recommendations based on your birth chart",
       image: lucky,
       icon: ShoppingBag,
       color: "from-yellow-500 to-orange-500",
@@ -58,7 +59,7 @@ const Categories = () => {
     },
     {
       title: "Health Stone Calculator",
-      description: "Personalized recommendations based on your birth chart",
+      description: "Personalized Health Stone recommendations based on your birth chart",
       image: healthCalculatorImg,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
@@ -66,7 +67,7 @@ const Categories = () => {
     },
     {
       title: "Life Stone Calculator",
-      description: "Personalized recommendations based on your birth chart",
+      description: "Personalized Life Stone recommendations based on your birth chart",
       image: life,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
@@ -74,7 +75,7 @@ const Categories = () => {
     },
     {
       title: "Gemstone report Calculator",
-      description: "Personalized recommendations based on your birth chart",
+      description: "Personalized Gemstone report recommendations based on your birth chart",
       image: repor,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
@@ -82,7 +83,7 @@ const Categories = () => {
     },
     {
       title: "Yantra",
-      description: "Personalized recommendations based on your birth chart",
+      description: "Magical Vastu Yantras to turn around your life",
       image: yantra,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
@@ -90,7 +91,7 @@ const Categories = () => {
     },
     {
       title: "Tribhuvani",
-      description: "Personalized recommendations based on your birth chart",
+      description: "Pure incense, kapoor and essential oils",
       image: tribh,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
@@ -98,11 +99,19 @@ const Categories = () => {
     },
     {
       title: "Books",
-      description: "Personalized recommendations based on your birth chart",
+      description: "Astrology and vastu books by Acharya Ashok Narayan",
       image: books,
       icon: Calculator,
       color: "from-amber-500 to-orange-600",
       link: "/books"
+    },
+    {
+      title: "Triakshi Blogs",
+      description: "Blogs by Triakshi",
+      image: blog,
+      icon: Calculator,
+      color: "from-amber-500 to-orange-600",
+      link: "/blogs"
     },
   ];
   const navigate = useNavigate();

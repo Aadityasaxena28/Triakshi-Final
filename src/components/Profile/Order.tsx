@@ -6,7 +6,7 @@ import "./Order.css";
 
 
 // Frontend display types
-type OrderStatus = "delivered" | "dispatched" | "pending";
+type OrderStatus = "delivered" | "dispatched" | "pending"|"yet to be dispatched";
 
 interface DisplayOrder {
   id: string;
@@ -30,15 +30,12 @@ interface DisplayOrder {
 function transformBillToOrder(bill: IBill): DisplayOrder {
   // Map payment status to delivery status
   const getStatus = (billStatus: string, transaction: ITransaction | null): OrderStatus => {
-    if (billStatus === 'paid' && transaction?.paidAt) {
-      const paidDate = new Date(transaction.paidAt);
-      const daysSincePaid = Math.floor((Date.now() - paidDate.getTime()) / (1000 * 60 * 60 * 24));
-      
-      if (daysSincePaid >= 5) return "delivered";
-      if (daysSincePaid >= 1) return "dispatched";
-      return "pending";
-    }
-    return "pending";
+    const status= billStatus.toLowerCase();
+    if (status === 'delivered') return 'delivered';
+    if (status === 'dispatched') return 'dispatched';
+    if (status === 'not_paid' ) return 'pending';
+    if(status=== "yet to be dispatched"||status==="paid") return "yet to be dispatched";
+    return 'pending';
   };
 
   // Calculate delivery date
@@ -84,12 +81,15 @@ const statusClassMap: Record<OrderStatus, string> = {
   delivered: "status-delivered",
   dispatched: "status-dispatched",
   pending: "status-pending",
+  "yet to be dispatched": "status-pending"
+
 };
 
 const statusTextMap: Record<OrderStatus, string> = {
   delivered: "Delivered",
   dispatched: "Dispatched",
-  pending: "Yet to be Dispatched",
+  pending: "Pending",
+  "yet to be dispatched": "Yet to be dispatched"
 };
 
 const Order = () => {
