@@ -104,7 +104,7 @@ export default function ReturnsRefundPolicy() {
             <ShieldAlert className="w-12 h-12 text-yellow-300" />
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-orange-200 to-red-200 mb-4">
-            Returns & Refund Policy
+            Returns & Exchange Policy
           </h1>
           <p className="text-xl text-amber-100 font-semibold">
             Quality Assurance & Customer Care
