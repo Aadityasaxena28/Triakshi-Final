@@ -33,7 +33,7 @@ export async function getProducts({page=0,category="gemstone",type="all", produc
 
 export async function getProductById(id: string):Promise<Product> {
   try{ 
-    console.log("Fetching product with ID:", id);
+    // console.log("Fetching product with ID:", id);
     const {data} = await api.get<RawProduct>(`/api/products/products/${id}`);
     if(!data.isOkay){
       throw new Error("Failed to fetch product by ID");
