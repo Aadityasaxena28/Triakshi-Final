@@ -85,6 +85,13 @@ const ProductSlider = () => {
     } else if (product.category.toLowerCase() === 'rudraksha' ){
       navigate(`/rudra-view/${product.id}`);
     }
+      else if (product.category.toLowerCase() === 'yantra' ){
+      navigate(`/rudra-view/${product.id}`);
+    } else if (product.category.toLowerCase() === 'books' ){
+      navigate(`/rudra-view/${product.id}`);
+    } else if (product.category.toLowerCase() === 'tribhuvani' ){
+      navigate(`/rudra-view/${product.id}`);
+    }
     else {
       navigate(`/rudra-view/${product.id}`);
     }
