@@ -13,13 +13,13 @@ const Footer = () => {
       { name: "Gemstones", href: "/gemstones" },
       { name: "Natural Rudraksh", href: "/rudraksha" },
       { name: "Mala & bracelets", href: "/mala" },
-      { name: "Yantra", href: "/rudraksha" },
-      { name: "Tribhuvani", href: "/rudraksha" },
-      { name: "Life Stone Calculator", href: "/rudraksha" },
-      { name: "Health Stone calculator", href: "/rudraksha" },
-      { name: "Lucky Stone calculator", href: "/rudraksha" },
-      { name: "Personalized Gemstone Report", href: "/lucky-store" },
-      { name: "Books", href: "/BooksPage" }
+      { name: "Yantra", href: "/yantra" },
+      { name: "Tribhuvani", href: "/tribhuvani" },
+      { name: "Life Stone Calculator", href: "/life-calculator" },
+      { name: "Health Stone calculator", href: "/health-stone-calculator" },
+      { name: "Lucky Stone calculator", href: "/lucky-stone-calculator" },
+      { name: "Personalized Gemstone Report", href: "/report" },
+      { name: "Books", href: "/books" }
     ],
     support: [
       { name: "Contact Us", href: "/contact-us" },
