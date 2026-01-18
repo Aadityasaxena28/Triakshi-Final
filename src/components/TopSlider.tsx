@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import freead from "@/assets/freead.jpeg";
-
+import newad from "@/assets/newadd.png";
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -15,7 +15,7 @@ const TopSlider = () => {
     {
       id: 0,
       type: "promo",
-      image: freead,
+      image: newad,
       bgColor: "#d9853b",
       link: "https://triakshi.co.in/rudra-view/692b703a09e2057af820b27f",
     },
