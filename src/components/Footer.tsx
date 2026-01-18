@@ -12,7 +12,7 @@ const Footer = () => {
     products: [
       { name: "Gemstones", href: "/gemstones" },
       { name: "Natural Rudraksh", href: "/rudraksha" },
-      { name: "Mala & bracelets", href: "/rudraksha" },
+      { name: "Mala & bracelets", href: "/mala" },
       { name: "Yantra", href: "/rudraksha" },
       { name: "Tribhuvani", href: "/rudraksha" },
       { name: "Life Stone Calculator", href: "/rudraksha" },
