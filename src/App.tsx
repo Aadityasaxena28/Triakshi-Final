@@ -30,6 +30,7 @@ import TribhuvaniPage from "./components/tribhuvani-page";
 import YantraPage from "./components/YantraPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import ReturnsRefundPolicy from "./components/returns_refund_policy";
 
 
 const queryClient = new QueryClient();
@@ -85,7 +86,7 @@ const App = () => (
           <Route path="contact-us" element={<ContactUs/>}/>
           <Route path="/blogs" element={<Blogs/>} />
           <Route path="/Shippingpolicy" element={<ShippingPolicy/>}/>
- 
+          <Route path="/return" element={<ReturnsRefundPolicy/>}/>
 
           {/* --------------Protected Pages-------------------- */}
           <Route element={<RequireAuth/>}>
