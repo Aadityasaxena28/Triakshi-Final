@@ -113,7 +113,7 @@ const TopSlider = () => {
                   />
                   
                   {/* Interactive Button Overlay */}
-                  <div className="absolute inset-0 flex items-end justify-center pb-[3%] sm:pb-[4%] md:pb-[5%]">
+                  <div className="absolute inset-0 flex items-end justify-center pb-2 sm:pb-3 md:pb-4">
                     <Button
                       onClick={handlePromoClick}
                       className="relative group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-600 text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl px-6 sm:px-8 md:px-10 lg:px-12 py-3 sm:py-4 md:py-5 lg:py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-amber-500/50 animate-bounce-subtle border-2 border-white/30"
