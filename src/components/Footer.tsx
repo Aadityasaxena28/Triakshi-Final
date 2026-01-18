@@ -11,9 +11,15 @@ const Footer = () => {
     ],
     products: [
       { name: "Gemstones", href: "/gemstones" },
-      { name: "Rudraksh", href: "/rudraksha" },
-      { name: "Lucky Store", href: "/lucky-store" },
-      { name: "Health Calculator", href: "/health-calculator" }
+      { name: "Natural Rudraksh", href: "/rudraksha" },
+      { name: "Mala & bracelets", href: "/mala" },
+      { name: "Yantra", href: "/yantra" },
+      { name: "Tribhuvani", href: "/tribhuvani" },
+      { name: "Life Stone Calculator", href: "/life-calculator" },
+      { name: "Health Stone calculator", href: "/health-stone-calculator" },
+      { name: "Lucky Stone calculator", href: "/lucky-stone-calculator" },
+      { name: "Personalized Gemstone Report", href: "/report" },
+      { name: "Books", href: "/books" }
     ],
     support: [
       { name: "Contact Us", href: "/contact-us" },
@@ -24,7 +30,7 @@ const Footer = () => {
     legal: [
       { name: "Privacy Policy", href: "/privacy-policy" },
       { name: "Terms And Conditions", href: "/terms-&-conditions" },
-      { name: "Shippingpolicy", href: "/Shippingpolicy" },
+      { name: "Shipping Policy", href: "/Shippingpolicy" },
       { name: "Refund Policy", href: "/refund-policy" }
     ]
   };
