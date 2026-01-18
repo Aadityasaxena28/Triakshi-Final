@@ -367,14 +367,14 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
             <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
               <div
                 className={[
-                  "relative h-72 sm:h-96 bg-gradient-to-br flex items-center justify-center",
+                  "relative h-72 sm:h-96 bg-gradient-to-br flex items-center justify-center overflow-visible",
                   theme.bandFrom,
                   theme.bandVia ?? "",
                   theme.bandTo,
                 ].join(" ")}
               >
                 {discount > 0 && (
-                  <div className={`absolute top-2 right-2 sm:top-6 sm:right-6 ${theme.badgeWrap} ${theme.badgeText} px-2 py-1 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-lg font-bold shadow-lg z-10`}>
+                  <div className={`absolute top-4 right-4 sm:top-6 sm:right-6 ${theme.badgeWrap} ${theme.badgeText} px-2 py-1 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-lg font-bold shadow-lg z-30`}>
                     {discount}% OFF
                   </div>
                 )}

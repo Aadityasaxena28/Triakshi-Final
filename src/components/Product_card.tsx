@@ -146,10 +146,11 @@ const Product_card: React.FC<Props> = ({
     <div className="bg-white rounded-2xl shadow-card hover:shadow-elegant transition-all duration-300 hover:scale-105 overflow-hidden group">
       <div
         className={[
-          "h-48 bg-gradient-to-br flex items-center justify-center relative overflow-hidden",
+          "h-48 bg-gradient-to-br flex items-center justify-center relative overflow-hidden cursor-pointer",
           theme.bandFrom,
           theme.bandTo,
         ].join(" ")}
+        onClick={() => handleViewDetails(product.id)}
       >
         <div
           className={[
@@ -179,7 +180,12 @@ const Product_card: React.FC<Props> = ({
 
       <div className="p-6">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="text-xl font-bold text-gray-800">{product.name}</h3>
+          <h3 
+            className="text-xl font-bold text-gray-800 cursor-pointer hover:text-gray-600 transition-colors"
+            onClick={() => handleViewDetails(product.id)}
+          >
+            {product.name}
+          </h3>
           
           {/* Rating Display with Diamond Icon */}
           <div className="flex items-center gap-1 bg-gradient-to-r from-amber-50 to-yellow-50 px-3 py-1.5 rounded-full border border-amber-200">

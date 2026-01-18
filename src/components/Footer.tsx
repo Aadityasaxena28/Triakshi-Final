@@ -25,7 +25,7 @@ const Footer = () => {
       { name: "Contact Us", href: "/contact-us" },
       // { name: "Size Guide", href: "#" },
       // { name: "Care Instructions", href: "#" },
-      { name: "Returns & Exchange", href: "/return-&-exchange" }
+      { name: "Returns & Exchange", href: "/return" }
     ],
     legal: [
       { name: "Privacy Policy", href: "/privacy-policy" },
