@@ -5,7 +5,7 @@ import slideImage4 from "@/assets/slide4.jpg";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import newadd from "@/assets/newadd.png";
+import newad from "@/assets/newadd.png";
 
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -15,7 +15,7 @@ const TopSlider = () => {
     {
       id: 0,
       type: "promo",
-      image:newadd,
+      image: newad,
       bgColor: "#d9853b",
       link: "https://triakshi.co.in/rudra-view/692b703a09e2057af820b27f",
     },
@@ -113,14 +113,14 @@ const TopSlider = () => {
                   />
                   
                   {/* Interactive Button Overlay */}
-                  <div className="absolute inset-0 flex items-end justify-center pb-2 sm:pb-3 md:pb-4">
+                  <div className="absolute inset-0 flex items-end justify-center pb-1">
                     <Button
                       onClick={handlePromoClick}
-                      className="relative group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-600 text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl px-6 sm:px-8 md:px-10 lg:px-12 py-3 sm:py-4 md:py-5 lg:py-6 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-amber-500/50 animate-bounce-subtle border-2 border-white/30"
+                      className="relative group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm md:text-base px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-3.5 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-amber-500/50 animate-bounce-subtle border-2 border-white/30"
                     >
-                      <Sparkles className="inline-block w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 animate-spin-slow" />
+                      <Sparkles className="inline-block w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1.5 animate-spin-slow" />
                       Get Free Rudraksha Now
-                      <Sparkles className="inline-block w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ml-2 animate-spin-slow" />
+                      <Sparkles className="inline-block w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 ml-1.5 animate-spin-slow" />
                       
                       {/* Pulsing Ring Effect */}
                       <span className="absolute inset-0 rounded-full bg-amber-400/30 animate-ping"></span>
