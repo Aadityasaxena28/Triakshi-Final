@@ -11,9 +11,15 @@ const Footer = () => {
     ],
     products: [
       { name: "Gemstones", href: "/gemstones" },
-      { name: "Rudraksh", href: "/rudraksha" },
-      { name: "Lucky Store", href: "/lucky-store" },
-      { name: "Health Calculator", href: "/health-calculator" }
+      { name: "Natural Rudraksh", href: "/rudraksha" },
+      { name: "Mala & bracelets", href: "/rudraksha" },
+      { name: "Yantra", href: "/rudraksha" },
+      { name: "Tribhuvani", href: "/rudraksha" },
+      { name: "Life Stone Calculator", href: "/rudraksha" },
+      { name: "Health Stone calculator", href: "/rudraksha" },
+      { name: "Lucky Stone calculator", href: "/rudraksha" },
+      { name: "Personalized Gemstone Report", href: "/lucky-store" },
+      { name: "Books", href: "/BooksPage" }
     ],
     support: [
       { name: "Contact Us", href: "/contact-us" },
