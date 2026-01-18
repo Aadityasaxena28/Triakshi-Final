@@ -15,41 +15,74 @@ const LuckyStoneCalculator = () => {
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
+  // 🔼 SCROLL TO TOP WHEN ROUTE LOADS
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
-  useEffect(()=>{
-    window.scrollTo({top:0, behavior:'smooth'})
-  })
+
   const calculateLuckyStone = () => {
     setLoading(true);
-    
-    // Simulate calculation
+
     setTimeout(() => {
       const luckyStones = [
-        { name: "Citrine", reason: "Attracts abundance and prosperity", price: 850, benefits: ["Wealth", "Success", "Confidence"] },
-        { name: "Green Aventurine", reason: "Brings luck and opportunity", price: 650, benefits: ["Luck", "Growth", "Healing"] },
-        { name: "Pyrite", reason: "Shields from negative energy", price: 750, benefits: ["Protection", "Willpower", "Action"] },
-        { name: "Tiger Eye", reason: "Enhances personal power", price: 900, benefits: ["Courage", "Focus", "Grounding"] },
-        { name: "Carnelian", reason: "Boosts motivation and creativity", price: 600, benefits: ["Creativity", "Motivation", "Vitality"] }
+        {
+          name: "Citrine",
+          reason: "Attracts abundance and prosperity",
+          price: 850,
+          benefits: ["Wealth", "Success", "Confidence"]
+        },
+        {
+          name: "Green Aventurine",
+          reason: "Brings luck and opportunity",
+          price: 650,
+          benefits: ["Luck", "Growth", "Healing"]
+        },
+        {
+          name: "Pyrite",
+          reason: "Shields from negative energy",
+          price: 750,
+          benefits: ["Protection", "Willpower", "Action"]
+        },
+        {
+          name: "Tiger Eye",
+          reason: "Enhances personal power",
+          price: 900,
+          benefits: ["Courage", "Focus", "Grounding"]
+        },
+        {
+          name: "Carnelian",
+          reason: "Boosts motivation and creativity",
+          price: 600,
+          benefits: ["Creativity", "Motivation", "Vitality"]
+        }
       ];
-      
-      const randomStone = luckyStones[Math.floor(Math.random() * luckyStones.length)];
-      
+
+      const randomStone =
+        luckyStones[Math.floor(Math.random() * luckyStones.length)];
+
       setResult({
         luckyStone: randomStone,
         luckScore: Math.floor(Math.random() * 15) + 85,
         zodiacCompatibility: "Highly Compatible",
         recommendation: `${randomStone.name} is your personal lucky stone that will enhance your natural abilities and attract positive energy.`
       });
+
       setLoading(false);
     }, 2000);
   };
 
-  const isFormValid = formData.name && formData.dateOfBirth && formData.timeOfBirth && formData.placeOfBirth;
+  const isFormValid =
+    formData.name &&
+    formData.dateOfBirth &&
+    formData.timeOfBirth &&
+    formData.placeOfBirth;
 
   return (
     <section className="py-20 bg-gradient-to-br from-gold/5 to-white">
@@ -57,13 +90,16 @@ const LuckyStoneCalculator = () => {
         <div className="text-center mb-12">
           <div className="inline-flex items-center space-x-2 bg-gold/10 px-4 py-2 rounded-full mb-6">
             <Star className="h-5 w-5 text-gold" />
-            <span className="text-gold font-semibold">Lucky Stone Calculator</span>
+            <span className="text-gold font-semibold">
+              Lucky Stone Calculator
+            </span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gold mb-4">
             Discover Your Lucky Stone
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Find the stone that will bring luck, prosperity, and positive energy into your life
+            Find the stone that will bring luck, prosperity, and positive energy
+            into your life
           </p>
         </div>
 
@@ -194,17 +230,19 @@ const LuckyStoneCalculator = () => {
                     <div className="p-4 bg-gold/5 rounded-xl">
                       <h4 className="font-semibold mb-3">Key Benefits</h4>
                       <div className="flex flex-wrap gap-2">
-                        {result.luckyStone.benefits.map((benefit: string, index: number) => (
-                          <span
-                            key={index}
-                            className="px-3 py-1 bg-gold/20 text-gold text-sm rounded-full"
-                          >
-                            {benefit}
-                          </span>
-                        ))}
+                        {result.luckyStone.benefits.map(
+                          (benefit: string, index: number) => (
+                            <span
+                              key={index}
+                              className="px-3 py-1 bg-gold/20 text-gold text-sm rounded-full"
+                            >
+                              {benefit}
+                            </span>
+                          )
+                        )}
                       </div>
                     </div>
-                    
+
                     <div className="p-4 bg-primary/5 rounded-xl">
                       <h4 className="font-semibold mb-2">Recommendation</h4>
                       <p className="text-muted-foreground">

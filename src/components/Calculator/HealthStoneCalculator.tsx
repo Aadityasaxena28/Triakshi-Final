@@ -11,9 +11,7 @@ const HealthStoneCalculator: React.FC<Props> = () => {
   const [dob, setDob] = useState("");
   const [tob, setTob] = useState("");
   const [pob, setPob] = useState("");
-  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
-    null
-  );
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [errors, setErrors] = useState<{ dob?: string; tob?: string; pob?: string }>({});
   const [loading, setLoading] = useState(false);
@@ -21,6 +19,11 @@ const HealthStoneCalculator: React.FC<Props> = () => {
 
   const navigate = useNavigate();
   const valid = useMemo(() => !!dob && !!tob && !!pob, [dob, tob, pob]);
+
+  // 🔼 SCROLL TO TOP ON PAGE LOAD (ADDED)
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
 
   // 🌍 Autocomplete logic
   useEffect(() => {
@@ -92,7 +95,7 @@ const HealthStoneCalculator: React.FC<Props> = () => {
   const fetchHealthStones = async (): Promise<StoneInfo[]> => {
     try {
       const data: CalculatorParams = {
-        type: "health", // UPDATED HERE
+        type: "health",
         dob,
         tob,
         place: pob,
@@ -182,6 +185,7 @@ const HealthStoneCalculator: React.FC<Props> = () => {
               value={pob}
               onChange={(e) => setPob(e.target.value)}
             />
+
             {suggestions.length > 0 && (
               <ul className="lifeCalculator_suggestionList">
                 {suggestions.map((s, idx) => (

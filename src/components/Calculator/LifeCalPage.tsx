@@ -7,15 +7,11 @@ import "./luckyStoneCalculator.css"; // keep same file, or rename if you want
 
 interface Props {}
 
-
-
 const LifeStoneCalculator: React.FC<Props> = () => {
   const [dob, setDob] = useState("");
   const [tob, setTob] = useState("");
   const [pob, setPob] = useState("");
-  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
-    null
-  );
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [errors, setErrors] = useState<{ dob?: string; tob?: string; pob?: string }>({});
   const [loading, setLoading] = useState(false);
@@ -24,7 +20,12 @@ const LifeStoneCalculator: React.FC<Props> = () => {
   const navigate = useNavigate();
   const valid = useMemo(() => !!dob && !!tob && !!pob, [dob, tob, pob]);
 
-  // 🌍 Autocomplete logic (same)
+  // 🔼 SCROLL TO TOP ON PAGE LOAD (ADDED)
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
+  // 🌍 Autocomplete logic
   useEffect(() => {
     if (pob.length < 3) {
       setSuggestions([]);
@@ -94,7 +95,7 @@ const LifeStoneCalculator: React.FC<Props> = () => {
   const fetchLifeStones = async (): Promise<StoneInfo[]> => {
     try {
       const data: CalculatorParams = {
-        type: "life", // CHANGED HERE
+        type: "life",
         dob,
         tob,
         place: pob,
@@ -184,6 +185,7 @@ const LifeStoneCalculator: React.FC<Props> = () => {
               value={pob}
               onChange={(e) => setPob(e.target.value)}
             />
+
             {suggestions.length > 0 && (
               <ul className="lifeCalculator_suggestionList">
                 {suggestions.map((s, idx) => (
@@ -217,7 +219,11 @@ const LifeStoneCalculator: React.FC<Props> = () => {
           <div className="lifeCalculator_stonesGrid">
             {stones.map((stone, index) => (
               <article key={index} className="lifeCalculator_stoneCard">
-                <img src={stone.image} alt={stone.englishName} className="lifeCalculator_stoneImage" />
+                <img
+                  src={stone.image}
+                  alt={stone.englishName}
+                  className="lifeCalculator_stoneImage"
+                />
 
                 <div className="lifeCalculator_stoneContent">
                   <h3 className="lifeCalculator_stoneName">{stone.englishName}</h3>
