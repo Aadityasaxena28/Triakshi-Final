@@ -5,7 +5,7 @@ import slideImage4 from "@/assets/slide4.jpg";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import newad from "@/assets/newadd.png";
+import freead from "@/assets/freead.jpeg";
 
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -15,7 +15,7 @@ const TopSlider = () => {
     {
       id: 0,
       type: "promo",
-      image: newad,
+      image: freead,
       bgColor: "#d9853b",
       link: "https://triakshi.co.in/rudra-view/692b703a09e2057af820b27f",
     },
@@ -113,7 +113,7 @@ const TopSlider = () => {
                   />
                   
                   {/* Interactive Button Overlay */}
-                  <div className="absolute inset-0 flex items-end justify-center pb-1">
+                  <div className="absolute inset-0 flex items-end justify-end pb-1 pr-2 sm:pr-3 md:pr-4">
                     <Button
                       onClick={handlePromoClick}
                       className="relative group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm md:text-base px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-3.5 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-amber-500/50 animate-bounce-subtle border-2 border-white/30"
