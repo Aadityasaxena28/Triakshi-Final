@@ -200,7 +200,7 @@ const Product_card: React.FC<Props> = ({
           </div>
         </div>
 
-        <p className="text-sm text-gray-600 mb-3">{product.description}</p>
+        {/*<p className="text-sm text-gray-600 mb-3">{product.description}</p>*/}
 
         <div className="flex items-center gap-2 mb-3">
           <span className="text-sm font-semibold text-gray-700">Quantity:</span>
