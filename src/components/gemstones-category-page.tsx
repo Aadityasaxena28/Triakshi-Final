@@ -61,7 +61,7 @@ const GemstonesPage = () => {
     ? products.filter(
         (product) =>
           product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          //product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
           product.id.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : products;
