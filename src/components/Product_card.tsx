@@ -186,6 +186,7 @@ const Product_card: React.FC<Props> = ({
           >
             {product.name}
           </h3>
+
           
           {/* Rating Display with Diamond Icon */}
           <div className="flex items-center gap-1 bg-gradient-to-r from-amber-50 to-yellow-50 px-3 py-1.5 rounded-full border border-amber-200">
