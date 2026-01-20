@@ -6,10 +6,10 @@ const Marquee = () => {
           JAI MAA PITAMBARA, WELCOME TO TRIAKSHI GEMS, HAPPY SHOPPING
         </span>
         <span className="text-white font-semibold text-lg mx-8">
-          JAI MAA PITAMBARA, WELCOME TO TRIAKSHI GEMS, HAPPY SHOPPING
+          The Third Eye Awakens. त्रिakshi Gems is Arriving.
         </span>
         <span className="text-white font-semibold text-lg mx-8">
-          JAI MAA PITAMBARA, WELCOME TO TRIAKSHI GEMS, HAPPY SHOPPING
+          🔱 Authentic 🔱 Certified 🔱 Energized
         </span>
       </div>
     </div>
