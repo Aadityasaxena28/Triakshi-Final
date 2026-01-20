@@ -201,12 +201,21 @@ const Product_card: React.FC<Props> = ({
         </div>
 
         {/*<p className="text-sm text-gray-600 mb-3">{product.description}</p>*/}
+      <div className="flex justify-between">
+
 
         <div className="flex items-center gap-2 mb-3">
           <span className="text-sm font-semibold text-gray-700">Quantity:</span>
           <span className="text-sm text-gray-600">{product.quantity}</span>
         </div>
-
+        {
+        
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-sm font-semibold text-gray-700">Weight:</span>
+          <span className="text-sm text-gray-600">{product.weight||10}</span>
+        </div>
+        }
+      </div>
         {/* {category === "gemstone" && (
           <div className="flex items-center gap-2 mb-3">
             <span
