@@ -209,10 +209,10 @@ const Product_card: React.FC<Props> = ({
           <span className="text-sm text-gray-600">{product.quantity}</span>
         </div>
         {
-        
+        product.weight&&
         <div className="flex items-center gap-2 mb-3">
           <span className="text-sm font-semibold text-gray-700">Weight:</span>
-          <span className="text-sm text-gray-600">{product.weight||10}</span>
+          <span className="text-sm text-gray-600">{product.weight}ct</span>
         </div>
         }
       </div>
