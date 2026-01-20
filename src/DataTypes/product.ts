@@ -15,7 +15,7 @@ export interface RawProduct {
   created_at: string;        // ISO datetime string from API
   description?: string;
   // Not being used currently
-  // weight?: number; 
+  weight?: number; 
   benefits?: string[];    // optional array of benefits
 }
 
@@ -35,7 +35,7 @@ export interface Product {
   createdAt: Date;
   description: string;       // defaulted to ""
   // Not being used currently
-  // weight?: number; 
+  weight?: number; 
   benefits?: string[];    // optional array of benefits
 }
 export function toProduct(raw: RawProduct): Product {
@@ -54,7 +54,7 @@ export function toProduct(raw: RawProduct): Product {
     type: raw.type,
     createdAt: new Date(raw.created_at),
     description: raw.description ?? "",
-    // weight: raw.weight,
+    weight: raw.weight,
     benefits: raw.benefits,
   };
 }
