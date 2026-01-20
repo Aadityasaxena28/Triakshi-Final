@@ -86,27 +86,28 @@ const THEME: Record<
     btnHoverTo: "hover:to-orange-700",
   },
   tribhuvani: {
-    // image band (soft bg to match the page header vibe)
-    bandFrom: "from-purple-50",
-    bandTo: "to-indigo-100",
-    overlayFrom: "from-purple-500/20",
-    overlayTo: "to-indigo-700/20",
+  // image band (soft bg to match the page header vibe)
+  bandFrom: "from-purple-50",
+  bandTo: "to-indigo-100",
+  overlayFrom: "from-purple-500/20",
+  overlayTo: "to-indigo-700/20",
 
-    // id pill (light chip, dark text)
-    idPill: "bg-purple-100 text-purple-800",
+  // id pill (light chip, dark text)
+  idPill: "bg-purple-100 text-purple-800",
 
-    // category pill (kept light; no override text needed)
-    catPillBg: "bg-purple-50 text-purple-800",
+  // category pill (kept light; no override text needed)
+  catPillBg: "bg-purple-50 text-purple-800",
 
-    // price/offer badge (on-brand pop instead of generic red)
-    offBadge: "bg-purple-600 text-white",
+  // price/offer badge (on-brand pop instead of generic red)
+  offBadge: "bg-purple-600 text-white",
 
-    // CTA button (matches page header gradient + hover)
-    btnFrom: "from-purple-600",
-    btnTo: "to-indigo-600",
-    btnHoverFrom: "hover:from-purple-700",
-    btnHoverTo: "hover:to-indigo-700",
-  },
+  // CTA button (matches page header gradient + hover)
+  btnFrom: "from-purple-600",
+  btnTo: "to-indigo-600",
+  btnHoverFrom: "hover:from-purple-700",
+  btnHoverTo: "hover:to-indigo-700",
+},
+
 };
 
 import { Diamond } from 'lucide-react';
@@ -125,7 +126,7 @@ const Product_card: React.FC<Props> = ({
     product.price * (1 - 0.01 * discountPct)
   );
   // console.log("Discounted Price:", product);
-  // console.log(category);
+// console.log(category);
   const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
   let imageSrc = ""
   if (product.images && product.images[0]){
@@ -160,7 +161,7 @@ const Product_card: React.FC<Props> = ({
         />
 
         {product.image ? (
-          <img src={imageSrc} alt={product.name} className="h-full w-full object-contain p-4" />
+          <img src={imageSrc} alt={product.name} className="h-full w-full object-cover" />
         ) : (
           <Star className="w-24 h-24 text-black/10" />
         )}
