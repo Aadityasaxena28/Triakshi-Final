@@ -8,6 +8,8 @@ import Loader from "./General/Loader";
 import NewArrivals from "./NewArrivals";
 import NewCategories from "./NewCategories";
 import FAQ from "./faq";
+import SpiritualToolsUnder999 from "./SpiritualToolsUnder999";
+
 
 const Home = () => {
   const [isLoading, setLoading] = useState(true);
@@ -44,6 +46,7 @@ const Home = () => {
         <>
           <TopSlider />
           <Marquee />
+          <SpiritualToolsUnder999/>
           <ProductSlider />
           <NewArrivals />
           <NewCategories />

@@ -32,7 +32,6 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ReturnsRefundPolicy from "./components/returns_refund_policy";
 
-
 const queryClient = new QueryClient();
  
 
@@ -68,6 +67,7 @@ const App = () => (
           <Route path="/payment-status/:id" element= {<PaymentStatusPage/>}/>
           <Route path="/tribhuvani" element ={<TribhuvaniPage/>}/>
           <Route path ="/tribhuvani-view/:id" element= {<ProductDetailView category="tribhuvani"/>}/>
+          
           
           <Route path="/yantra" element={<YantraPage/>}/>
           <Route path ="/yantra-view/:id" element= {<ProductDetailView category="yantra"/>}/>
