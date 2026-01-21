@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import freead from "@/assets/freead.jpeg";
 import newad from "@/assets/newadd.png";
+import jadebanner from "@/assets/banner_jade_website.jpg";
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -46,6 +47,12 @@ const TopSlider = () => {
       type: "image-only",
       image: slideImage4,
       bgColor: "#0a1448",
+    },
+     {
+      id: 5,
+      type: "image-only",
+      image: jadebanner,
+      bgColor: "#d9853b",
     },
   ];
 
