@@ -27,7 +27,7 @@ const SpiritualToolsUnder999 = () => {
     queryKey: ['products-under-999'],
     queryFn: () => getProducts({
       min_price: 0,
-      max_price: 10000,
+      max_price: 999,
       productCount:25
     }),
     staleTime: 1000 * 60 * 5,
