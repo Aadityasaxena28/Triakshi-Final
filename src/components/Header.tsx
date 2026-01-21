@@ -103,6 +103,7 @@ const Header: React.FC = () => {
     { name: "Tribhuvani", path: "/tribhuvani" },
     { name: "Mala & Bracelets", path: "/mala" },
     { name: "Books",path:"/books"},
+    //{ name: "Spirtual products",path:"/"}
   ];
 
   const calculatorItems: MenuItem[] = [
