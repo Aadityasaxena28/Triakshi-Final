@@ -146,7 +146,7 @@ const Product_card: React.FC<Props> = ({
     <div className="bg-white rounded-2xl shadow-card hover:shadow-elegant transition-all duration-300 hover:scale-105 overflow-hidden group">
       <div
         className={[
-          "h-48 bg-gradient-to-br flex items-center justify-center relative overflow-hidden cursor-pointer p-2 sm:p-0",
+          "h-48 bg-gradient-to-br flex items-center justify-center relative overflow-hidden cursor-pointer",
           theme.bandFrom,
           theme.bandTo,
         ].join(" ")}
