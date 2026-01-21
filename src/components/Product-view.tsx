@@ -524,7 +524,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                   className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-2 text-sm"
                 >
                   <AlertCircle className="w-4 h-4" />
-                  No Return, No Exchange
+                  Specially Curated Item
                 </button>
 
                 <p className="text-red-600 text-xs text-center leading-relaxed">
