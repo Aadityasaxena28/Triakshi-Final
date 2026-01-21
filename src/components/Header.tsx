@@ -103,6 +103,7 @@ const Header: React.FC = () => {
     { name: "Tribhuvani", path: "/tribhuvani" },
     { name: "Mala & Bracelets", path: "/mala" },
     { name: "Books",path:"/books"},
+    //{ name: "Spirtual products",path:"/"}
   ];
 
   const calculatorItems: MenuItem[] = [
@@ -238,7 +239,7 @@ const Header: React.FC = () => {
                 <div className="bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900 p-2 rounded-xl shadow-elegant">
                   <Gem className="h-4 w-4 text-white" />
                 </div>
-                <span className="text-xl golden-glare">Triakshi Gems</span>
+                <span className="text-xl golden-glare">त्रिakshi Gems</span>
               </Link>
             </div>
 

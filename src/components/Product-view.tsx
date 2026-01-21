@@ -1,13 +1,16 @@
 import { addToCart } from "@/API/Cart";
 import { getProductById } from "@/API/Product";
+import { getProductReviews } from "@/API/ReviewAPI";
 import { CartItem } from "@/DataTypes/CartData";
 import { CheckoutDraft, CheckoutItem } from "@/DataTypes/Checkout";
 import type { Product } from "@/DataTypes/product";
+import { Review } from "@/DataTypes/Review";
 import { toastError, toastSuccess } from "@/utlity/AlertSystem";
 import { setWithExpiry } from "@/utlity/Storage";
-import { ArrowLeft, ChevronLeft, ChevronRight, Heart, Minus, Plus, ShoppingCart, Sparkles, Star, AlertCircle } from "lucide-react";
+import { AlertCircle, ArrowLeft, ChevronLeft, ChevronRight, Heart, Minus, Plus, ShoppingCart, Sparkles, Star } from "lucide-react";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ProductReviewSlider } from "./ProductReviewSlider";
 
 type Props = {
   category?: "gemstone" | "rudraksha" | string;
@@ -212,6 +215,7 @@ const THEME: Record<
   },
 };
 
+
 const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const params = useParams();
   const [product, setProduct] = React.useState<Product | null>(null);
@@ -222,7 +226,8 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const [benefits, setBenefits] = React.useState<string[]>([]);
   const [displayImages, setDisplayImages] = React.useState<string[]>([]);
-  
+  const [reviews, setReviews] = React.useState<Review[]>([]);
+
   const navigate = useNavigate();
   const BDK = import.meta.env.VITE_BUY_DRAFT_KEY;
   const theme = THEME[category] ?? THEME.gemstone;
@@ -231,7 +236,40 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     const fetchProduct = async () => {
       const fetchedProduct = await getProductById(params.id || "MTI001");
       setProduct(fetchedProduct);
+      const productReviews = await getProductReviews(params.id || "MTI001");
+      setReviews(productReviews);
+      
+      // For now, you can use mock data:
+      const mockReviews: Review[] = [
+        {
+          _id: "1",
+          customer_name: "Rahul Sharma",
+          rating: 5,
+          comment: "Excellent quality gemstone! The authenticity certificate provided gives me complete confidence. Highly recommended for anyone seeking genuine spiritual products.",
+          date: "2024-01-15",
+          verified: true,
+        },
+        {
+          _id: "2",
+          customer_name: "Priya Patel",
+          rating: 4,
+          comment: "Beautiful product with great energy. Delivery was fast and packaging was secure. Minor color variation from photo but overall very satisfied.",
+          date: "2024-01-10",
+          verified: true,
+        },
+        {
+          _id: "3",
+          customer_name: "Amit Kumar",
+          rating: 5,
+          comment: "Authentic and powerful. I can feel the positive vibrations. The customer service team was very helpful in choosing the right product for my needs.",
+          date: "2024-01-05",
+          verified: false,
+        },
 
+      ];
+
+      if(productReviews.length===0) setReviews(mockReviews);
+      
       // Set up images array - prioritize images array over single image
       let imagesToDisplay: string[] = [];
       
@@ -243,7 +281,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
         imagesToDisplay = [fetchedProduct.image];
       }
       
-      console.log('Images to display:', imagesToDisplay);
+      // console.log('Images to display:', imagesToDisplay);
       setDisplayImages(imagesToDisplay);
 
       const d = Math.max(0, Math.min(100, fetchedProduct.discount ?? 0));
@@ -329,7 +367,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     if (displayImages.length > 0) {
       setCurrentImageIndex((p) => {
         const newIndex = (p + 1) % displayImages.length;
-        console.log('Next image - Current:', p, 'New:', newIndex, 'Total:', displayImages.length);
+        // console.log('Next image - Current:', p, 'New:', newIndex, 'Total:', displayImages.length);
         return newIndex;
       });
     }
@@ -339,7 +377,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     if (displayImages.length > 0) {
       setCurrentImageIndex((p) => {
         const newIndex = (p - 1 + displayImages.length) % displayImages.length;
-        console.log('Prev image - Current:', p, 'New:', newIndex, 'Total:', displayImages.length);
+        // console.log('Prev image - Current:', p, 'New:', newIndex, 'Total:', displayImages.length);
         return newIndex;
       });
     }
@@ -387,7 +425,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('Prev button clicked');
+                        // console.log('Prev button clicked');
                         prevImage();
                       }}
                       className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg transition-all z-20 cursor-pointer"
@@ -400,7 +438,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('Next button clicked');
+                        // console.log('Next button clicked');
                         nextImage();
                       }}
                       className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg transition-all z-20 cursor-pointer"
@@ -419,7 +457,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                       alt={`${product.name} - Image ${currentImageIndex + 1}`}
                       className="w-full h-full object-contain relative z-10 drop-shadow-2xl"
                       onError={(e) => {
-                        console.error('Image failed to load:', displayImages[currentImageIndex]);
+                        // console.error('Image failed to load:', displayImages[currentImageIndex]);
                         e.currentTarget.src = product.image || '';
                       }}
                     />
@@ -444,7 +482,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                       type="button"
                       onClick={(e) => {
                         e.preventDefault();
-                        console.log('Thumbnail clicked - Index:', index);
+                        // console.log('Thumbnail clicked - Index:', index);
                         setCurrentImageIndex(index);
                       }}
                       className={`h-3 rounded-full transition-all cursor-pointer ${index === currentImageIndex ? `${theme.dotActive} w-8` : `${theme.dotIdle} w-3`}`}
@@ -486,7 +524,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                   className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-2 text-sm"
                 >
                   <AlertCircle className="w-4 h-4" />
-                  No Return, No Exchange
+                  Specially Curated Item
                 </button>
 
                 <p className="text-red-600 text-xs text-center leading-relaxed">
@@ -564,6 +602,12 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                 </ul>
               </div>
             )}
+             {/* Reviews Slider - ADD THIS */}
+            {reviews.length > 0 && (
+              <ProductReviewSlider 
+                reviews={reviews} 
+                category={category} 
+              />)}
           </div>
         </div>
       </div>

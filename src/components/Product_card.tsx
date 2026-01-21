@@ -186,6 +186,7 @@ const Product_card: React.FC<Props> = ({
           >
             {product.name}
           </h3>
+
           
           {/* Rating Display with Diamond Icon */}
           <div className="flex items-center gap-1 bg-gradient-to-r from-amber-50 to-yellow-50 px-3 py-1.5 rounded-full border border-amber-200">
@@ -199,13 +200,22 @@ const Product_card: React.FC<Props> = ({
           </div>
         </div>
 
-        <p className="text-sm text-gray-600 mb-3">{product.description}</p>
+        {/*<p className="text-sm text-gray-600 mb-3">{product.description}</p>*/}
+      <div className="flex justify-between">
+
 
         <div className="flex items-center gap-2 mb-3">
           <span className="text-sm font-semibold text-gray-700">Quantity:</span>
           <span className="text-sm text-gray-600">{product.quantity}</span>
         </div>
-
+        {
+        product.weight&&
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-sm font-semibold text-gray-700">Weight:</span>
+          <span className="text-sm text-gray-600">{product.weight}ct</span>
+        </div>
+        }
+      </div>
         {/* {category === "gemstone" && (
           <div className="flex items-center gap-2 mb-3">
             <span

@@ -207,13 +207,13 @@ const ProductSlider = () => {
                   animation: 'gradient 3s ease infinite',
                 }}
               >
-                The Shine Affair
+                Top Picks
               </span>
             </h2>
             <Sparkles className="w-8 h-8 text-orange-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
           </div>
           <p className="text-gray-700 text-lg font-medium max-w-2xl mx-auto">
-            ✨ Limited time offers on premium gemstones, Rudraksha, Mala and Bracelets! ✨
+            ✨ Authentic 🔱 Certified 🔱 Energized. ✨
           </p>
           <div className="mt-4 inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg animate-bounce">
             <Sparkles className="w-4 h-4" />

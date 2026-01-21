@@ -23,6 +23,7 @@ import moonstoneimage from "@/assets/Stones/moonstone.png";
 import pyriteimage from "@/assets/Stones/pyrite.png";
 import sodaimage from "@/assets/Stones/sodalite.png";
 import topazimage from "@/assets/Stones/topaz.png";
+
 const GemstonesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSubcategory, setSelectedSubcategory] = useState("all");
@@ -99,6 +100,28 @@ const GemstonesPage = () => {
     },
   };
 
+  const stoneDescriptions = {
+    moonga: "Moonga gemstone confidence, courage aur energy boost karta hai Mars ke powerful influence ke saath. Career growth, health strength aur negative energies se protection ke liye best mana jata hai.",
+    opal: "Opal gemstone luxury, creativity aur emotional balance ko enhance karta hai apni beautiful shine ke saath. Love, attraction aur financial growth ke liye Venus ka strong stone mana jata hai.",
+    panna: "Panna gemstone intelligence, communication aur decision-making power ko strong karta hai. Business success, education aur Mercury blessings ke liye highly recommended hai.",
+    moti: "Moti gemstone mind ko calm karta hai aur emotional stability lata hai. Moon energy ko balance karke peace, relationships aur mental health improve karta hai.",
+    manik: "Manik gemstone power, leadership aur self-confidence ko boost karta hai. Sun ke strong energy ke saath name, fame aur authority badhata hai.",
+    pukhraj: "Pukhraj gemstone wealth, wisdom aur prosperity attract karta hai. Jupiter blessings ke liye career growth, marriage aur luck enhance karta hai.",
+    neelam: "Neelam gemstone fast results dene ke liye jana jata hai life transformation mein. Saturn remedies ke liye success, discipline aur protection provide karta hai.",
+    catseye: "Cat's Eye gemstone sudden losses aur negative energies se protection deta hai. Rahu-Ketu balance karke intuition aur stability ko strong karta hai.",
+    sulemani: "Sulemani Hakik gemstone buri nazar aur negative energies se strong protection deta hai. Spiritual grounding, emotional strength aur inner peace ke liye popular hai.",
+    tigereye: "Tiger's Eye gemstone confidence, courage aur focus ko boost karta hai. Fear remove karke decision-making aur leadership qualities improve karta hai.",
+    jade: "Jade gemstone good luck, prosperity aur harmony ka symbol mana jata hai. Abundance attract karke emotional balance aur peace provide karta hai.",
+    amethyst: "Amethyst gemstone stress relief aur mental calmness ke liye best hai. Meditation, positivity aur spiritual growth ko enhance karta hai.",
+    rosequartz: "Rose Quartz gemstone love, healing aur emotional bonding ko strengthen karta hai. Relationships improve karne aur self-love badhane ke liye perfect stone hai.",
+    citrine: "Citrine gemstone wealth, success aur positive energy attract karta hai. Business growth aur financial abundance ke liye 'merchant stone' ke naam se famous hai.",
+    lapizlazuli: "Lapiz Lazuli gemstone wisdom, confidence aur self-expression ko boost karta hai. Communication skills aur spiritual awareness enhance karta hai.",
+    moonstone: "Moonstone gemstone emotions ko balance karta hai aur intuition ko strong banata hai. New beginnings, calmness aur feminine energy ke liye ideal mana jata hai.",
+    pyrite: "Pyrite gemstone protection aur wealth attraction ke liye jana jata hai. Confidence boost karta hai aur negative energy se shield provide karta hai.",
+    sodalite: "Sodalite gemstone clarity, logic aur emotional stability ko improve karta hai. Stress kam karke communication aur focus ko better banata hai.",
+    topaz: "Topaz gemstone confidence, creativity aur success ko attract karta hai. Happiness, motivation aur overall positive vibes ke liye powerful stone hai."
+  };
+
   const categoryImages = {
     all: null,
     moonga: moongaimage,
@@ -167,6 +190,24 @@ const GemstonesPage = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: 200, behavior: 'smooth' });
     }
+  };
+
+  const getCurrentStoneDescription = () => {
+    if (selectedSubcategory !== 'all') {
+      return stoneDescriptions[selectedSubcategory];
+    }
+    return null;
+  };
+
+  const getCurrentStoneName = () => {
+    if (selectedSubcategory !== 'all') {
+      for (const category of Object.values(categories)) {
+        if (category.subcategories[selectedSubcategory]) {
+          return category.subcategories[selectedSubcategory];
+        }
+      }
+    }
+    return null;
   };
 
   return (
@@ -469,6 +510,18 @@ const GemstonesPage = () => {
           </div>
 
           <main className="flex-1">
+            {getCurrentStoneDescription() && (
+              <div className="bg-white rounded-2xl shadow-md p-4 sm:p-6 mb-6 border-l-4 border-yellow-400">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                  <Sparkles className="w-6 h-6 text-yellow-500" />
+                  {getCurrentStoneName()}
+                </h2>
+                <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                  {getCurrentStoneDescription()}
+                </p>
+              </div>
+            )}
+
             {isLoading && (
               <div className="flex justify-center items-center py-20">
                 <div className="animate-spin rounded-full h-12 w-12 border-4 border-yellow-400 border-t-transparent"></div>
