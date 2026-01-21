@@ -378,10 +378,9 @@ const NewArrivals = () => {
         {/* Expert Consultation Button */}
         <div className="mt-12 flex justify-center">
           <Button
-            className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 text-lg"
+            className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold py-4 px-8 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 text-lg"
             onClick={() => {
-              // Add your navigation or modal logic here
-              console.log('Expert consultation clicked');
+              window.open('https://astroashoknarayan.com/', '_blank');
             }}
           >
             Still Confused ? Talk to our Experts for right choice
