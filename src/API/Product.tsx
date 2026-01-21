@@ -7,8 +7,10 @@ type GetProductsParams = {
   category?:string;
   productCount?:number; // to keep the track of the total product need to show over on single page
   type?:string;
+  min_price?:number;
+  max_price?:number;
 };
-export async function getProducts({page=0,category="gemstone",type="all", productCount=40}:GetProductsParams):Promise<Product[]>{
+export async function getProducts({page=0,category="gemstone",type="all", productCount=40,min_price=0,max_price=0}:GetProductsParams):Promise<Product[]>{
 
   try {
     // console.log("Fetching products with params:", {page, category, type, productCount});
@@ -17,7 +19,9 @@ export async function getProducts({page=0,category="gemstone",type="all", produc
         page,
         category,
         type,
-        productCount
+        productCount,
+        min_price,
+        max_price
       }
     });
     if(!data.isOkay){

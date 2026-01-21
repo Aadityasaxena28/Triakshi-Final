@@ -1,5 +1,5 @@
 import { addToCart } from '@/API/Cart';
-import { getProductsByPriceRange } from '@/API/Product';
+import { getProducts } from '@/API/Product';
 import { Button } from '@/components/ui/button';
 import { CartItem } from '@/DataTypes/CartData';
 import { Product } from '@/DataTypes/product';
@@ -25,10 +25,10 @@ const SpiritualToolsUnder999 = () => {
   // Fetch products under 999 using TanStack Query
   const { data: products = [], isLoading, isError } = useQuery({
     queryKey: ['products-under-999'],
-    queryFn: () => getProductsByPriceRange({
-      minPrice: 0,
-      maxPrice: 999,
-      count: 15
+    queryFn: () => getProducts({
+      min_price: 0,
+      max_price: 999,
+      productCount: 15
     }),
     staleTime: 1000 * 60 * 5,
   });
