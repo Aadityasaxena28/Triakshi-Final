@@ -10,7 +10,7 @@ type GetProductsParams = {
   min_price?:number;
   max_price?:number;
 };
-export async function getProducts({page=0,category="gemstone",type="all", productCount=40,min_price=0,max_price=0}:GetProductsParams):Promise<Product[]>{
+export async function getProducts({page=1,category="all",type="all", productCount=40,min_price=0,max_price=0}:GetProductsParams):Promise<Product[]>{
 
   try {
     // console.log("Fetching products with params:", {page, category, type, productCount});

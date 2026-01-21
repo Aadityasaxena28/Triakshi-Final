@@ -9,10 +9,10 @@ import {
   ChevronLeft,
   ChevronRight,
   Eye,
+  Heart,
   ShoppingCart,
   Sparkles,
-  Star,
-  Heart
+  Star
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -27,12 +27,12 @@ const SpiritualToolsUnder999 = () => {
     queryKey: ['products-under-999'],
     queryFn: () => getProducts({
       min_price: 0,
-      max_price: 999,
-      productCount: 15
+      max_price: 10000,
+      productCount:15
     }),
     staleTime: 1000 * 60 * 5,
   });
-
+  // console.log(products);
   const updateScrollProgress = () => {
     if (scrollRef.current) {
       const scrollWidth = scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
@@ -121,14 +121,6 @@ const SpiritualToolsUnder999 = () => {
     return Math.round(price - discountAmount);
   };
 
-  const validProducts = products.filter(
-    (product: Product) => 
-      product && 
-      product.price != null && 
-      product.price > 0 &&
-      product.price <= 999 &&
-      product.name
-  );
 
   if (isLoading) {
     return (
@@ -155,7 +147,7 @@ const SpiritualToolsUnder999 = () => {
     );
   }
 
-  if (!validProducts || validProducts.length === 0) {
+  if (!products || products.length === 0) {
     return (
       <section className="py-16 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -235,7 +227,7 @@ const SpiritualToolsUnder999 = () => {
             msOverflowStyle: 'none',
           }}
         >
-          {validProducts.map((product: Product) => {
+          {products.map((product: Product) => {
             const price = product.price || 0;
             const discount = product.discount || 0;
             const discountedPrice = calculateDiscountedPrice(product);
