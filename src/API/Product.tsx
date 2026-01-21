@@ -2,6 +2,7 @@ import { Product, RawProduct, toProduct } from "@/DataTypes/product";
 import { api } from "./Api";
 
 
+
 type GetProductsParams = {
   page?:number;
   category?:string;
