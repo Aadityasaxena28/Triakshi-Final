@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 import freead from "@/assets/freead.jpeg";
 import newad from "@/assets/newadd.png";
 import jadebanner from "@/assets/banner_jade_website.jpg";
-import pyritebanner from "@/assets/pyritebanner.png";
+import pyritebanner from "@/assets/pyrite_bracelet_banner.png";
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
