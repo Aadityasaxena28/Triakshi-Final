@@ -457,14 +457,11 @@ const RudrakshPage = () => {
                 </div>
 
                 {filteredProducts.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+                  <div className="flex flex-wrap gap-y-4">
                      {filteredProducts.map((product) => (
                        <Product_card key={product.id} product={product} handleViewDetails={handleViewDetails} />
-                        ))}
+                     ))}
                   </div>
-
-
-
                 ) : (
                   <div className="text-center py-16 px-4">
                     <div className="text-gray-400 mb-4">
