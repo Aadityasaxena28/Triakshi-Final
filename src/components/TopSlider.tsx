@@ -10,17 +10,33 @@ import newad from "@/assets/newadd.png";
 import jadebanner from "@/assets/banner_jade_website.jpg";
 import pyritebanner from "@/assets/pyrite_bracelet_banner.png";
 import yantra_ban from "@/assets/yantra_banner.png";
-import moonga_combo from "@/assets/moonga_combo_final.png";
+import moonga_combo from "@/assets/Moonga_combo.png";
+import mobfirst from "@/assets/2.png";
+import lapfirst from "@/assets/poster_laptop.jpeg";
 
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const slides = [
     {
       id: 0,
       type: "promo",
-      image: newad,
+      image: lapfirst,
+      mobileImage: mobfirst, // You can use different image for mobile
       bgColor: "#d9853b",
       link: "https://triakshi.co.in/rudra-view/692b703a09e2057af820b27f",
     },
@@ -28,6 +44,7 @@ const TopSlider = () => {
       id: 1,
       type: "hero",
       image: heroImage,
+      mobileImage: heroImage, // You can use different image for mobile
       bgColor: "from-black/40 to-black/30",
       title: "Gemstone",
       subtitle: "Collection",
@@ -38,42 +55,49 @@ const TopSlider = () => {
       id: 2,
       type: "image-only",
       image: slideImage2,
+      mobileImage: slideImage2,
       bgColor: "#3b1f0f",*/
     },
     {
       id: 3,
       type: "image-only",
       image: slideImage3,
+      mobileImage: slideImage3, // You can use different image for mobile
       bgColor: "#3b1f0f",
     },
     {/*
       id: 4,
       type: "image-only",
       image: slideImage4,
+      mobileImage: slideImage4,
       bgColor: "#0a1448",*/
     },
      {
       id: 5,
       type: "image-only",
       image: jadebanner,
+      mobileImage: jadebanner, // You can use different image for mobile
       bgColor: "#d9853b",
     },
     {
       id: 6,
       type: "image-only",
       image: pyritebanner,
+      mobileImage: pyritebanner, // You can use different image for mobile
       bgColor: "#d9853b",
     },
     {
       id: 7,
       type: "image-only",
       image: yantra_ban,
+      mobileImage: yantra_ban, // You can use different image for mobile
       bgColor: "#d9853b",
     },
     {
       id: 8,
       type: "image-only",
       image: moonga_combo,
+      mobileImage: moonga_combo, // You can use different image for mobile
       bgColor: "#d9853b",
     },
 
@@ -115,18 +139,33 @@ const TopSlider = () => {
     window.open("https://triakshi.co.in/rudra-view/692b703a09e2057af820b27f", "_blank");
   };
 
+  // Helper function to get the correct image based on device
+  const getSlideImage = (slide) => {
+    return isMobile && slide.mobileImage ? slide.mobileImage : slide.image;
+  };
+
   return (
     <section className="relative h-[50vh] sm:h-[53vh] md:h-[60vh] overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Ambient background glow */}
-      <div className="absolute inset-0 bg-gradient-radial from-amber-500/5 via-transparent to-transparent opacity-60 animate-pulse-ambient pointer-events-none" />
+      {/* Ambient background glow - Different for mobile vs desktop */}
+      <div className={`absolute inset-0 pointer-events-none ${
+        isMobile 
+          ? 'bg-gradient-radial from-purple-500/10 via-transparent to-transparent opacity-50 animate-pulse-ambient-mobile' 
+          : 'bg-gradient-radial from-amber-500/5 via-transparent to-transparent opacity-60 animate-pulse-ambient'
+      }`} />
       
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
-            className={`absolute inset-0 transition-all duration-[800ms] ${
+            className={`absolute inset-0 ${
+              isMobile 
+                ? 'transition-all duration-[600ms]' 
+                : 'transition-all duration-[800ms]'
+            } ${
               index === currentSlide
-                ? "opacity-100 scale-100 z-10 animate-slide-in"
+                ? isMobile 
+                  ? "opacity-100 scale-100 z-10 animate-slide-in-mobile" 
+                  : "opacity-100 scale-100 z-10 animate-slide-in"
                 : index === (currentSlide - 1 + slides.length) % slides.length
                 ? "opacity-0 scale-95 blur-sm z-0"
                 : "opacity-0 scale-105 blur-sm z-0"
@@ -138,21 +177,29 @@ const TopSlider = () => {
                 className="absolute inset-0 flex items-center justify-center overflow-hidden"
                 style={{ backgroundColor: slide.bgColor }}
               >
-                {/* Animated gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-600/20 via-transparent to-amber-900/20 animate-gradient-shift" />
+                {/* Animated gradient overlay - Different for mobile */}
+                <div className={`absolute inset-0 ${
+                  isMobile
+                    ? 'bg-gradient-to-b from-purple-600/15 via-transparent to-purple-900/15 animate-gradient-shift-mobile'
+                    : 'bg-gradient-to-br from-amber-600/20 via-transparent to-amber-900/20 animate-gradient-shift'
+                }`} />
                 
                 <div className="relative w-full h-full flex items-center justify-center">
                   <img
-                    src={slide.image}
+                    src={getSlideImage(slide)}
                     alt="Free Rudraksha Offer"
-                    className="max-w-full max-h-full object-contain transform hover:scale-[1.02] transition-transform duration-500"
+                    className={`max-w-full max-h-full object-contain transform transition-transform duration-500 ${
+                      isMobile ? 'hover:scale-[1.01]' : 'hover:scale-[1.02]'
+                    }`}
                   />
                   
                   {/* Interactive Button Overlay */}
                   <div className="absolute inset-0 flex items-end justify-end pb-1 pr-2 sm:pr-3 md:pr-4">
                     <Button
                       onClick={handlePromoClick}
-                      className="relative group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm md:text-base px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-3.5 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-amber-500/50 animate-bounce-subtle border-2 border-white/30 backdrop-blur-sm"
+                      className={`relative group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm md:text-base px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-3.5 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-amber-500/50 border-2 border-white/30 backdrop-blur-sm ${
+                        isMobile ? 'animate-bounce-subtle-mobile' : 'animate-bounce-subtle'
+                      }`}
                     >
                       <Sparkles className="inline-block w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1.5 animate-spin-slow" />
                       Get Free Rudraksha Now
@@ -166,48 +213,66 @@ const TopSlider = () => {
                     </Button>
                   </div>
 
-                  {/* Enhanced Floating particles */}
+                  {/* Enhanced Floating particles - More on desktop, fewer on mobile */}
                   <div className="absolute inset-0 overflow-hidden pointer-events-none">
                     <div className="promo-particle promo-particle-1"></div>
                     <div className="promo-particle promo-particle-2"></div>
                     <div className="promo-particle promo-particle-3"></div>
                     <div className="promo-particle promo-particle-4"></div>
-                    <div className="promo-particle promo-particle-5"></div>
-                    <div className="promo-particle promo-particle-6"></div>
+                    {!isMobile && (
+                      <>
+                        <div className="promo-particle promo-particle-5"></div>
+                        <div className="promo-particle promo-particle-6"></div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
             ) : slide.type === "hero" ? (
               <>
-                {/* Background Image with parallax effect */}
+                {/* Background Image with parallax effect - Different image for mobile */}
                 <div
-                  className="absolute inset-0 bg-cover bg-center animate-ken-burns"
-                  style={{ backgroundImage: `url(${slide.image})` }}
+                  className={`absolute inset-0 bg-cover bg-center ${
+                    isMobile ? 'animate-ken-burns-mobile' : 'animate-ken-burns'
+                  }`}
+                  style={{ backgroundImage: `url(${getSlideImage(slide)})` }}
                 >
                   <div className={`absolute inset-0 bg-gradient-to-br ${slide.bgColor} backdrop-blur-[0.5px]`} />
                   
-                  {/* Elegant vignette */}
-                  <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/60" />
+                  {/* Elegant vignette - Stronger on mobile */}
+                  <div className={`absolute inset-0 ${
+                    isMobile 
+                      ? 'bg-gradient-radial from-transparent via-transparent to-black/70'
+                      : 'bg-gradient-radial from-transparent via-transparent to-black/60'
+                  }`} />
                 </div>
 
-                {/* Enhanced Floating Particles */}
+                {/* Enhanced Floating Particles - Fewer on mobile */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
                   <div className="particle particle-1"></div>
                   <div className="particle particle-2"></div>
                   <div className="particle particle-3"></div>
                   <div className="particle particle-4"></div>
-                  <div className="particle particle-5"></div>
-                  <div className="particle particle-6"></div>
-                  <div className="particle particle-7"></div>
-                  <div className="particle particle-8"></div>
+                  {!isMobile && (
+                    <>
+                      <div className="particle particle-5"></div>
+                      <div className="particle particle-6"></div>
+                      <div className="particle particle-7"></div>
+                      <div className="particle particle-8"></div>
+                    </>
+                  )}
                 </div>
 
                 {/* Hero Content with enhanced animations */}
                 <div className="relative z-10 h-full flex items-center justify-center px-3 sm:px-4 md:px-6">
-                  <div className="text-center space-y-2 sm:space-y-3 md:space-y-4 max-w-3xl animate-fade-in-up">
+                  <div className={`text-center space-y-2 sm:space-y-3 md:space-y-4 max-w-3xl ${
+                    isMobile ? 'animate-fade-in-up-mobile' : 'animate-fade-in-up'
+                  }`}>
                     {/* Decorative top element */}
                     <div className="flex justify-center mb-3 animate-fade-in">
-                      <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent rounded-full"></div>
+                      <div className={`h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent rounded-full ${
+                        isMobile ? 'w-12' : 'w-16'
+                      }`}></div>
                     </div>
                     
                     <div className="space-y-1 sm:space-y-2">
@@ -219,7 +284,9 @@ const TopSlider = () => {
                       </h2>
                     </div>
 
-                    <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/95 max-w-xl mx-auto leading-relaxed font-light drop-shadow-lg animate-fade-in-delay backdrop-blur-sm bg-black/10 px-4 py-2 rounded-lg">
+                    <p className={`text-sm sm:text-base md:text-lg lg:text-xl text-white/95 max-w-xl mx-auto leading-relaxed font-light drop-shadow-lg animate-fade-in-delay backdrop-blur-sm bg-black/10 rounded-lg ${
+                      isMobile ? 'px-3 py-1.5' : 'px-4 py-2'
+                    }`}>
                       {slide.description}
                     </p>
 
@@ -233,7 +300,7 @@ const TopSlider = () => {
                 </div>
               </>
             ) : (
-              // Image-Only Slides with elegant presentation
+              // Image-Only Slides with elegant presentation - Different image for mobile
               <div
                 className="absolute inset-0 flex items-center justify-center overflow-hidden"
                 style={{ backgroundColor: slide.bgColor }}
@@ -242,14 +309,20 @@ const TopSlider = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-black/5 via-transparent to-black/10" />
                 
                 <img
-                  src={slide.image}
+                  src={getSlideImage(slide)}
                   alt={`Slide ${slide.id}`}
-                  className="max-w-full max-h-full object-contain transform hover:scale-[1.02] transition-transform duration-700 filter drop-shadow-2xl"
+                  className={`max-w-full max-h-full object-contain transform transition-transform duration-700 filter drop-shadow-2xl ${
+                    isMobile ? 'hover:scale-[1.01]' : 'hover:scale-[1.02]'
+                  }`}
                 />
                 
-                {/* Corner accent */}
-                <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-amber-500/10 to-transparent blur-xl" />
-                <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-amber-500/10 to-transparent blur-xl" />
+                {/* Corner accent - Different sizes for mobile */}
+                <div className={`absolute top-0 left-0 bg-gradient-to-br from-amber-500/10 to-transparent blur-xl ${
+                  isMobile ? 'w-16 h-16' : 'w-20 h-20'
+                }`} />
+                <div className={`absolute bottom-0 right-0 bg-gradient-to-tl from-amber-500/10 to-transparent blur-xl ${
+                  isMobile ? 'w-16 h-16' : 'w-20 h-20'
+                }`} />
               </div>
             )}
           </div>
@@ -278,7 +351,9 @@ const TopSlider = () => {
       </Button>
 
       {/* Enhanced Slide Indicators */}
-      <div className="absolute bottom-2 sm:bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-30 bg-black/20 backdrop-blur-md px-3 py-2 rounded-full">
+      <div className={`absolute bottom-2 sm:bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-30 bg-black/20 backdrop-blur-md rounded-full ${
+        isMobile ? 'px-2 py-1.5' : 'px-3 py-2'
+      }`}>
         {slides.map((_, index) => (
           <button
             key={index}
@@ -332,6 +407,18 @@ const TopSlider = () => {
           animation: bounce-subtle 2.5s ease-in-out infinite;
         }
         
+        @keyframes bounce-subtle-mobile {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-5px);
+          }
+        }
+        .animate-bounce-subtle-mobile {
+          animation: bounce-subtle-mobile 2s ease-in-out infinite;
+        }
+        
         @keyframes spin-slow {
           from {
             transform: rotate(0deg);
@@ -356,6 +443,20 @@ const TopSlider = () => {
         }
         .animate-fade-in-up {
           animation: fade-in-up 1.2s ease-out;
+        }
+        
+        @keyframes fade-in-up-mobile {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in-up-mobile {
+          animation: fade-in-up-mobile 0.9s ease-out;
         }
         
         @keyframes slide-up {
@@ -436,6 +537,21 @@ const TopSlider = () => {
           animation: ken-burns 25s ease-in-out infinite;
         }
         
+        @keyframes ken-burns-mobile {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.05);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+        .animate-ken-burns-mobile {
+          animation: ken-burns-mobile 20s ease-in-out infinite;
+        }
+        
         @keyframes slide-in {
           0% {
             opacity: 0;
@@ -448,6 +564,20 @@ const TopSlider = () => {
         }
         .animate-slide-in {
           animation: slide-in 0.8s ease-out;
+        }
+        
+        @keyframes slide-in-mobile {
+          0% {
+            opacity: 0;
+            transform: scale(0.98) translateX(-10px);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateX(0);
+          }
+        }
+        .animate-slide-in-mobile {
+          animation: slide-in-mobile 0.6s ease-out;
         }
         
         @keyframes gradient-shift {
@@ -464,6 +594,20 @@ const TopSlider = () => {
           animation: gradient-shift 8s ease-in-out infinite;
         }
         
+        @keyframes gradient-shift-mobile {
+          0%, 100% {
+            opacity: 0.2;
+            transform: translateY(0);
+          }
+          50% {
+            opacity: 0.5;
+            transform: translateY(5px);
+          }
+        }
+        .animate-gradient-shift-mobile {
+          animation: gradient-shift-mobile 6s ease-in-out infinite;
+        }
+        
         @keyframes pulse-ambient {
           0%, 100% {
             opacity: 0.4;
@@ -474,6 +618,18 @@ const TopSlider = () => {
         }
         .animate-pulse-ambient {
           animation: pulse-ambient 6s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-ambient-mobile {
+          0%, 100% {
+            opacity: 0.3;
+          }
+          50% {
+            opacity: 0.6;
+          }
+        }
+        .animate-pulse-ambient-mobile {
+          animation: pulse-ambient-mobile 5s ease-in-out infinite;
         }
         
         @keyframes float {
@@ -580,47 +736,3 @@ const TopSlider = () => {
           animation: float 5s ease-in-out infinite;
         }
         .promo-particle-2 {
-          width: 8px;
-          height: 8px;
-          bottom: 22%;
-          right: 32%;
-          animation: float 6s ease-in-out infinite 1.3s;
-        }
-        .promo-particle-3 {
-          width: 12px;
-          height: 12px;
-          bottom: 14%;
-          left: 20%;
-          animation: float 7s ease-in-out infinite 0.7s;
-        }
-        .promo-particle-4 {
-          width: 9px;
-          height: 9px;
-          bottom: 20%;
-          right: 22%;
-          animation: float 6.5s ease-in-out infinite 2s;
-        }
-        .promo-particle-5 {
-          width: 7px;
-          height: 7px;
-          bottom: 25%;
-          left: 40%;
-          animation: float 5.5s ease-in-out infinite 1.8s;
-        }
-        .promo-particle-6 {
-          width: 11px;
-          height: 11px;
-          bottom: 16%;
-          right: 40%;
-          animation: float 6.8s ease-in-out infinite 0.5s;
-        }
-        
-        .bg-gradient-radial {
-          background: radial-gradient(circle, var(--tw-gradient-stops));
-        }
-      `}</style>
-    </section>
-  );
-};
-
-export default TopSlider;
