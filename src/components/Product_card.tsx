@@ -125,7 +125,7 @@ const Product_card: React.FC<Props> = ({
     product.price * (1 - 0.01 * discountPct)
   );
   // console.log("Discounted Price:", product);
-  // console.log(category);
+// console.log(category);
   const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
   let imageSrc = ""
   if (product.images && product.images[0]){
@@ -226,7 +226,7 @@ const Product_card: React.FC<Props> = ({
 
         <button
           className={[
-            "w-full text-gray-900 font-semibold py-0.5 px-1 rounded-lg transition-all duration-300 flex items-center justify-center gap-1 group bg-gradient-to-r text-xs",
+            "w-full text-gray-900 font-semibold py-0.5 px-1 rounded-md transition-all duration-300 flex items-center justify-center gap-0.5 group bg-gradient-to-r text-xs",
             theme.btnFrom,
             theme.btnTo,
             theme.btnHoverFrom,
@@ -234,7 +234,7 @@ const Product_card: React.FC<Props> = ({
           ].join(" ")}
           onClick={() => handleViewDetails(product.id)}
         >
-          <Eye className="w-2.5 h-2.5" />
+          <Eye className="w-3 h-3" />
           View
         </button>
       </div>
