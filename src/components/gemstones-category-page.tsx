@@ -23,6 +23,7 @@ import moonstoneimage from "@/assets/Stones/moonstone.png";
 import pyriteimage from "@/assets/Stones/pyrite.png";
 import sodaimage from "@/assets/Stones/sodalite.png";
 import topazimage from "@/assets/Stones/topaz.png";
+import gomedicon from "@/assets/gomed_icon.png";
 
 const GemstonesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -78,7 +79,7 @@ const GemstonesPage = () => {
         manik: "Manik",
         pukhraj: "Pukhraj",
         neelam: "Neelam",
-        //gomed: "Gomed",
+        gomed: "Gomed",
         catseye:"Cat's Eye",
       },
     },
@@ -119,7 +120,8 @@ const GemstonesPage = () => {
     moonstone: "Moonstone gemstone emotions ko balance karta hai aur intuition ko strong banata hai. New beginnings, calmness aur feminine energy ke liye ideal mana jata hai.",
     pyrite: "Pyrite gemstone protection aur wealth attraction ke liye jana jata hai. Confidence boost karta hai aur negative energy se shield provide karta hai.",
     sodalite: "Sodalite gemstone clarity, logic aur emotional stability ko improve karta hai. Stress kam karke communication aur focus ko better banata hai.",
-    topaz: "Topaz gemstone confidence, creativity aur success ko attract karta hai. Happiness, motivation aur overall positive vibes ke liye powerful stone hai."
+    topaz: "Topaz gemstone confidence, creativity aur success ko attract karta hai. Happiness, motivation aur overall positive vibes ke liye powerful stone hai.",
+    gomed:"Gomedak gemstone also known as Hessonite is a powerful Rahu graha stone used in Vedic astrology for protection clarity and sudden growth."
   };
 
   const categoryImages = {
@@ -134,7 +136,7 @@ const GemstonesPage = () => {
     catseye:catseyeimage,
     tigereye:tigereyeimage,
     jade:jadeimage,
-    //gomed: `${baseUrl}/images/categories/gomed.jpg`,
+    gomed:gomedicon,
     sulemani: sulemaniimage,
     amethyst:amethystimage,
     rosequartz:roseimage,
