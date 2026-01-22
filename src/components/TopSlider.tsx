@@ -729,10 +729,36 @@ const TopSlider = () => {
           filter: blur(2px);
         }
         .promo-particle-1 {
-          width: 10px;
-          height: 10px;
-          bottom: 18%;
-          left: 30%;
-          animation: float 5s ease-in-out infinite;
+          width: 8px;
+          height: 8px;
+          bottom: 15%;
+          left: 35%;
+          animation: float 4s ease-in-out infinite;
         }
         .promo-particle-2 {
+          width: 6px;
+          height: 6px;
+          bottom: 20%;
+          right: 35%;
+          animation: float 5s ease-in-out infinite 1s;
+        }
+        .promo-particle-3 {
+          width: 10px;
+          height: 10px;
+          bottom: 12%;
+          left: 25%;
+          animation: float 6s ease-in-out infinite 0.5s;
+        }
+        .promo-particle-4 {
+          width: 7px;
+          height: 7px;
+          bottom: 18%;
+          right: 25%;
+          animation: float 5.5s ease-in-out infinite 1.5s;
+        }
+      `}</style>
+    </section>
+  );
+};
+
+export default TopSlider;
