@@ -7,6 +7,17 @@ import "./luckyStoneCalculator.css";
 
 interface Props {}
 
+// Stone URL mapping
+const STONE_URL_MAP: Record<string, string> = {
+  'Ruby': 'https://triakshi.co.in/gem-view/696b91788cd5859c4f598a29',
+  'Pearl': 'https://triakshi.co.in/gem-view/69722de4b100ec8faf05d963',
+  'Red Coral': 'https://triakshi.co.in/gem-view/696b51538cd5859c4f598a00',
+  'Emerald': 'https://triakshi.co.in/gem-view/6971a135b100ec8faf05d955',
+  'Yellow Sapphire': 'https://triakshi.co.in/gem-view/696b5c008cd5859c4f598a08',
+  'Opal': 'https://triakshi.co.in/gem-view/6970a34eb9e593c765145ae5',
+  'Blue Sapphire': 'https://triakshi.co.in/gem-view/696b9cb28cd5859c4f598a36',
+};
+
 const LuckyStoneCalculator: React.FC<Props> = () => {
   const [dob, setDob] = useState("");
   const [tob, setTob] = useState("");
@@ -151,8 +162,14 @@ const LuckyStoneCalculator: React.FC<Props> = () => {
     }
   };
 
-  const handleStoneClick = (productUrl: string) => {
-    navigate(productUrl);
+  const handleStoneClick = (stoneName: string) => {
+    // Get the URL from the mapping, fallback to productUrl if not found
+    const url = STONE_URL_MAP[stoneName];
+    if (url) {
+      window.open(url, '_blank');
+    } else {
+      toastError(`No URL found for ${stoneName}`);
+    }
   };
 
   return (
@@ -278,7 +295,7 @@ const LuckyStoneCalculator: React.FC<Props> = () => {
                     <p className="lifeCalculator_stoneHindiName">({stone.hindiName})</p>
                   )}
                   <button
-                    onClick={() => handleStoneClick(stone.productUrl)}
+                    onClick={() => handleStoneClick(stone.englishName)}
                     className="lifeCalculator_exploreBtn"
                   >
                     View Details
