@@ -142,13 +142,18 @@ const Product_card: React.FC<Props> = ({
   // const maxRating = 5;
 
   return (
-    <div className="bg-white rounded-2xl shadow-card hover:shadow-elegant transition-all duration-300 hover:scale-105 overflow-hidden group max-w-[75%]">
+    <div 
+      className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group flex flex-col"
+      style={{ width: '280px', minHeight: '500px' }}
+    >
+      {/* Image Section - Perfect Square 280x280 */}
       <div
         className={[
-          "h-48 bg-gradient-to-br flex items-center justify-center relative overflow-hidden cursor-pointer",
+          "relative overflow-hidden cursor-pointer bg-gradient-to-br flex items-center justify-center",
           theme.bandFrom,
           theme.bandTo,
         ].join(" ")}
+        style={{ width: '280px', height: '280px', flexShrink: 0 }}
         onClick={() => handleViewDetails(product.id)}
       >
         <div
@@ -160,7 +165,11 @@ const Product_card: React.FC<Props> = ({
         />
 
         {product.image ? (
-          <img src={imageSrc} alt={product.name} className="h-full w-full object-cover" />
+          <img 
+            src={imageSrc} 
+            alt={product.name} 
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" 
+          />
         ) : (
           <Star className="w-24 h-24 text-black/10" />
         )}
@@ -168,7 +177,7 @@ const Product_card: React.FC<Props> = ({
         {discountPct > 0 && (
           <div
             className={[
-              "absolute top-3 right-3 px-3 py-1 rounded-full text-sm font-semibold",
+              "absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-semibold z-10",
               theme.offBadge,
             ].join(" ")}
           >
@@ -177,56 +186,63 @@ const Product_card: React.FC<Props> = ({
         )}
       </div>
 
-      <div className="p-6">
-        <div className="flex flex-col mb-2">
-          <h3 
-            className="text-xl font-bold text-gray-800 cursor-pointer hover:text-gray-600 transition-colors mb-2"
-            onClick={() => handleViewDetails(product.id)}
-          >
-            {product.name}
-          </h3>
+      {/* Content Section - Flexible Height */}
+      <div className="p-4 flex flex-col flex-grow">
+        {/* Product Name - Max 2 Lines */}
+        <h3 
+          className="text-base font-bold text-gray-800 cursor-pointer hover:text-gray-600 transition-colors mb-2 line-clamp-2"
+          style={{ 
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden'
+          }}
+          onClick={() => handleViewDetails(product.id)}
+        >
+          {product.name}
+        </h3>
 
-          
-          {/* Rating Display with Diamond Icon */}
-          <div className="flex items-center gap-1 bg-gradient-to-r from-amber-50 to-yellow-50 px-3 py-1.5 rounded-full border border-amber-200 self-start">
-            <Diamond className="w-4 h-4 text-amber-500 fill-amber-500" />
-            <span className="text-sm font-bold text-amber-700">
-              {Number(rating.toFixed(1))}
-            </span>
+        {/* Rating Display */}
+        <div className="flex items-center gap-1 bg-gradient-to-r from-amber-50 to-yellow-50 px-2.5 py-1 rounded-full border border-amber-200 self-start mb-3">
+          <Diamond className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+          <span className="text-xs font-bold text-amber-700">
+            {Number(rating.toFixed(1))}
+          </span>
+        </div>
+
+        {/* Quantity and Weight */}
+        <div className="flex flex-col gap-1.5 mb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-semibold text-gray-700">Quantity:</span>
+            <span className="text-xs text-gray-600">{product.quantity}</span>
           </div>
+          {product.weight && (
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-gray-700">Weight:</span>
+              <span className="text-xs text-gray-600">{product.weight}ct</span>
+            </div>
+          )}
         </div>
 
-        {/*<p className="text-sm text-gray-600 mb-3">{product.description}</p>*/}
-      <div className="flex flex-col gap-2">
+        {/* Spacer to push button to bottom */}
+        <div className="flex-grow"></div>
 
-
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-gray-700">Quantity:</span>
-          <span className="text-sm text-gray-600">{product.quantity}</span>
-        </div>
-        {
-        product.weight&&
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-sm font-semibold text-gray-700">Weight:</span>
-          <span className="text-sm text-gray-600">{product.weight}ct</span>
-        </div>
-        }
-      </div>
-
-        <div className="flex flex-col items-start gap-2 mb-4 mt-3">
-          <span className="text-2xl font-bold text-gray-900">
+        {/* Price Section */}
+        <div className="flex flex-col gap-1 mb-3">
+          <span className="text-xl font-bold text-gray-900">
             ₹{discountedPrice.toLocaleString()}
           </span>
           {discountPct > 0 && product.price > discountedPrice && (
-            <span className="text-lg text-gray-400 line-through">
+            <span className="text-sm text-gray-400 line-through">
               ₹{product.price.toLocaleString()}
             </span>
           )}
         </div>
 
+        {/* CTA Button - Always at Bottom */}
         <button
           className={[
-            "w-full text-gray-900 font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group bg-gradient-to-r",
+            "w-full text-white font-semibold py-2.5 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 bg-gradient-to-r",
             theme.btnFrom,
             theme.btnTo,
             theme.btnHoverFrom,
@@ -234,8 +250,8 @@ const Product_card: React.FC<Props> = ({
           ].join(" ")}
           onClick={() => handleViewDetails(product.id)}
         >
-          <Eye className="w-5 h-5" />
-          View Details
+          <Eye className="w-4 h-4" />
+          <span className="text-sm">View Details</span>
         </button>
       </div>
     </div>
