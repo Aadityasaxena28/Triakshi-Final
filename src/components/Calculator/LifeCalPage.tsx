@@ -3,7 +3,7 @@ import { toastError } from "@/utlity/AlertSystem";
 import { getStoneInfo, StoneInfo } from "@/utlity/StoneMapper";
 import React, { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./luckyStoneCalculator.css"; // keep same file, or rename if you want
+import "./luckyStoneCalculator.css";
 
 interface Props {}
 
@@ -20,12 +20,12 @@ const LifeStoneCalculator: React.FC<Props> = () => {
   const navigate = useNavigate();
   const valid = useMemo(() => !!dob && !!tob && !!pob, [dob, tob, pob]);
 
-  // 🔼 SCROLL TO TOP ON PAGE LOAD (ADDED)
+  // Scroll to top on page load
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
-  // 🌍 Autocomplete logic
+  // Autocomplete logic
   useEffect(() => {
     if (pob.length < 3) {
       setSuggestions([]);
@@ -56,7 +56,7 @@ const LifeStoneCalculator: React.FC<Props> = () => {
     setSuggestions([]);
   };
 
-  // 📍 User Location
+  // User Location
   const handleUseMyLocation = () => {
     if (!navigator.geolocation) {
       toastError("Geolocation not supported by your browser");
@@ -91,7 +91,7 @@ const LifeStoneCalculator: React.FC<Props> = () => {
     return Object.keys(e).length === 0;
   };
 
-  // 🔮 FETCH LIFE STONES
+  // Fetch Life Stones
   const fetchLifeStones = async (): Promise<StoneInfo[]> => {
     try {
       const data: CalculatorParams = {
@@ -143,7 +143,24 @@ const LifeStoneCalculator: React.FC<Props> = () => {
     }
   };
 
-  const handleStoneClick = (url: string) => {
+  const handleStoneClick = (stoneName: string) => {
+    // Navigate to the product detail page based on stone name
+    // You can customize this logic based on your routing structure
+    const stoneUrlMap: { [key: string]: string } = {
+      "Ruby": "/gemstone-view/ruby",
+      "Pearl": "/gemstone-view/pearl",
+      "Red Coral": "/gemstone-view/red-coral",
+      "Emerald": "/gemstone-view/emerald",
+      "Yellow Sapphire": "/gemstone-view/yellow-sapphire",
+      "Diamond": "/gemstone-view/diamond",
+      "Blue Sapphire": "/gemstone-view/blue-sapphire",
+      "Hessonite": "/gemstone-view/hessonite",
+      "Cat's Eye": "/gemstone-view/cats-eye",
+      // Add more mappings as needed
+    };
+
+    const url = stoneUrlMap[stoneName] || `/gemstone-view/${stoneName.toLowerCase().replace(/\s+/g, '-')}`;
+    window.scrollTo({ top: 0, behavior: "smooth" });
     navigate(url);
   };
 
@@ -231,7 +248,7 @@ const LifeStoneCalculator: React.FC<Props> = () => {
                     <p className="lifeCalculator_stoneHindiName">({stone.hindiName})</p>
                   )}
                   <button
-                    onClick={() => handleStoneClick(stone.productUrl)}
+                    onClick={() => handleStoneClick(stone.englishName)}
                     className="lifeCalculator_exploreBtn"
                   >
                     View Details
