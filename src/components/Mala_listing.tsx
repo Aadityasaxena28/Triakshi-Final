@@ -411,7 +411,7 @@ const Mala_listing = () => {
             </div>
 
             {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+              <div className="flex flex-wrap gap-y-4">
                 {filteredProducts.map((product: any) => {
                   const pid = product._id || product.id;
                   return (
