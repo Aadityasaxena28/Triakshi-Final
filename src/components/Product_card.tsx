@@ -1,5 +1,5 @@
 import type { Product } from "@/DataTypes/product";
-import { Eye, Star } from "lucide-react";
+import { Eye, Star, Diamond } from "lucide-react";
 import React from "react";
 
 type Props = {
@@ -109,8 +109,6 @@ const THEME: Record<
   },
 };
 
-import { Diamond } from 'lucide-react';
-
 const Product_card: React.FC<Props> = ({
   product,
   handleViewDetails,
@@ -125,7 +123,7 @@ const Product_card: React.FC<Props> = ({
     product.price * (1 - 0.01 * discountPct)
   );
   // console.log("Discounted Price:", product);
-// console.log(category);
+  // console.log(category);
   const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
   let imageSrc = ""
   if (product.images && product.images[0]){
@@ -143,7 +141,7 @@ const Product_card: React.FC<Props> = ({
 
   return (
     <div 
-      className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group flex flex-col m-1"
+      className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group flex flex-col"
       style={{ width: '140px', minHeight: '250px' }}
     >
       {/* Image Section - Perfect Square 140x140 (50% of 280x280) */}

@@ -537,11 +537,11 @@ const GemstonesPage = () => {
             )}
 
             {filteredProducts.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-                {filteredProducts.map((product) => (
-                  <Product_card key={product.id} product={product} handleViewDetails={handleViewDetails} />
-                ))}
-              </div>
+            <div className="flex flex-wrap gap-y-4">
+              {filteredProducts.map((product) => (
+                <Product_card key={product.id} product={product} handleViewDetails={handleViewDetails} category="gemstones" />
+              ))}
+            </div>
             )}
 
             {!isError && !isLoading && filteredProducts.length === 0 && (
