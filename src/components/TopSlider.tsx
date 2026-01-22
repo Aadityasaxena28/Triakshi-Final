@@ -10,6 +10,7 @@ import newad from "@/assets/newadd.png";
 import jadebanner from "@/assets/banner_jade_website.jpg";
 import pyritebanner from "@/assets/pyrite_bracelet_banner.png";
 import yantra_ban from "@/assets/yantra_banner.png";
+import moonga_combo from "@/assets/Moonga_combo.png";
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -66,6 +67,12 @@ const TopSlider = () => {
       id: 7,
       type: "image-only",
       image: yantra_ban,
+      bgColor: "#d9853b",
+    },
+    {
+      id: 8,
+      type: "image-only",
+      image: moonga_combo,
       bgColor: "#d9853b",
     },
 
