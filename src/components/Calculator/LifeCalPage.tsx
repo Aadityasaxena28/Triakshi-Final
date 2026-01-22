@@ -7,6 +7,20 @@ import "./luckyStoneCalculator.css";
 
 interface Props {}
 
+// Stone URL mapping
+const STONE_URL_MAP: Record<string, string> = {
+  'Ruby': 'https://triakshi.co.in/gem-view/696b91788cd5859c4f598a29',
+  'Pearl': 'https://triakshi.co.in/gem-view/69722de4b100ec8faf05d963',
+  'Red Coral': 'https://triakshi.co.in/gem-view/696b51538cd5859c4f598a00',
+  'Emerald': 'https://triakshi.co.in/gem-view/6971a135b100ec8faf05d955',
+  'Yellow Sapphire': 'https://triakshi.co.in/gem-view/696b5c008cd5859c4f598a08',
+  'Opal': 'https://triakshi.co.in/gem-view/6970a34eb9e593c765145ae5',
+  'Blue Sapphire': 'https://triakshi.co.in/gem-view/696b9cb28cd5859c4f598a36',
+  "Cat's Eye": 'https://triakshi.co.in/gem-view/696b94a08cd5859c4f598a2a',
+  'Hessonite': 'https://triakshi.co.in/gem-view/6971a90cb100ec8faf05d960',
+  'Gomed': 'https://triakshi.co.in/gem-view/6971a90cb100ec8faf05d960',
+};
+
 const LifeStoneCalculator: React.FC<Props> = () => {
   const [dob, setDob] = useState("");
   const [tob, setTob] = useState("");
@@ -144,24 +158,13 @@ const LifeStoneCalculator: React.FC<Props> = () => {
   };
 
   const handleStoneClick = (stoneName: string) => {
-    // Navigate to the product detail page based on stone name
-    // You can customize this logic based on your routing structure
-    const stoneUrlMap: { [key: string]: string } = {
-      "Ruby": "/gemstone-view/ruby",
-      "Pearl": "/gemstone-view/pearl",
-      "Red Coral": "/gemstone-view/red-coral",
-      "Emerald": "/gemstone-view/emerald",
-      "Yellow Sapphire": "/gemstone-view/yellow-sapphire",
-      "Diamond": "/gemstone-view/diamond",
-      "Blue Sapphire": "/gemstone-view/blue-sapphire",
-      "Hessonite": "/gemstone-view/hessonite",
-      "Cat's Eye": "/gemstone-view/cats-eye",
-      // Add more mappings as needed
-    };
-
-    const url = stoneUrlMap[stoneName] || `/gemstone-view/${stoneName.toLowerCase().replace(/\s+/g, '-')}`;
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    navigate(url);
+    // Get the URL from the mapping
+    const url = STONE_URL_MAP[stoneName];
+    if (url) {
+      window.open(url, '_blank');
+    } else {
+      toastError(`No URL found for ${stoneName}`);
+    }
   };
 
   return (

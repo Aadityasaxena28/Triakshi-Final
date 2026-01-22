@@ -48,8 +48,8 @@ const LORD_TO_STONE = {
   Jupiter: 'Yellow Sapphire',
   Venus: 'Opal',
   Saturn: 'Amethyst',
-  Rahu: 'Hessonite (Gomed)',
-  Ketu: "Cat’s Eye (Lehsunia)",
+  Rahu: 'Gomed',
+  Ketu: "Cat’s Eye",
 };
 
 // Compute the sign at the Nth house given ascendant sign
