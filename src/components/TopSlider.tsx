@@ -10,7 +10,7 @@ import newad from "@/assets/newadd.png";
 import jadebanner from "@/assets/banner_jade_website.jpg";
 import pyritebanner from "@/assets/pyrite_bracelet_banner.png";
 import yantra_ban from "@/assets/yantra_banner.png";
-import moonga_combo from "@/assets/Moonga_combo.png";
+import moonga_combo from "@/assets/moonga_combo_final.png";
 
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
