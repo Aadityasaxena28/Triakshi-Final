@@ -13,6 +13,7 @@ import yantra_ban from "@/assets/yantra_banner.png";
 import moonga_combo from "@/assets/Moonga_combo.png";
 import mobfirst from "@/assets/2.png";
 import lapfirst from "@/assets/poster_laptop.jpeg";
+import lapsec from "@/assets/banner2.png";
 
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -51,12 +52,12 @@ const TopSlider = () => {
       description:
         "Discover the mystical power of premium gemstones, carefully curated for healing, prosperity, and spiritual growth.",
     },
-    {/*
+    {
       id: 2,
       type: "image-only",
-      image: slideImage2,
+      image: lapsec,
       mobileImage: slideImage2,
-      bgColor: "#3b1f0f",*/
+      bgColor: "#3b1f0f",
     },
     {
       id: 3,
