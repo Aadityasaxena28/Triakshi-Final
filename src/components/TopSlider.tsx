@@ -14,6 +14,7 @@ import moonga_combo from "@/assets/Moonga_combo.png";
 import mobfirst from "@/assets/2.png";
 import lapfirst from "@/assets/poster_laptop.jpeg";
 import lapsec from "@/assets/banner2.png";
+import bannermo from"@/assets/bannermob.jpeg";
 
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -56,7 +57,7 @@ const TopSlider = () => {
       id: 2,
       type: "image-only",
       image: lapsec,
-      mobileImage: slideImage2,
+      mobileImage: bannermo,
       bgColor: "#3b1f0f",
     },
     {
