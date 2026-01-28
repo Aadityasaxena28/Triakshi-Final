@@ -837,7 +837,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                 <Product_card 
                   key={relatedProduct.id || relatedProduct.id} 
                   product={relatedProduct}
-                  handleViewDetails={(id) => handleViewDetails(id, relatedProduct.type || relatedProduct.category)}
+                  handleViewDetails={(key) => handleViewDetails(key, relatedProduct.type || relatedProduct.category)}
                   category={relatedProduct.type || relatedProduct.category}
                 />
               ))}
