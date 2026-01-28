@@ -39,7 +39,7 @@ const TopSlider = () => {
       type: "promo",
       image: lapfirst,
       mobileImage: freebanner,
-      bgColor: "#d9853b",
+      bgColor: "#170505",
       link: "https://triakshi.co.in/rudra-view/692b703a09e2057af820b27f",
     },
     {
