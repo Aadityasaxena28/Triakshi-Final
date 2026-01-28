@@ -870,7 +870,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
               {/* Scrollable Container */}
               <div
                 ref={carouselRef}
-                className="flex gap-3 sm:gap-4 overflow-x-auto overflow-y-visible scrollbar-hide scroll-smooth py-2"
+                className="flex gap-2 overflow-x-auto overflow-y-visible scrollbar-hide scroll-smooth py-2"
                 style={{
                   scrollbarWidth: 'none',
                   msOverflowStyle: 'none',
