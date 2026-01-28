@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
+import pachmukhi from '@/assets/5 mukhi.png';
+import manikimage from "@/assets/Stones/Ruby.png";
 
 interface Category {
   id: string;
@@ -17,13 +19,13 @@ const CategorySection = () => {
     {
       id: "rudraksha",
       name: "Rudraksha",
-      image: "/images/categories/rudraksha.jpg", // Replace with your actual image path
+      image: "pachmukhi",
       path: "/rudraksha",
     },
     {
       id: "gemstones",
       name: "Gemstones",
-      image: "/images/categories/gemstones.jpg", // Replace with your actual image path
+      image: "manikimage",
       path: "/gemstones",
     },
     {
@@ -47,7 +49,7 @@ const CategorySection = () => {
     {
       id: "tribhuvani",
       name: "Tribhuvani",
-      image: "/images/categories/tribhuvani.jpg", // Replace with your actual image path
+      image: "/images/categor", // Replace with your actual image path
       path: "/tribhuvani",
     },
   ];
