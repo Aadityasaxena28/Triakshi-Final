@@ -2,8 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
 import pachmukhi from '@/assets/5 mukhi.png';
-import manikimage from "@/assets/Stones/Ruby.png";
-
+import manik from "@/assets/Stones/Ruby.png";
+import health from '@/assets/health.png';
+import yantra from "@/assets/yantra.png";
+import tribh from "@/assets/tribhuvani incense.png";
+import braceletImg from "@/assets/bracelet-category.jpg";
 interface Category {
   id: string;
   name: string;
@@ -19,37 +22,37 @@ const CategorySection = () => {
     {
       id: "rudraksha",
       name: "Rudraksha",
-      image: "pachmukhi",
+      image: pachmukhi,
       path: "/rudraksha",
     },
     {
       id: "gemstones",
       name: "Gemstones",
-      image: "manikimage",
+      image: manik,
       path: "/gemstones",
     },
     {
       id: "mala",
       name: "Mala",
-      image: "/images/categories/mala.jpg", // Replace with your actual image path
+      image: health,
       path: "/mala",
     },
     {
       id: "bracelets",
       name: "Bracelets",
-      image: "/images/categories/bracelets.jpg", // Replace with your actual image path
+      image: braceletImg,
       path: "/bracelet",
     },
     {
       id: "yantra",
       name: "Yantra",
-      image: "/images/categories/yantra.jpg", // Replace with your actual image path
+      image: yantra,
       path: "/yantra",
     },
     {
       id: "tribhuvani",
       name: "Tribhuvani",
-      image: "/images/categor", // Replace with your actual image path
+      image: tribh,
       path: "/tribhuvani",
     },
   ];
