@@ -1,15 +1,15 @@
 const Marquee = () => {
   return (
-    <div className="bg-gradient-to-r from-primary to-gold-light py-3 overflow-hidden">
+    <div className="bg-yellow-400 py-3 overflow-hidden">
       <div className="animate-marquee whitespace-nowrap">
-        <span className="text-white font-semibold text-lg mx-8">
+        <span className="text-red-900 font-bold text-lg mx-8">
           JAI MAA PITAMBARA, WELCOME TO TRIAKSHI GEMS, HAPPY SHOPPING
         </span>
-        <span className="text-white font-semibold text-lg mx-8">
-          The Third Eye Awakens. त्रिakshi Gems is Arriving.
+        <span className="text-red-900 font-bold text-lg mx-8">
+          The Third Eye Awakens.
         </span>
-        <span className="text-white font-semibold text-lg mx-8">
-          🔱 Authentic 🔱 Certified 🔱 Energized
+        <span className="text-red-900 font-bold text-lg mx-8">
+        Triakshi Gems  provides 🔱 Authentic 🔱 Certified 🔱 Energized spiritual products.
         </span>
       </div>
     </div>

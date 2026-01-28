@@ -133,11 +133,11 @@ const NewArrivals = () => {
 
   if (isLoading) {
     return (
-      <section id="new-arrivals" className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
+      <section id="new-arrivals" className="py-4 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading new arrivals...</p>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto"></div>
+            <p className="mt-2 text-gray-600 text-xs">Loading new arrivals...</p>
           </div>
         </div>
       </section>
@@ -146,9 +146,9 @@ const NewArrivals = () => {
 
   if (isError) {
     return (
-      <section id="new-arrivals" className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
+      <section id="new-arrivals" className="py-4 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-red-600">
+          <div className="text-center text-red-600 text-xs">
             <p>Failed to load products. Please try again later.</p>
           </div>
         </div>
@@ -158,9 +158,9 @@ const NewArrivals = () => {
 
   if (!validProducts || validProducts.length === 0) {
     return (
-      <section id="new-arrivals" className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
+      <section id="new-arrivals" className="py-4 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-gray-600">
+          <div className="text-center text-gray-600 text-xs">
             <p>No new arrivals at the moment.</p>
           </div>
         </div>
@@ -169,7 +169,7 @@ const NewArrivals = () => {
   }
 
   return (
-    <section id="new-arrivals" className="py-16 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 relative overflow-hidden">
+    <section id="new-arrivals" className="py-4 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 relative overflow-hidden" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full opacity-10">
         <div className="absolute top-10 right-10 w-20 h-20 bg-orange-400 rounded-full blur-3xl animate-pulse"></div>
@@ -179,10 +179,10 @@ const NewArrivals = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header with animated gradient text */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Package className="w-8 h-8 text-orange-500 animate-pulse" />
-            <h2 className="text-5xl font-extrabold relative inline-block">
+        <div className="text-center mb-3">
+          <div className="flex items-center justify-center gap-1.5 mb-1">
+            <Package className="w-4 h-4 text-orange-500 animate-pulse" />
+            <h2 className="text-xl sm:text-3xl font-bold relative inline-block">
               <span 
                 className="bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_200%]"
                 style={{
@@ -193,42 +193,42 @@ const NewArrivals = () => {
                 New Arrivals
               </span>
             </h2>
-            <Package className="w-8 h-8 text-orange-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <Package className="w-4 h-4 text-orange-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
           </div>
-          <p className="text-gray-700 text-lg font-medium max-w-2xl mx-auto">
+          <p className="text-gray-700 text-xs font-medium max-w-2xl mx-auto">
             ✨ Discover our latest collection of precious gemstones and spiritual items ✨
           </p>
-          <div className="mt-4 inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
-            <Sparkles className="w-4 h-4" />
+          <div className="mt-2 inline-flex items-center gap-1 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-semibold shadow-lg">
+            <Sparkles className="w-2.5 h-2.5" />
             <span>Just Arrived</span>
-            <Sparkles className="w-4 h-4" />
+            <Sparkles className="w-2.5 h-2.5" />
           </div>
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-center md:justify-end mb-6 gap-3">
+        <div className="flex justify-center md:justify-end mb-2 gap-1.5">
           <Button
             variant="outline"
             size="icon"
             onClick={prevSlide}
-            className="rounded-full bg-white/80 backdrop-blur-sm border-orange-300 hover:bg-orange-100 hover:border-orange-400 shadow-lg transition-all"
+            className="rounded-full h-7 w-7 bg-white/80 backdrop-blur-sm border-orange-300 hover:bg-orange-100 hover:border-orange-400 shadow-lg transition-all"
           >
-            <ChevronLeft className="h-5 w-5 text-orange-600" />
+            <ChevronLeft className="h-3.5 w-3.5 text-orange-600" />
           </Button>
           <Button
             variant="outline"
             size="icon"
             onClick={nextSlide}
-            className="rounded-full bg-white/80 backdrop-blur-sm border-orange-300 hover:bg-orange-100 hover:border-orange-400 shadow-lg transition-all"
+            className="rounded-full h-7 w-7 bg-white/80 backdrop-blur-sm border-orange-300 hover:bg-orange-100 hover:border-orange-400 shadow-lg transition-all"
           >
-            <ChevronRight className="h-5 w-5 text-orange-600" />
+            <ChevronRight className="h-3.5 w-3.5 text-orange-600" />
           </Button>
         </div>
 
         {/* Scrollable Slider */}
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto no-scrollbar gap-6 pb-4"
+          className="flex overflow-x-auto no-scrollbar gap-2 pb-2"
           style={{
             scrollSnapType: "x mandatory",
             scrollbarWidth: 'none',
@@ -245,29 +245,29 @@ const NewArrivals = () => {
             return (
               <div
                 key={product.id}
-                className="min-w-[280px] max-w-[280px] flex-shrink-0 bg-white border-2 border-orange-200 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 relative overflow-hidden"
+                className="min-w-[160px] max-w-[160px] flex-shrink-0 bg-white border-2 border-orange-200 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2 relative overflow-hidden"
                 style={{
                   scrollSnapAlign: "start",
                 }}
               >
                 {/* NEW Badge */}
-                <div className="absolute top-3 left-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg z-10 animate-pulse">
+                <div className="absolute top-1.5 left-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg z-10 animate-pulse">
                   NEW
                 </div>
 
                 {/* Discount Badge */}
                 {hasDiscount && (
-                  <div className="absolute top-3 right-3 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg z-10">
+                  <div className="absolute top-1.5 right-1.5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-lg z-10">
                     {discount}% OFF
                   </div>
                 )}
 
                 {/* Festive corner decoration */}
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-400 opacity-20 rounded-bl-full"></div>
+                <div className="absolute top-0 right-0 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-400 opacity-20 rounded-bl-full"></div>
 
                 {/* Image */}
                 <div 
-                  className="aspect-square overflow-hidden rounded-t-3xl relative cursor-pointer bg-gray-100"
+                  className="aspect-square overflow-hidden rounded-t-xl relative cursor-pointer bg-gray-100"
                   onClick={() => handleViewDetails(product)}
                 >
                   <img
@@ -276,16 +276,16 @@ const NewArrivals = () => {
                     className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
                     onLoad={updateScrollProgress}
                     onError={(e) => {
-                      e.currentTarget.src = "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop";
+                     // e.currentTarget.src = "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop";
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 </div>
 
                 {/* Product Details */}
-                <div className="p-5">
+                <div className="p-2">
                   <h3 
-                    className="text-lg font-bold mb-2 text-gray-800 hover:text-orange-600 transition-colors line-clamp-2 cursor-pointer"
+                    className="text-xs font-semibold mb-1 text-gray-800 hover:text-orange-600 transition-colors line-clamp-2 cursor-pointer leading-tight"
                     onClick={() => handleViewDetails(product)}
                   >
                     {product.name || 'Unnamed Product'}
@@ -293,37 +293,37 @@ const NewArrivals = () => {
 
                   {/* Category Badge */}
                   {product.category && (
-                    <div className="mb-2">
-                      <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-semibold capitalize">
+                    <div className="mb-1">
+                      <span className="text-[9px] bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-full font-semibold capitalize">
                         {product.category}
                       </span>
                     </div>
                   )}
 
                   {/* Rating */}
-                  <div className="flex items-center space-x-1 mb-3">
+                  <div className="flex items-center space-x-0.5 mb-1.5">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`h-4 w-4 ${
+                        className={`h-2.5 w-2.5 ${
                           i < Math.floor(rating)
                             ? "text-amber-500 fill-current"
                             : "text-gray-300"
                         }`}
                       />
                     ))}
-                    <span className="text-sm text-gray-600 ml-2 font-medium">
+                    <span className="text-[10px] text-gray-600 ml-1 font-medium">
                       {rating.toFixed(1)}
                     </span>
                   </div>
 
                   {/* Price */}
-                  <div className="flex items-baseline space-x-2 mb-4">
-                    <span className="text-2xl font-extrabold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  <div className="flex items-baseline space-x-1 mb-2">
+                    <span className="text-base font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
                       ₹{discountedPrice.toLocaleString()}
                     </span>
                     {hasDiscount && (
-                      <span className="text-sm text-gray-400 line-through">
+                      <span className="text-[10px] text-gray-400 line-through">
                         ₹{price.toLocaleString()}
                       </span>
                     )}
@@ -331,26 +331,26 @@ const NewArrivals = () => {
 
                   {/* Availability */}
                   {product.availability === 'out-of-stock' && (
-                    <div className="mb-3 text-red-600 text-xs font-semibold">
+                    <div className="mb-1.5 text-red-600 text-[9px] font-semibold">
                       Out of Stock
                     </div>
                   )}
 
                   {/* Buttons */}
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-1">
                     <Button 
-                      className="flex-1 h-10 text-sm bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold shadow-lg"
+                      className="flex-1 h-7 text-[10px] bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold shadow-lg"
                       onClick={() => handleAddToCart(product)}
                       disabled={product.availability === 'out-of-stock'}
                     >
-                      <ShoppingCart className="mr-2 h-4 w-4" /> Add
+                      <ShoppingCart className="mr-0.5 h-2.5 w-2.5" /> Add
                     </Button>
                     <Button
                       variant="outline"
-                      className="h-10 px-4 text-sm border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-semibold transition-all"
+                      className="h-7 px-2 text-[10px] border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-semibold transition-all"
                       onClick={() => handleViewDetails(product)}
                     >
-                      <Eye className="h-4 w-4" />
+                      <Eye className="h-2.5 w-2.5" />
                     </Button>
                   </div>
                 </div>
@@ -360,15 +360,15 @@ const NewArrivals = () => {
         </div>
 
         {/* Custom Progress Bar */}
-        <div className="mt-8 flex justify-center">
+        <div className="mt-3 flex justify-center">
           <div className="w-full max-w-md">
-            <div className="h-2 bg-orange-200 rounded-full overflow-hidden shadow-inner">
+            <div className="h-1 bg-orange-200 rounded-full overflow-hidden shadow-inner">
               <div 
                 className="h-full bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 rounded-full transition-all duration-300 shadow-lg"
                 style={{ width: `${scrollProgress}%` }}
               ></div>
             </div>
-            <div className="flex justify-between mt-2 text-xs text-gray-600 font-medium">
+            <div className="flex justify-between mt-1 text-[9px] text-gray-600 font-medium">
               <span>Scroll to explore</span>
               <span>{Math.round(scrollProgress)}%</span>
             </div>
@@ -376,9 +376,9 @@ const NewArrivals = () => {
         </div>
 
         {/* Expert Consultation Button */}
-        <div className="mt-12 flex justify-center">
+        <div className="mt-6 flex justify-center">
           <Button
-            className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold py-4 px-8 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 text-lg"
+            className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold py-2 px-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 text-xs"
             onClick={() => {
               window.open('https://astroashoknarayan.com/', '_blank');
             }}

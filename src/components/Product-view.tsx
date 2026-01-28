@@ -3,14 +3,33 @@ import { getProductById } from "@/API/Product";
 import { getProductReviews } from "@/API/ReviewAPI";
 import { CartItem } from "@/DataTypes/CartData";
 import { CheckoutDraft, CheckoutItem } from "@/DataTypes/Checkout";
+import { getRelatedProducts } from "@/API/RelatedProducts";
+
 import type { Product } from "@/DataTypes/product";
 import { Review } from "@/DataTypes/Review";
 import { toastError, toastSuccess } from "@/utlity/AlertSystem";
 import { setWithExpiry } from "@/utlity/Storage";
-import { AlertCircle, ArrowLeft, ChevronLeft, ChevronRight, Heart, Minus, Plus, ShoppingCart, Sparkles, Star } from "lucide-react";
+import { 
+  AlertCircle, 
+  ArrowLeft, 
+  ChevronLeft, 
+  ChevronRight, 
+  Heart, 
+  Minus, 
+  Plus, 
+  ShoppingCart, 
+  Sparkles, 
+  Star,
+  Shield,
+  Award,
+  Zap,
+  Gift,
+  MapPin
+} from "lucide-react";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ProductReviewSlider } from "./ProductReviewSlider";
+import Product_card from "./Product_card";
 
 type Props = {
   category?: "gemstone" | "rudraksha" | string;
@@ -213,6 +232,35 @@ const THEME: Record<
     dotActive: "bg-amber-500",
     dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
+  books: {
+    pageBgFrom: "from-blue-50/30",
+    pageBgTo: "to-indigo-50/30",
+
+    headerFrom: "from-blue-500",
+    headerTo: "to-indigo-600",
+
+    bandFrom: "from-blue-50",
+    bandVia: "via-white",
+    bandTo: "to-indigo-100",
+    overlayPulse: "bg-blue-400/20",
+
+    badgeWrap: "bg-gradient-to-r from-blue-500 to-indigo-600",
+    badgeText: "text-white",
+
+    catChip: "bg-blue-50 text-blue-800 border-2 border-blue-200",
+    sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
+
+    priceFrom: "from-blue-600",
+    priceTo: "to-indigo-600",
+
+    qtyBorder: "border-blue-100",
+
+    outlineText: "text-blue-600",
+    outlineBorder: "border-blue-500 hover:border-indigo-600",
+
+    dotActive: "bg-blue-500",
+    dotIdle: "bg-gray-300 hover:bg-gray-400",
+  },
 };
 
 
@@ -227,10 +275,16 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const [benefits, setBenefits] = React.useState<string[]>([]);
   const [displayImages, setDisplayImages] = React.useState<string[]>([]);
   const [reviews, setReviews] = React.useState<Review[]>([]);
+  const [relatedProducts, setRelatedProducts] = React.useState<Product[]>([]);
+  const [loadingRelated, setLoadingRelated] = React.useState(false);
+  const carouselRef = React.useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
   const BDK = import.meta.env.VITE_BUY_DRAFT_KEY;
   const theme = THEME[category] ?? THEME.gemstone;
+
+  // Mock review count
+  const reviewCount = 200;
 
   React.useEffect(() => {
     const fetchProduct = async () => {
@@ -281,7 +335,6 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
         imagesToDisplay = [fetchedProduct.image];
       }
       
-      // console.log('Images to display:', imagesToDisplay);
       setDisplayImages(imagesToDisplay);
 
       const d = Math.max(0, Math.min(100, fetchedProduct.discount ?? 0));
@@ -296,9 +349,33 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       setTotalPrice(discPrice * initialQty);
       setQuantity(1);
       setCurrentImageIndex(0);
+
+      // Fetch related products
+      if (fetchedProduct.id) {
+        await fetchRelatedProducts(fetchedProduct.id);
+      }
     };
     fetchProduct();
   }, [params.id]);
+
+  const fetchRelatedProducts = async (productId: string) => {
+    try {
+      setLoadingRelated(true);
+      console.log("Fetching related products for:", productId);
+      
+      // getRelatedProducts returns Promise<Product[]> directly
+      const productsArray = await getRelatedProducts(productId, 0.2, 1, 8);
+      console.log("Related products response:", productsArray);
+      
+      // Since getRelatedProducts already returns an array, just set it directly
+      setRelatedProducts(Array.isArray(productsArray) ? productsArray : []);
+    } catch (error) {
+      console.error("Failed to fetch related products:", error);
+      setRelatedProducts([]);
+    } finally {
+      setLoadingRelated(false);
+    }
+  };
 
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -352,9 +429,44 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
   const onBack = () => window.history.back();
 
+  // Handle view details for related products
+  const handleViewDetails = (productId: string, productType?: string) => {
+    // Use the productType if provided, otherwise fall back to current category
+    const type = productType || category;
+    
+    // Determine the route based on product type
+    const typeMap: Record<string, string> = {
+      gemstone: `/gem-view/${productId}`,
+      rudraksha: `/rudra-view/${productId}`,
+      mala: `/mala-brace-view/${productId}`,
+      bracelet: `/mala-brace-view/${productId}`,
+      tribhuvani: `/tribhuvani-view/${productId}`,
+      yantra: `/yantra-view/${productId}`,
+      books: `/books-view/${productId}`,
+    };
+
+    const route = typeMap[type.toLowerCase()] || `/gem-view/${productId}`;
+    navigate(route);
+  };
+
+  // Carousel navigation functions
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    if (carouselRef.current) {
+      const scrollAmount = 300;
+      const newScrollLeft = direction === 'left' 
+        ? carouselRef.current.scrollLeft - scrollAmount
+        : carouselRef.current.scrollLeft + scrollAmount;
+      
+      carouselRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   if (!product) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
+      <div className="min-h-screen flex items-center justify-center text-sm font-medium" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
         Loading product details...
       </div>
     );
@@ -367,7 +479,6 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     if (displayImages.length > 0) {
       setCurrentImageIndex((p) => {
         const newIndex = (p + 1) % displayImages.length;
-        // console.log('Next image - Current:', p, 'New:', newIndex, 'Total:', displayImages.length);
         return newIndex;
       });
     }
@@ -377,42 +488,43 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     if (displayImages.length > 0) {
       setCurrentImageIndex((p) => {
         const newIndex = (p - 1 + displayImages.length) % displayImages.length;
-        // console.log('Prev image - Current:', p, 'New:', newIndex, 'Total:', displayImages.length);
         return newIndex;
       });
     }
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${theme.pageBgFrom} ${theme.pageBgTo}`}>
+    <div className={`min-h-screen bg-gradient-to-br ${theme.pageBgFrom} ${theme.pageBgTo}`} style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
       {/* Header */}
-      <div className={`bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} text-white py-6 px-6 shadow-lg sticky top-0 z-20`}>
-        <div className="max-w-7xl mx-auto flex items-center gap-4">
-          <button onClick={onBack} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
-            <ArrowLeft className="w-6 h-6" />
+      <div className={`bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} text-white py-3 px-4 sm:py-4 sm:px-5 shadow-lg sticky top-0 z-20`}>
+        <div className="max-w-7xl mx-auto flex items-center gap-2 sm:gap-3">
+          <button onClick={onBack} className="p-1.5 sm:p-2 hover:bg-white/20 rounded-lg transition-colors">
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
-          <div className="flex items-center gap-3">
-            <Sparkles className="w-8 h-8" />
-            <h1 className="text-3xl font-bold">{category === "rudraksha" ? "Rudraksha Details" : "Product Details"}</h1>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" />
+            <h1 className="text-base sm:text-lg font-semibold tracking-tight">
+              {category === "rudraksha" ? "Rudraksha Details" : "Product Details"}
+            </h1>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Left Column - Image Carousel */}
-          <div className="space-y-6">
-            <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+          <div className="space-y-3 sm:space-y-4">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden">
               <div
                 className={[
-                  "relative h-72 sm:h-96 bg-gradient-to-br flex items-center justify-center overflow-visible",
+                  "relative h-64 sm:h-72 md:h-80 bg-gradient-to-br flex items-center justify-center overflow-visible",
                   theme.bandFrom,
                   theme.bandVia ?? "",
                   theme.bandTo,
                 ].join(" ")}
               >
                 {discount > 0 && (
-                  <div className={`absolute top-4 right-4 sm:top-6 sm:right-6 ${theme.badgeWrap} ${theme.badgeText} px-2 py-1 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-lg font-bold shadow-lg z-30`}>
+                  <div className={`absolute top-2 right-2 sm:top-3 sm:right-3 ${theme.badgeWrap} ${theme.badgeText} px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold shadow-lg z-30`}>
                     {discount}% OFF
                   </div>
                 )}
@@ -425,12 +537,11 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        // console.log('Prev button clicked');
                         prevImage();
                       }}
-                      className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg transition-all z-20 cursor-pointer"
+                      className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-1.5 sm:p-2 rounded-full shadow-lg transition-all z-20 cursor-pointer"
                     >
-                      <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-gray-800" />
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-800" />
                     </button>
 
                     <button
@@ -438,12 +549,11 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        // console.log('Next button clicked');
                         nextImage();
                       }}
-                      className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg transition-all z-20 cursor-pointer"
+                      className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-1.5 sm:p-2 rounded-full shadow-lg transition-all z-20 cursor-pointer"
                     >
-                      <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-gray-800" />
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-800" />
                     </button>
                   </>
                 )}
@@ -455,18 +565,17 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                       key={currentImageIndex}
                       src={displayImages[currentImageIndex]}
                       alt={`${product.name} - Image ${currentImageIndex + 1}`}
-                      className="w-full h-full object-contain relative z-10 drop-shadow-2xl"
+                      className="w-full h-full object-contain relative z-10 drop-shadow-2xl px-4"
                       onError={(e) => {
-                        // console.error('Image failed to load:', displayImages[currentImageIndex]);
                         e.currentTarget.src = product.image || '';
                       }}
                     />
                   ) : (
-                    <Star className="w-48 h-48 sm:w-64 sm:h-64 text-black/10 relative z-10 drop-shadow-2xl" />
+                    <Star className="w-32 h-32 sm:w-40 sm:h-40 text-black/10 relative z-10 drop-shadow-2xl" />
                   )}
 
                   {displayImages.length > 1 && (
-                    <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-2 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm">
+                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 text-white bg-black/50 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-xs">
                       {currentImageIndex + 1} / {displayImages.length}
                     </div>
                   )}
@@ -475,142 +584,355 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
               {/* Thumbnail Indicators */}
               {displayImages.length > 1 && (
-                <div className="flex gap-2 justify-center p-4 bg-gray-50">
+                <div className="flex gap-1.5 sm:gap-2 justify-center p-2.5 sm:p-3 bg-gray-50">
                   {displayImages.map((_, index) => (
                     <button
                       key={index}
                       type="button"
                       onClick={(e) => {
                         e.preventDefault();
-                        // console.log('Thumbnail clicked - Index:', index);
                         setCurrentImageIndex(index);
                       }}
-                      className={`h-3 rounded-full transition-all cursor-pointer ${index === currentImageIndex ? `${theme.dotActive} w-8` : `${theme.dotIdle} w-3`}`}
+                      className={`h-2 rounded-full transition-all cursor-pointer ${
+                        index === currentImageIndex 
+                          ? `${theme.dotActive} w-6 sm:w-7` 
+                          : `${theme.dotIdle} w-2`
+                      }`}
                     />
                   ))}
                 </div>
               )}
 
               {/* Basic Info */}
-              <div className="p-4 sm:p-6 border-t border-gray-100">
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{product.name}</h2>
-                <p className={`${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"} font-semibold text-base sm:text-lg mb-4`}>
+              <div className="p-3 sm:p-4 border-t border-gray-100">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-1.5">
+                  {product.name}
+                </h2>
+                
+                {/* Star Rating */}
+                <div className="flex items-center gap-1.5 mb-2">
+                  <div className="flex items-center gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    {reviewCount} reviews
+                  </span>
+                </div>
+
+                <p className={`${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"} font-medium text-xs sm:text-sm mb-3`}>
                   Product ID: {product.id}
                 </p>
 
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium ${theme.catChip}`}>
-                    {categoryLabel}
-                  </span>
-                  <span className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium ${theme.sizeChip}`}>
-                    Size / Qty: {product.quantity}
-                  </span>
-                </div>
-
-                <div className="flex items-baseline gap-3 mb-3">
-                  <span className={`text-3xl sm:text-4xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent`}>
+                <div className="flex items-baseline gap-2 mb-2.5">
+                  <span className={`text-xl sm:text-2xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent`}>
                     ₹{discountedPrice.toLocaleString()}
                   </span>
                   {discount > 0 && originalPrice > discountedPrice && (
-                    <span className="text-xl sm:text-2xl text-gray-400 line-through">₹{originalPrice.toLocaleString()}</span>
+                    <span className="text-base sm:text-lg text-gray-400 line-through">
+                      ₹{originalPrice.toLocaleString()}
+                    </span>
                   )}
                 </div>
-              </div>
 
-              {/* No Return/Exchange Button & Color Variation Message */}
-              <div className="px-4 sm:px-6 pb-4 sm:pb-6 space-y-2">
-                <button
-                  onClick={handleRefundPolicyClick}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-2 text-sm"
-                >
-                  <AlertCircle className="w-4 h-4" />
-                  Specially Curated Item
-                </button>
-
-                <p className="text-red-600 text-xs text-center leading-relaxed">
-                  Minor color variations or appearance differences may occur due to lighting, photography or screen display settings.
+                <p className="text-xs text-gray-600 mb-3">
+                  Tax included • Free delivery over ₹299
                 </p>
+
+                <div className="flex flex-wrap gap-1.5">
+                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${theme.catChip}`}>
+                    {categoryLabel}
+                  </span>
+                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${theme.sizeChip}`}>
+                    Size / Qty: {product.quantity}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Right Column */}
-          <div className="space-y-6">
-            {/* Description */}
-            <div className="bg-white rounded-3xl shadow-xl p-4 sm:p-6">
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">Description</h3>
-              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{product.description || "—"}</p>
-            </div>
-
+          <div className="space-y-3 sm:space-y-4">
             {/* Quantity & Actions */}
-            <div className={`bg-gradient-to-br from-white to-white rounded-3xl shadow-xl p-4 sm:p-6 border-2 ${theme.qtyBorder}`}>
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Select Quantity</h3>
-              <div className="flex items-center justify-center gap-4 mb-4">
-                <button
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
-                >
-                  <Minus className="w-5 h-5 text-gray-700" />
-                </button>
-                <span className="text-3xl font-bold text-gray-900 w-16 text-center">{quantity}</span>
-                <button
-                  onClick={() => setQuantity((q) => Math.min(product.quantity, q + 1))}
-                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
-                >
-                  <Plus className="w-5 h-5 text-gray-700" />
-                </button>
-              </div>
-              <p className={`text-xl sm:text-2xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent text-center mb-4`}>
-                Total: ₹{totalPrice.toLocaleString()}
-              </p>
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              {/* Quantity Selector */}
+              <div className="flex items-center justify-between gap-3 mb-3">
+                <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden">
+                  <button
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    className="p-3 hover:bg-gray-100 transition-colors"
+                  >
+                    <Minus className="w-4 h-4 text-gray-700" />
+                  </button>
+                  <span className="text-lg font-semibold text-gray-900 px-6">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() => setQuantity((q) => Math.min(product.quantity, q + 1))}
+                    className="p-3 hover:bg-gray-100 transition-colors"
+                  >
+                    <Plus className="w-4 h-4 text-gray-700" />
+                  </button>
+                </div>
 
-              <div className="space-y-2.5">
+                {/* Add to Cart Button */}
                 <button
-                  className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} hover:opacity-95 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 text-base sm:text-lg transform hover:scale-105`}
-                  onClick={() => handleBuyNow(product, quantity)}
-                >
-                  <ShoppingCart className="w-5 h-5" />
-                  Buy Now
-                </button>
-
-                <button
-                  className={`w-full bg-white hover:bg-gray-50 ${theme.outlineText} font-bold py-4 px-6 rounded-2xl shadow-lg border-2 ${theme.outlineBorder} transition-all duration-300 flex items-center justify-center gap-2 text-base sm:text-lg transform hover:scale-105`}
+                  className="flex-1 bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
                   onClick={() => {
                     handleAddToCart(product.id, quantity);
                   }}
                 >
-                  <Heart className="w-5 h-5" />
-                  Add to Cart
+                  <span className="text-sm">ADD TO CART</span>
+                </button>
+              </div>
+
+              {/* Buy Now Button */}
+              <button
+                className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} hover:opacity-90 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg`}
+                onClick={() => {
+                  handleBuyNow(product, quantity);
+                }}
+              >
+                <ShoppingCart className="w-4 h-4" />
+                <span className="text-sm">BUY NOW</span>
+              </button>
+            </div>
+
+            {/* Description */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
+                Description
+              </h3>
+              <p className="text-gray-600 leading-relaxed text-xs sm:text-sm">
+                {product.description || "—"}
+              </p>
+            </div>
+
+            {/* Trust Badges - Now below description on mobile */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              <div className="grid grid-cols-3 gap-2">
+                <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
+                  <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-green-600 mb-1" />
+                  <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
+                    100%
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
+                    Authentic 
+                  </span>
+                </div>
+                <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
+                  <Award className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600 mb-1" />
+                  <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
+                    100%
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
+                    Certified
+                  </span>
+                </div>
+                <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
+                  <Zap className="w-7 h-7 sm:w-8 sm:h-8 text-orange-600 mb-1" />
+                  <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
+                    100%
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
+                    Energized
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Delivery Check */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0" />
+                <span className="text-xs sm:text-sm text-gray-600 font-medium">Delivery</span>
+                <input
+                  type="text"
+                  placeholder="Enter Pincode"
+                  className="flex-1 px-2.5 py-1.5 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+                <button className="px-3 py-1.5 text-xs sm:text-sm text-red-600 font-semibold hover:bg-red-50 rounded-md transition-colors">
+                  Check
                 </button>
               </div>
             </div>
 
+            {/* Exclusive Offer */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              <div className="flex items-center gap-1.5 mb-2">
+                <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
+                <h3 className="text-sm sm:text-base font-semibold text-gray-900">EXCLUSIVE OFFERS</h3>
+              </div>
+              <div className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 border-dashed border-orange-300 rounded-lg p-2.5 sm:p-3">
+                <div className="flex items-start gap-2">
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <h4 className="text-xs sm:text-sm font-semibold text-gray-900 mb-0.5">
+                      Free Rudraksha
+                    </h4>
+                    <p className="text-[10px] sm:text-xs text-gray-700 mb-1.5">
+                      Complimentary 5 Mukhi certified Rudraksha
+                    </p>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] sm:text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded">
+                        NAMASTE
+                      </span>
+                      <button className="text-[10px] sm:text-xs text-gray-600 hover:text-gray-900 font-medium">
+                        Copy
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Special Note */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              <button
+                onClick={handleRefundPolicyClick}
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-1.5 text-xs sm:text-sm"
+              >
+                <AlertCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                Return Policy
+              </button>
+
+              <p className="text-red-600 text-[10px] sm:text-xs text-center leading-relaxed mt-1.5">
+                Minor color variations or appearance differences may occur due to lighting, photography or screen display settings.
+              </p>
+            </div>
+
             {/* Benefits */}
             {(benefits?.length ?? 0) > 0 && (
-              <div className={`bg-gradient-to-br ${category === "rudraksha" ? "from-orange-50" : "from-yellow-50"} to-white rounded-3xl shadow-xl p-4 sm:p-6 border-2 ${theme.qtyBorder}`}>
-                <div className="flex items-center gap-2 mb-4">
-                  <Sparkles className={`w-6 h-6 sm:w-8 sm:h-8 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Benefits</h3>
+              <div className={`bg-gradient-to-br ${category === "rudraksha" ? "from-orange-50" : "from-yellow-50"} to-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4 border-2 ${theme.qtyBorder}`}>
+                <div className="flex items-center gap-1.5 mb-2.5">
+                  <Sparkles className={`w-5 h-5 sm:w-6 sm:h-6 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900">
+                    Benefits
+                  </h3>
                 </div>
-                <ul className="space-y-3">
+                <ul className="space-y-2">
                   {benefits.map((benefit: string, idx: number) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <div className={`w-2 h-2 rounded-full ${category === "rudraksha" ? "bg-orange-600" : "bg-yellow-600"} mt-2 flex-shrink-0`}></div>
-                      <span className="text-gray-700 text-sm sm:text-base leading-relaxed">{benefit}</span>
+                    <li key={idx} className="flex items-start gap-2">
+                      <div className={`w-1.5 h-1.5 rounded-full ${category === "rudraksha" ? "bg-orange-600" : "bg-yellow-600"} mt-1.5 flex-shrink-0`}></div>
+                      <span className="text-gray-700 text-xs sm:text-sm leading-relaxed">
+                        {benefit}
+                      </span>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
-             {/* Reviews Slider - ADD THIS */}
+
+            {/* Reviews Slider */}
             {reviews.length > 0 && (
               <ProductReviewSlider 
                 reviews={reviews} 
                 category={category} 
-              />)}
+              />
+            )}
           </div>
         </div>
+
+        {/* You May Also Like Section - Horizontal Carousel */}
+        <div className="mt-8 sm:mt-12">
+          {/* Section Header */}
+          <div className="flex items-center gap-2 mb-4 sm:mb-6">
+            <Sparkles
+              className={`w-5 h-5 sm:w-6 sm:h-6 ${
+                category === "rudraksha" ? "text-orange-600" : "text-yellow-600"
+              }`}
+            />
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+              You May Also Like
+            </h2>
+          </div>
+
+          {/* Loading State */}
+          {loadingRelated ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-gray-600 text-xs sm:text-sm">
+                Loading related products...
+              </div>
+            </div>
+          ) : relatedProducts && relatedProducts.length > 0 ? (
+            /* Horizontal Carousel */
+            <div className="relative group px-2 sm:px-4">
+              {/* Left Navigation Button */}
+              <button
+                onClick={() => scrollCarousel('left')}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white shadow-xl rounded-full p-2 sm:p-3 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                aria-label="Scroll left"
+              >
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800" />
+              </button>
+
+              {/* Scrollable Container */}
+              <div
+                ref={carouselRef}
+                className="flex gap-2 overflow-x-auto overflow-y-visible scrollbar-hide scroll-smooth py-2"
+                style={{
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                  WebkitOverflowScrolling: 'touch'
+                }}
+              >
+                {relatedProducts.map((relatedProduct) => {
+                  const productId = relatedProduct.id || relatedProduct._id;
+
+                  if (!productId) return null;
+
+                  return (
+                    <div
+                      key={productId}
+                      className="flex-shrink-0 w-[180px] sm:w-[220px] md:w-[240px] transition-transform duration-300 hover:-translate-y-2"
+                    >
+                      <Product_card
+                        product={relatedProduct}
+                        category={relatedProduct.type || relatedProduct.category}
+                        handleViewDetails={() =>
+                          handleViewDetails(
+                            productId,
+                            relatedProduct.type || relatedProduct.category
+                          )
+                        }
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Right Navigation Button */}
+              <button
+                onClick={() => scrollCarousel('right')}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white shadow-xl rounded-full p-2 sm:p-3 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                aria-label="Scroll right"
+              >
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800" />
+              </button>
+            </div>
+          ) : (
+            /* Empty State */
+            <div className="flex items-center justify-center py-12">
+              <p className="text-gray-500 text-xs sm:text-sm">
+                No related products found
+              </p>
+            </div>
+          )}
+        </div>
+
       </div>
+
+      {/* Hide scrollbar globally for carousel */}
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 };
