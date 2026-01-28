@@ -702,7 +702,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                 className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-1.5 text-xs sm:text-sm"
               >
                 <AlertCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                Specially Curated Item
+                Return Policy
               </button>
 
               <p className="text-red-600 text-[10px] sm:text-xs text-center leading-relaxed mt-1.5">
