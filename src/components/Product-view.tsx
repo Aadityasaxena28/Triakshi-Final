@@ -360,9 +360,31 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const fetchRelatedProducts = async (productId: string) => {
     try {
       setLoadingRelated(true);
-      const related = await getRelatedProducts(productId, 0.2, 1, 8);
-      // Ensure we always set an array, even if the result is undefined or null
-      setRelatedProducts(Array.isArray(related) ? related : []);
+      console.log("Fetching related products for:", productId);
+      
+      const response = await getRelatedProducts(productId, 0.2, 1, 8);
+      console.log("Related products response:", response);
+      
+      // Handle different response structures
+      let productsArray: Product[] = [];
+      
+      if (response && typeof response === 'object') {
+        // Check if response has a 'data' property (based on your API structure)
+        if (Array.isArray(response.data)) {
+          productsArray = response.data;
+        } 
+        // Check if response itself is an array
+        else if (Array.isArray(response)) {
+          productsArray = response;
+        }
+        // Check if response has isOkay and data properties
+        else if (response.isOkay && response.data) {
+          productsArray = Array.isArray(response.data) ? response.data : [];
+        }
+      }
+      
+      console.log("Setting related products:", productsArray);
+      setRelatedProducts(productsArray);
     } catch (error) {
       console.error("Failed to fetch related products:", error);
       setRelatedProducts([]);
@@ -814,33 +836,35 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
         </div>
 
         {/* You May Also Like Section */}
-        {relatedProducts && relatedProducts.length > 0 && (
-          <div className="mt-8 sm:mt-12">
-            <div className="flex items-center gap-2 mb-4 sm:mb-6">
-              <Sparkles className={`w-5 h-5 sm:w-6 sm:h-6 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
-              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
-                You May Also Like
-              </h2>
-            </div>
-
-            {loadingRelated ? (
-              <div className="flex items-center justify-center py-12">
-                <div className="text-gray-600 text-xs sm:text-sm">Loading related products...</div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-                {relatedProducts.map((relatedProduct) => (
-                  <Product_card 
-                    key={relatedProduct.id} 
-                    product={relatedProduct}
-                    handleViewDetails={(id) => handleViewDetails(id, relatedProduct.type || relatedProduct.category)}
-                    category={relatedProduct.type || relatedProduct.category}
-                  />
-                ))}
-              </div>
-            )}
+        <div className="mt-8 sm:mt-12">
+          <div className="flex items-center gap-2 mb-4 sm:mb-6">
+            <Sparkles className={`w-5 h-5 sm:w-6 sm:h-6 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+              You May Also Like
+            </h2>
           </div>
-        )}
+
+          {loadingRelated ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-gray-600 text-xs sm:text-sm">Loading related products...</div>
+            </div>
+          ) : relatedProducts && relatedProducts.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+              {relatedProducts.map((relatedProduct) => (
+                <Product_card 
+                  key={relatedProduct.id || relatedProduct._id} 
+                  product={relatedProduct}
+                  handleViewDetails={(id) => handleViewDetails(id, relatedProduct.type || relatedProduct.category)}
+                  category={relatedProduct.type || relatedProduct.category}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center py-12">
+              <p className="text-gray-500 text-xs sm:text-sm">No related products found</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
