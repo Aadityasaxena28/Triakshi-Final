@@ -61,7 +61,7 @@ const Topslide: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <div className="w-1 h-1 rounded-full bg-amber-400"></div>
-              <span className="text-xs md:text-sm font-light">Spiritual Guidance</span>
+              <span className="text-xs md:text-sm font-light">Energized Products</span>
             </div>
           </div>
         </div>
