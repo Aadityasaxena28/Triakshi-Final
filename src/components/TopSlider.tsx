@@ -15,7 +15,7 @@ import mobfirst from "@/assets/2.png";
 import lapfirst from "@/assets/poster_laptop.jpeg";
 import lapsec from "@/assets/banner2.png";
 import bannermo from"@/assets/bannermob.jpeg";
-
+import freebanner from "@/assets/freebanner.png";
 const TopSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -38,7 +38,7 @@ const TopSlider = () => {
       id: 0,
       type: "promo",
       image: lapfirst,
-      mobileImage: mobfirst, // You can use different image for mobile
+      mobileImage: freebanner,
       bgColor: "#d9853b",
       link: "https://triakshi.co.in/rudra-view/692b703a09e2057af820b27f",
     },
@@ -60,41 +60,41 @@ const TopSlider = () => {
       mobileImage: bannermo,
       bgColor: "#3b1f0f",
     },
-    {
+    {/*
       id: 3,
       type: "image-only",
       image: slideImage3,
       mobileImage: slideImage3, // You can use different image for mobile
       bgColor: "#3b1f0f",
-    },
-    {
+  */},
+    {/*
       id: 5,
       type: "image-only",
       image: jadebanner,
       mobileImage: jadebanner, // You can use different image for mobile
       bgColor: "#d9853b",
-    },
-    {
+  */},
+    {/*
       id: 6,
       type: "image-only",
       image: pyritebanner,
       mobileImage: pyritebanner, // You can use different image for mobile
       bgColor: "#d9853b",
-    },
-    {
+  */},
+    {/*
       id: 7,
       type: "image-only",
       image: yantra_ban,
       mobileImage: yantra_ban, // You can use different image for mobile
       bgColor: "#d9853b",
-    },
-    {
+  */},
+    {/*
       id: 8,
       type: "image-only",
       image: moonga_combo,
       mobileImage: moonga_combo, // You can use different image for mobile
       bgColor: "#d9853b",
-    },
+   */},
 
   ];
 
