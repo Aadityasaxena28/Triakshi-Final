@@ -29,6 +29,7 @@ import {
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ProductReviewSlider } from "./ProductReviewSlider";
+import Product_card from "./Product_card";
 
 type Props = {
   category?: "gemstone" | "rudraksha" | string;
@@ -231,6 +232,35 @@ const THEME: Record<
     dotActive: "bg-amber-500",
     dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
+  books: {
+    pageBgFrom: "from-blue-50/30",
+    pageBgTo: "to-indigo-50/30",
+
+    headerFrom: "from-blue-500",
+    headerTo: "to-indigo-600",
+
+    bandFrom: "from-blue-50",
+    bandVia: "via-white",
+    bandTo: "to-indigo-100",
+    overlayPulse: "bg-blue-400/20",
+
+    badgeWrap: "bg-gradient-to-r from-blue-500 to-indigo-600",
+    badgeText: "text-white",
+
+    catChip: "bg-blue-50 text-blue-800 border-2 border-blue-200",
+    sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
+
+    priceFrom: "from-blue-600",
+    priceTo: "to-indigo-600",
+
+    qtyBorder: "border-blue-100",
+
+    outlineText: "text-blue-600",
+    outlineBorder: "border-blue-500 hover:border-indigo-600",
+
+    dotActive: "bg-blue-500",
+    dotIdle: "bg-gray-300 hover:bg-gray-400",
+  },
 };
 
 
@@ -245,6 +275,8 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const [benefits, setBenefits] = React.useState<string[]>([]);
   const [displayImages, setDisplayImages] = React.useState<string[]>([]);
   const [reviews, setReviews] = React.useState<Review[]>([]);
+  const [relatedProducts, setRelatedProducts] = React.useState<Product[]>([]);
+  const [loadingRelated, setLoadingRelated] = React.useState(false);
 
   const navigate = useNavigate();
   const BDK = import.meta.env.VITE_BUY_DRAFT_KEY;
@@ -316,9 +348,25 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       setTotalPrice(discPrice * initialQty);
       setQuantity(1);
       setCurrentImageIndex(0);
+
+      // Fetch related products
+      await fetchRelatedProducts(fetchedProduct.id);
     };
     fetchProduct();
   }, [params.id]);
+
+  const fetchRelatedProducts = async (productId: string) => {
+    try {
+      setLoadingRelated(true);
+      const related = await getRelatedProducts(productId, 0.2, 1, 8);
+      setRelatedProducts(related);
+    } catch (error) {
+      console.error("Failed to fetch related products:", error);
+      setRelatedProducts([]);
+    } finally {
+      setLoadingRelated(false);
+    }
+  };
 
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -371,6 +419,23 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   };
 
   const onBack = () => window.history.back();
+
+  // Handle view details for related products
+  const handleViewDetails = (productId: string, productType: string) => {
+    // Determine the route based on product type
+    const typeMap: Record<string, string> = {
+      gemstone: `/gem-view/${productId}`,
+      rudraksha: `/rudra-view/${productId}`,
+      mala: `/mala-brace-view/${productId}`,
+      bracelet: `/mala-brace-view/${productId}`,
+      tribhuvani: `/tribhuvani-view/${productId}`,
+      yantra: `/yantra-view/${productId}`,
+      books: `/books-view/${productId}`,
+    };
+
+    const route = typeMap[productType.toLowerCase()] || `/gem-view/${productId}`;
+    navigate(route);
+  };
 
   if (!product) {
     return (
@@ -741,6 +806,35 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
             )}
           </div>
         </div>
+
+        {/* You May Also Like Section */}
+        {relatedProducts.length > 0 && (
+          <div className="mt-8 sm:mt-12">
+            <div className="flex items-center gap-2 mb-4 sm:mb-6">
+              <Sparkles className={`w-5 h-5 sm:w-6 sm:h-6 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+                You May Also Like
+              </h2>
+            </div>
+
+            {loadingRelated ? (
+              <div className="flex items-center justify-center py-12">
+                <div className="text-gray-600 text-xs sm:text-sm">Loading related products...</div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                {relatedProducts.map((relatedProduct) => (
+                  <Product_card 
+                    key={relatedProduct.id} 
+                    product={relatedProduct}
+                    handleViewDetails={(id) => handleViewDetails(id, relatedProduct.type)}
+                    category={relatedProduct.type}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
