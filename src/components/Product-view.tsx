@@ -277,6 +277,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const [reviews, setReviews] = React.useState<Review[]>([]);
   const [relatedProducts, setRelatedProducts] = React.useState<Product[]>([]);
   const [loadingRelated, setLoadingRelated] = React.useState(false);
+  const carouselRef = React.useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
   const BDK = import.meta.env.VITE_BUY_DRAFT_KEY;
@@ -446,6 +447,21 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
     const route = typeMap[type.toLowerCase()] || `/gem-view/${productId}`;
     navigate(route);
+  };
+
+  // Carousel navigation functions
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    if (carouselRef.current) {
+      const scrollAmount = 300;
+      const newScrollLeft = direction === 'left' 
+        ? carouselRef.current.scrollLeft - scrollAmount
+        : carouselRef.current.scrollLeft + scrollAmount;
+      
+      carouselRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: 'smooth'
+      });
+    }
   };
 
   if (!product) {
@@ -818,62 +834,105 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
           </div>
         </div>
 
-        {/* You May Also Like Section */}
+        {/* You May Also Like Section - Horizontal Carousel */}
         <div className="mt-8 sm:mt-12">
-  {/* Section Header */}
-  <div className="flex items-center gap-2 mb-4 sm:mb-6">
-    <Sparkles
-      className={`w-5 h-5 sm:w-6 sm:h-6 ${
-        category === "rudraksha" ? "text-orange-600" : "text-yellow-600"
-      }`}
-    />
-    <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
-      You May Also Like
-    </h2>
-  </div>
+          {/* Section Header */}
+          <div className="flex items-center gap-2 mb-4 sm:mb-6">
+            <Sparkles
+              className={`w-5 h-5 sm:w-6 sm:h-6 ${
+                category === "rudraksha" ? "text-orange-600" : "text-yellow-600"
+              }`}
+            />
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+              You May Also Like
+            </h2>
+          </div>
 
-  {/* Loading State */}
-  {loadingRelated ? (
-    <div className="flex items-center justify-center py-12">
-      <div className="text-gray-600 text-xs sm:text-sm">
-        Loading related products...
+          {/* Loading State */}
+          {loadingRelated ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-gray-600 text-xs sm:text-sm">
+                Loading related products...
+              </div>
+            </div>
+          ) : relatedProducts && relatedProducts.length > 0 ? (
+            /* Horizontal Carousel */
+            <div className="relative group">
+              {/* Left Navigation Button */}
+              <button
+                onClick={() => scrollCarousel('left')}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/95 hover:bg-white shadow-xl rounded-full p-2 sm:p-3 transition-all duration-300 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-2"
+                aria-label="Scroll left"
+              >
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800" />
+              </button>
+
+              {/* Scrollable Container */}
+              <div
+                ref={carouselRef}
+                className="flex gap-3 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+                style={{
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                  WebkitOverflowScrolling: 'touch'
+                }}
+              >
+                {relatedProducts.map((relatedProduct) => {
+                  const productId = relatedProduct.id;
+
+                  if (!productId) return null;
+
+                  return (
+                    <div
+                      key={productId}
+                      className="flex-shrink-0 w-[160px] sm:w-[200px] transition-transform duration-300 hover:-translate-y-2"
+                    >
+                      <Product_card
+                        product={relatedProduct}
+                        category={relatedProduct.type || relatedProduct.category}
+                        handleViewDetails={() =>
+                          handleViewDetails(
+                            productId,
+                            relatedProduct.type || relatedProduct.category
+                          )
+                        }
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Right Navigation Button */}
+              <button
+                onClick={() => scrollCarousel('right')}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/95 hover:bg-white shadow-xl rounded-full p-2 sm:p-3 transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:-translate-x-2"
+                aria-label="Scroll right"
+              >
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800" />
+              </button>
+            </div>
+          ) : (
+            /* Empty State */
+            <div className="flex items-center justify-center py-12">
+              <p className="text-gray-500 text-xs sm:text-sm">
+                No related products found
+              </p>
+            </div>
+          )}
+        </div>
+
       </div>
-    </div>
-  ) : relatedProducts && relatedProducts.length > 0 ? (
-    /* Products Grid */
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-      {relatedProducts.map((relatedProduct) => {
-        // ✅ Normalize product ID (_id OR id)
-        const productId = relatedProduct.id || relatedProduct._id;
 
-        if (!productId) return null;
-
-        return (
-          <Product_card
-            key={productId}
-            product={relatedProduct}
-            category={relatedProduct.type || relatedProduct.category}
-            handleViewDetails={() =>
-              handleViewDetails(
-                productId,
-                relatedProduct.type || relatedProduct.category
-              )
-            }
-          />
-        );
-      })}
-    </div>
-  ) : (
-    /* Empty State */
-    <div className="flex items-center justify-center py-12">
-      <p className="text-gray-500 text-xs sm:text-sm">
-        No related products found
-      </p>
-    </div>
-  )}
-</div>
-
-      </div>
+      {/* Hide scrollbar globally for carousel */}
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 };
