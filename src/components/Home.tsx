@@ -46,8 +46,8 @@ const Home = () => {
       ) : (
         <>
           <CategorySection />
-          <TopSlider />
           <Marquee />
+          <TopSlider />
           <SpiritualToolsUnder999/>
           <ProductSlider />
           <NewArrivals />

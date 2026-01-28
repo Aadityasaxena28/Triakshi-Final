@@ -60,41 +60,6 @@ const TopSlider = () => {
       mobileImage: bannermo,
       bgColor: "#3b1f0f",
     },
-    {/*
-      id: 3,
-      type: "image-only",
-      image: slideImage3,
-      mobileImage: slideImage3, // You can use different image for mobile
-      bgColor: "#3b1f0f",
-  */},
-    {/*
-      id: 5,
-      type: "image-only",
-      image: jadebanner,
-      mobileImage: jadebanner, // You can use different image for mobile
-      bgColor: "#d9853b",
-  */},
-    {/*
-      id: 6,
-      type: "image-only",
-      image: pyritebanner,
-      mobileImage: pyritebanner, // You can use different image for mobile
-      bgColor: "#d9853b",
-  */},
-    {/*
-      id: 7,
-      type: "image-only",
-      image: yantra_ban,
-      mobileImage: yantra_ban, // You can use different image for mobile
-      bgColor: "#d9853b",
-  */},
-    {/*
-      id: 8,
-      type: "image-only",
-      image: moonga_combo,
-      mobileImage: moonga_combo, // You can use different image for mobile
-      bgColor: "#d9853b",
-   */},
 
   ];
 
@@ -126,7 +91,7 @@ const TopSlider = () => {
   );
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 2000);
+    const timer = setInterval(nextSlide, 8000);
     return () => clearInterval(timer);
   }, [nextSlide]);
 
@@ -140,7 +105,7 @@ const TopSlider = () => {
   };
 
   return (
-    <section className="relative h-[50vh] sm:h-[53vh] md:h-[60vh] overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <section className="relative h-[40vh] sm:h-[42vh] md:h-[48vh] overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Ambient background glow - Different for mobile vs desktop */}
       <div className={`absolute inset-0 pointer-events-none ${
         isMobile 
