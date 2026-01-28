@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import nban from "@/assets/newban.jpeg";
 
 const HeroSection: React.FC = () => {
@@ -41,14 +42,15 @@ const HeroSection: React.FC = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 pt-4">
-            <button className="group relative px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-white font-medium tracking-wide overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/50">
+            <Link 
+              to="/rudraksha"
+              className="group relative px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-white font-medium tracking-wide overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/50 inline-block"
+            >
               <span className="relative z-10">Explore Collection</span>
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-600 to-amber-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-            </button>
+            </Link>
             
-            <button className="px-8 py-4 border-2 border-white/30 text-white font-medium tracking-wide backdrop-blur-sm hover:bg-white/10 hover:border-white/50 transition-all duration-300">
-              Learn More
-            </button>
+           
           </div>
 
           {/* Trust Indicators */}
