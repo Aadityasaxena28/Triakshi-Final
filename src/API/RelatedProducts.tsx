@@ -29,6 +29,6 @@ export async function getRelatedProducts(
       params: { rangePercent, page, productCount },
     }
   );
-
+  console.log(res.data.data);
   return res.data.data;
 }
