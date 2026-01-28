@@ -560,7 +560,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
           {/* Right Column */}
           <div className="space-y-3 sm:space-y-4">
-            {/* Quantity & Actions - MODIFIED STRUCTURE */}
+            {/* Quantity & Actions */}
             <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
               {/* Quantity Selector */}
               <div className="flex items-center justify-between gap-3 mb-3">
@@ -592,6 +592,17 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                   <span className="text-sm">ADD TO CART</span>
                 </button>
               </div>
+
+              {/* Buy Now Button */}
+              <button
+                className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} hover:opacity-90 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg`}
+                onClick={() => {
+                  handleBuyNow(product, quantity);
+                }}
+              >
+                <ShoppingCart className="w-4 h-4" />
+                <span className="text-sm">BUY NOW</span>
+              </button>
             </div>
 
             {/* Description */}
