@@ -75,11 +75,6 @@ const CategorySection = () => {
     <section className="w-full py-6 md:py-8 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="mb-4 md:mb-6">
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900">
-            Shop by Category
-          </h2>
-        </div>
 
         {/* Scrollable Container with Navigation Buttons */}
         <div className="relative group">
