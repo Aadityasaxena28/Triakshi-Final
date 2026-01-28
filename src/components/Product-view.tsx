@@ -245,6 +245,9 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const [benefits, setBenefits] = React.useState<string[]>([]);
   const [displayImages, setDisplayImages] = React.useState<string[]>([]);
   const [reviews, setReviews] = React.useState<Review[]>([]);
+  const [relatedProducts, setRelatedProducts] = React.useState<Product[]>([]);
+  const [loadingRelated, setLoadingRelated] = React.useState(false);
+
 
   const navigate = useNavigate();
   const BDK = import.meta.env.VITE_BUY_DRAFT_KEY;
@@ -254,69 +257,95 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const reviewCount = 200;
 
   React.useEffect(() => {
-    const fetchProduct = async () => {
-      const fetchedProduct = await getProductById(params.id || "MTI001");
-      setProduct(fetchedProduct);
-      const productReviews = await getProductReviews(params.id || "MTI001");
-      setReviews(productReviews);
-      
-      // For now, you can use mock data:
-      const mockReviews: Review[] = [
-        {
-          _id: "1",
-          customer_name: "Rahul Sharma",
-          rating: 5,
-          comment: "Excellent quality gemstone! The authenticity certificate provided gives me complete confidence. Highly recommended for anyone seeking genuine spiritual products.",
-          date: "2024-01-15",
-          verified: true,
-        },
-        {
-          _id: "2",
-          customer_name: "Priya Patel",
-          rating: 4,
-          comment: "Beautiful product with great energy. Delivery was fast and packaging was secure. Minor color variation from photo but overall very satisfied.",
-          date: "2024-01-10",
-          verified: true,
-        },
-        {
-          _id: "3",
-          customer_name: "Amit Kumar",
-          rating: 5,
-          comment: "Authentic and powerful. I can feel the positive vibrations. The customer service team was very helpful in choosing the right product for my needs.",
-          date: "2024-01-05",
-          verified: false,
-        },
+const fetchProduct = async () => {
+  const productId = params.id || "MTI001";
 
-      ];
+  try {
+    // ---------- Fetch main product ----------
+    const fetchedProduct = await getProductById(productId);
+    setProduct(fetchedProduct);
 
-      if(productReviews.length===0) setReviews(mockReviews);
-      
-      // Set up images array - prioritize images array over single image
-      let imagesToDisplay: string[] = [];
-      
-      if (Array.isArray(fetchedProduct.images) && fetchedProduct.images.length > 0) {
-        // Use the images array
-        imagesToDisplay = [...fetchedProduct.images];
-      } else if (fetchedProduct.image) {
-        // Fallback to single image
-        imagesToDisplay = [fetchedProduct.image];
-      }
-      
-      setDisplayImages(imagesToDisplay);
+    // ---------- Fetch reviews ----------
+    const productReviews = await getProductReviews(productId);
+    setReviews(productReviews);
 
-      const d = Math.max(0, Math.min(100, fetchedProduct.discount ?? 0));
-      setDiscount(d);
+    // ---------- Mock reviews fallback ----------
+    const mockReviews: Review[] = [
+      {
+        _id: "1",
+        customer_name: "Rahul Sharma",
+        rating: 5,
+        comment:
+          "Excellent quality gemstone! The authenticity certificate provided gives me complete confidence. Highly recommended for anyone seeking genuine spiritual products.",
+        date: "2024-01-15",
+        verified: true,
+      },
+      {
+        _id: "2",
+        customer_name: "Priya Patel",
+        rating: 4,
+        comment:
+          "Beautiful product with great energy. Delivery was fast and packaging was secure. Minor color variation from photo but overall very satisfied.",
+        date: "2024-01-10",
+        verified: true,
+      },
+      {
+        _id: "3",
+        customer_name: "Amit Kumar",
+        rating: 5,
+        comment:
+          "Authentic and powerful. I can feel the positive vibrations. The customer service team was very helpful in choosing the right product for my needs.",
+        date: "2024-01-05",
+        verified: false,
+      },
+    ];
 
-      const safePrice = typeof fetchedProduct.price === "number" ? fetchedProduct.price : 0;
-      const discPrice = Math.round(safePrice * (1 - d / 100));
-      setDiscountedPrice(discPrice);
-      setBenefits(fetchedProduct.benefits || []);
+    if (productReviews.length === 0) {
+      setReviews(mockReviews);
+    }
 
-      const initialQty = 1;
-      setTotalPrice(discPrice * initialQty);
-      setQuantity(1);
-      setCurrentImageIndex(0);
-    };
+    // ---------- Image handling ----------
+    let imagesToDisplay: string[] = [];
+
+    if (Array.isArray(fetchedProduct.images) && fetchedProduct.images.length > 0) {
+      imagesToDisplay = [...fetchedProduct.images];
+    } else if (fetchedProduct.image) {
+      imagesToDisplay = [fetchedProduct.image];
+    }
+
+    setDisplayImages(imagesToDisplay);
+
+    // ---------- Pricing & discount ----------
+    const d = Math.max(0, Math.min(100, fetchedProduct.discount ?? 0));
+    setDiscount(d);
+
+    const safePrice =
+      typeof fetchedProduct.price === "number" ? fetchedProduct.price : 0;
+    const discPrice = Math.round(safePrice * (1 - d / 100));
+
+    setDiscountedPrice(discPrice);
+    setBenefits(fetchedProduct.benefits || []);
+
+    const initialQty = 1;
+    setTotalPrice(discPrice * initialQty);
+    setQuantity(initialQty);
+    setCurrentImageIndex(0);
+
+    // ---------- 🔗 Fetch related products (NEW) ----------
+    try {
+      setLoadingRelated(true);
+      const related = await getRelatedProducts(productId, 0.2, 1, 8);
+      setRelatedProducts(related);
+    } catch (e) {
+      console.error("Failed to load related products", e);
+    } finally {
+      setLoadingRelated(false);
+    }
+  } catch (error) {
+    console.error("Failed to fetch product data", error);
+  }
+};
+
     fetchProduct();
   }, [params.id]);
 
@@ -739,6 +768,50 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                 category={category} 
               />
             )}
+            {/* Related Products */}
+{relatedProducts.length > 0 && (
+  <div className="mt-10">
+    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">
+      Related Products
+    </h3>
+
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      {relatedProducts.map((rp) => (
+        <div
+          key={rp.id}
+          className="bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer"
+          onClick={() => navigate(`/product/${rp.id}`)}
+        >
+          <div className="h-36 flex items-center justify-center bg-gray-50 rounded-t-xl">
+            <img
+              src={rp.image}
+              alt={rp.name}
+              className="h-full object-contain p-3"
+            />
+          </div>
+
+          <div className="p-3">
+            <h4 className="text-sm font-semibold text-gray-800 line-clamp-2">
+              {rp.name}
+            </h4>
+
+            <div className="mt-1 flex items-center gap-2">
+              <span className="text-sm font-bold text-gray-900">
+                ₹{rp.price?.toLocaleString()}
+              </span>
+              {rp.discount && rp.discount > 0 && (
+                <span className="text-xs text-red-600 font-medium">
+                  {rp.discount}% OFF
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
           </div>
         </div>
       </div>
