@@ -25,12 +25,13 @@ export async function getRelatedProducts(
   page: number = 1,
   productCount: number = 8
 ): Promise<Product[]> {
+  console.log(productId);
   const query=new URLSearchParams();
   query.append("rangePercent", JSON.stringify(rangePercent));
   query.append("page", JSON.stringify(page));
   query.append("productCount", JSON.stringify(productCount));
   const res = await api.get(
-    `${BASE_URL}/api/products/products/${productId}/related`,
+    `${BASE_URL}/api/products/products/${productId}/related?${query}`,
 
   );
 
