@@ -429,24 +429,38 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const onBack = () => window.history.back();
 
   // Handle view details for related products
-  const handleViewDetails = (productId: string, productType?: string) => {
-    // Use the productType if provided, otherwise fall back to current category
-    const type = productType || category;
-    
-    // Determine the route based on product type
-    const typeMap: Record<string, string> = {
-      gemstone: `/gem-view/${productId}`,
-      rudraksha: `/rudra-view/${productId}`,
-      mala: `/mala-brace-view/${productId}`,
-      bracelet: `/mala-brace-view/${productId}`,
-      tribhuvani: `/tribhuvani-view/${productId}`,
-      yantra: `/yantra-view/${productId}`,
-      books: `/books-view/${productId}`,
-    };
+const handleViewDetails = (productId?: string, productType?: string) => {
+  // 🛑 Safety check
+  if (!productId) {
+    console.error("handleViewDetails: productId is missing");
+    return;
+  }
 
-    const route = typeMap[type.toLowerCase()] || `/gem-view/${productId}`;
-    navigate(route);
+  // Normalize product type
+  const normalizedType = (productType || category || "gemstone")
+    .toString()
+    .toLowerCase();
+
+  // Route mapping
+  const typeMap: Record<string, string> = {
+    gemstone: `/gem-view/${productId}`,
+    rudraksha: `/rudra-view/${productId}`,
+    mala: `/mala-brace-view/${productId}`,
+    bracelet: `/mala-brace-view/${productId}`,
+    tribhuvani: `/tribhuvani-view/${productId}`,
+    yantra: `/yantra-view/${productId}`,
+    books: `/books-view/${productId}`,
   };
+
+  // Fallback-safe route
+  const route = typeMap[normalizedType] || `/gem-view/${productId}`;
+
+  // Debug (can be removed in prod)
+  console.log("Navigating to:", route);
+
+  navigate(route);
+};
+
 
   if (!product) {
     return (
@@ -820,34 +834,59 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
         {/* You May Also Like Section */}
         <div className="mt-8 sm:mt-12">
-          <div className="flex items-center gap-2 mb-4 sm:mb-6">
-            <Sparkles className={`w-5 h-5 sm:w-6 sm:h-6 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
-              You May Also Like
-            </h2>
-          </div>
+  {/* Section Header */}
+  <div className="flex items-center gap-2 mb-4 sm:mb-6">
+    <Sparkles
+      className={`w-5 h-5 sm:w-6 sm:h-6 ${
+        category === "rudraksha" ? "text-orange-600" : "text-yellow-600"
+      }`}
+    />
+    <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+      You May Also Like
+    </h2>
+  </div>
 
-          {loadingRelated ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="text-gray-600 text-xs sm:text-sm">Loading related products...</div>
-            </div>
-          ) : relatedProducts && relatedProducts.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {relatedProducts.map((relatedProduct) => (
-                <Product_card 
-                  key={relatedProduct.id || relatedProduct.id} 
-                  product={relatedProduct}
-                  handleViewDetails={(key) => handleViewDetails(key, relatedProduct.type || relatedProduct.category)}
-                  category={relatedProduct.type || relatedProduct.category}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="flex items-center justify-center py-12">
-              <p className="text-gray-500 text-xs sm:text-sm">No related products found</p>
-            </div>
-          )}
-        </div>
+  {/* Loading State */}
+  {loadingRelated ? (
+    <div className="flex items-center justify-center py-12">
+      <div className="text-gray-600 text-xs sm:text-sm">
+        Loading related products...
+      </div>
+    </div>
+  ) : relatedProducts && relatedProducts.length > 0 ? (
+    /* Products Grid */
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      {relatedProducts.map((relatedProduct) => {
+        // ✅ Normalize product ID (_id OR id)
+        const productId = relatedProduct.id || relatedProduct._id;
+
+        if (!productId) return null;
+
+        return (
+          <Product_card
+            key={productId}
+            product={relatedProduct}
+            category={relatedProduct.type || relatedProduct.category}
+            handleViewDetails={() =>
+              handleViewDetails(
+                productId,
+                relatedProduct.type || relatedProduct.category
+              )
+            }
+          />
+        );
+      })}
+    </div>
+  ) : (
+    /* Empty State */
+    <div className="flex items-center justify-center py-12">
+      <p className="text-gray-500 text-xs sm:text-sm">
+        No related products found
+      </p>
+    </div>
+  )}
+</div>
+
       </div>
     </div>
   );
