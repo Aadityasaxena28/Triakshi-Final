@@ -362,29 +362,12 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       setLoadingRelated(true);
       console.log("Fetching related products for:", productId);
       
-      const response = await getRelatedProducts(productId, 0.2, 1, 8);
-      console.log("Related products response:", response);
+      // getRelatedProducts returns Promise<Product[]> directly
+      const productsArray = await getRelatedProducts(productId, 0.2, 1, 8);
+      console.log("Related products response:", productsArray);
       
-      // Handle different response structures
-      let productsArray: Product[] = [];
-      
-      if (response && typeof response === 'object') {
-        // Check if response has a 'data' property (based on your API structure)
-        if (Array.isArray(response.data)) {
-          productsArray = response.data;
-        } 
-        // Check if response itself is an array
-        else if (Array.isArray(response)) {
-          productsArray = response;
-        }
-        // Check if response has isOkay and data properties
-        else if (response.isOkay && response.data) {
-          productsArray = Array.isArray(response.data) ? response.data : [];
-        }
-      }
-      
-      console.log("Setting related products:", productsArray);
-      setRelatedProducts(productsArray);
+      // Since getRelatedProducts already returns an array, just set it directly
+      setRelatedProducts(Array.isArray(productsArray) ? productsArray : []);
     } catch (error) {
       console.error("Failed to fetch related products:", error);
       setRelatedProducts([]);
