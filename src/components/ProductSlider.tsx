@@ -199,7 +199,7 @@ const ProductSlider = () => {
         <div className="text-center mb-3">
           <div className="flex items-center justify-center gap-1.5 mb-1">
             <Sparkles className="w-4 h-4 text-orange-500 animate-pulse" />
-            <h2 className="text-xl sm:text-2xl font-bold relative inline-block">
+            <h2 className="text-xl sm:text-3xl font-bold relative inline-block">
               <span 
                 className="bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_200%]"
                 style={{

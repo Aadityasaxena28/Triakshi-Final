@@ -182,7 +182,7 @@ const NewArrivals = () => {
         <div className="text-center mb-3">
           <div className="flex items-center justify-center gap-1.5 mb-1">
             <Package className="w-4 h-4 text-orange-500 animate-pulse" />
-            <h2 className="text-xl sm:text-2xl font-bold relative inline-block">
+            <h2 className="text-xl sm:text-3xl font-bold relative inline-block">
               <span 
                 className="bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_200%]"
                 style={{
@@ -276,7 +276,7 @@ const NewArrivals = () => {
                     className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
                     onLoad={updateScrollProgress}
                     onError={(e) => {
-                      e.currentTarget.src = "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop";
+                     // e.currentTarget.src = "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop";
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
