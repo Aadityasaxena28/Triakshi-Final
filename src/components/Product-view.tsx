@@ -870,7 +870,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
               {/* Scrollable Container */}
               <div
                 ref={carouselRef}
-                className="flex gap-2 overflow-x-auto overflow-y-visible scrollbar-hide scroll-smooth py-2"
+                className="flex gap-1 overflow-x-auto overflow-y-visible scrollbar-hide scroll-smooth py-2"
                 style={{
                   scrollbarWidth: 'none',
                   msOverflowStyle: 'none',
@@ -878,7 +878,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                 }}
               >
                 {relatedProducts.map((relatedProduct) => {
-                  const productId = relatedProduct.id || relatedProduct._id;
+                  const productId = relatedProduct.id;
 
                   if (!productId) return null;
 
