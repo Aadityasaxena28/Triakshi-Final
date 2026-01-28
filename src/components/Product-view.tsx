@@ -653,16 +653,6 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
           {/* Right Column */}
           <div className="space-y-3 sm:space-y-4">
-            {/* Description */}
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
-                Description
-              </h3>
-              <p className="text-gray-600 leading-relaxed text-xs sm:text-sm">
-                {product.description || "—"}
-              </p>
-            </div>
-
             {/* Quantity & Actions */}
             <div className={`bg-gradient-to-br from-white to-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4 border-2 ${theme.qtyBorder}`}>
               <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3">
@@ -708,6 +698,16 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                   Add to Cart
                 </button>
               </div>
+            </div>
+
+            {/* Description */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
+                Description
+              </h3>
+              <p className="text-gray-600 leading-relaxed text-xs sm:text-sm">
+                {product.description || "—"}
+              </p>
             </div>
 
             {/* Benefits */}
