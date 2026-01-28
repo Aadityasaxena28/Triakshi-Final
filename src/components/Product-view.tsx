@@ -257,13 +257,32 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const reviewCount = 200;
 
   React.useEffect(() => {
+
+const fetchRelated = async (productId: string) => {
+  try {
+    setLoadingRelated(true);
+    const related = await getRelatedProducts(productId, 0.2, 1, 8);
+    setRelatedProducts(related);
+  } catch (e) {
+    console.error("Failed to load related products", e);
+  } finally {
+    setLoadingRelated(false);
+  }
+};
+
+
 const fetchProduct = async () => {
   const productId = params.id || "MTI001";
 
   try {
     // ---------- Fetch main product ----------
     const fetchedProduct = await getProductById(productId);
+
+    // ✅ Set product
     setProduct(fetchedProduct);
+
+    // ✅ Fetch related products using fetched product ID
+    fetchRelated(fetchedProduct.id);
 
     // ---------- Fetch reviews ----------
     const productReviews = await getProductReviews(productId);
@@ -321,6 +340,7 @@ const fetchProduct = async () => {
 
     const safePrice =
       typeof fetchedProduct.price === "number" ? fetchedProduct.price : 0;
+
     const discPrice = Math.round(safePrice * (1 - d / 100));
 
     setDiscountedPrice(discPrice);
@@ -330,21 +350,11 @@ const fetchProduct = async () => {
     setTotalPrice(discPrice * initialQty);
     setQuantity(initialQty);
     setCurrentImageIndex(0);
-
-    // ---------- 🔗 Fetch related products (NEW) ----------
-    try {
-      setLoadingRelated(true);
-      const related = await getRelatedProducts(productId, 0.2, 1, 8);
-      setRelatedProducts(related);
-    } catch (e) {
-      console.error("Failed to load related products", e);
-    } finally {
-      setLoadingRelated(false);
-    }
   } catch (error) {
     console.error("Failed to fetch product data", error);
   }
 };
+
 
     fetchProduct();
   }, [params.id]);
