@@ -23,12 +23,23 @@ export async function getRelatedProducts(
   page: number = 1,
   productCount: number = 8
 ): Promise<Product[]> {
-  const res = await axios.get<RelatedProductsResponse>(
+  const res = await axios.get(
     `${BASE_URL}/api/products/products/${productId}/related`,
     {
       params: { rangePercent, page, productCount },
     }
   );
-  console.log(res.data.data);
-  return res.data.data;
+
+  /**
+   * IMPORTANT:
+   * If an axios response interceptor returns `response.data`,
+   * then `res` IS ALREADY the backend JSON.
+   * If no interceptor exists, `res.data` is the backend JSON.
+   */
+
+  const payload = (res)?.data ?? res;
+
+  console.log("RELATED PRODUCTS PAYLOAD:", payload);
+
+  return payload?.data ?? [];
 }
