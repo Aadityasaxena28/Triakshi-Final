@@ -25,8 +25,8 @@ const Topslide: React.FC = () => {
             </span>
           </div>
 
-          {/* Main Heading - Responsive sizing */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif text-white leading-tight tracking-tight">
+          {/* Main Heading - Responsive sizing with center alignment */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif text-white leading-tight tracking-tight text-center">
             Free
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 mt-1 md:mt-2">
               5 Mukhi Rudraksha
@@ -38,8 +38,8 @@ const Topslide: React.FC = () => {
             5 Mukhi Rudraksha is known to promote mental peace, emotional balance, and stress relief, helping calm the mind and improve focus—making it one of the most powerful and widely worn Rudraksha beads for daily well-being, meditation, and spiritual growth.
           </p>
 
-          {/* CTA Buttons - Stack on mobile, side by side on larger screens */}
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 pt-2 md:pt-4">
+          {/* CTA Button */}
+          <div className="flex justify-center pt-2 md:pt-4">
             <Link 
               to="/rudra-view/692b703a09e2057af820b27f"
               className="group relative px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-white font-medium tracking-wide overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/50 inline-block text-center"
@@ -47,14 +47,10 @@ const Topslide: React.FC = () => {
               <span className="relative z-10">Get FREE Rudraksha</span>
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-600 to-amber-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
             </Link>
-            
-            <button className="px-6 md:px-8 py-3 md:py-4 border-2 border-white/30 text-white font-medium tracking-wide backdrop-blur-sm hover:bg-white/10 hover:border-white/50 transition-all duration-300 text-center">
-              Learn More
-            </button>
           </div>
 
           {/* Trust Indicators - Stack on mobile, horizontal on larger screens */}
-          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 sm:gap-6 md:gap-8 pt-4 md:pt-8 text-white/80">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 sm:gap-6 md:gap-8 pt-3 md:pt-4 text-white/80 justify-center">
             <div className="flex items-center gap-2">
               <div className="w-1 h-1 rounded-full bg-amber-400"></div>
               <span className="text-xs md:text-sm font-light">Authentic Products</span>
