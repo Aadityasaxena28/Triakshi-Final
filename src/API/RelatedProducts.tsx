@@ -1,23 +1,7 @@
-import axios from "axios";
-import {api} from "./Api";
+import { api } from "./Api";
 import type { Product } from "@/DataTypes/product";
-import { url } from "inspector";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-// example: https://saxena-backend.onrender.com
-
-type RelatedProductsResponse = {
-  data: Product[];
-  meta: {
-    totalMatches: number;
-    page: number;
-    productCount: number;
-    rangePercent: number;
-    minPrice: number;
-    maxPrice: number;
-  };
-  isOkay: boolean;
-};
 
 export async function getRelatedProducts(
   productId: string,
@@ -25,25 +9,23 @@ export async function getRelatedProducts(
   page: number = 1,
   productCount: number = 8
 ): Promise<Product[]> {
-  console.log(productId,page,rangePercent,productCount);
 
-  const query=new URLSearchParams();
-  query.append("rangePercent", JSON.stringify(rangePercent));
-  query.append("page", JSON.stringify(page));
-  query.append("productCount", JSON.stringify(productCount));
-  const res = await api.get(
-    `${BASE_URL}/api/products/products/${productId}/related?${query}`,
+  console.log("FRONTEND PARAMS:", productId, page, rangePercent, productCount);
 
-  );
+  const query = new URLSearchParams({
+    rangePercent: String(rangePercent),
+    page: String(page),
+    productCount: String(productCount),
+  });
 
-  /**
-   * IMPORTANT:
-   * If an axios response interceptor returns `response.data`,
-   * then `res` IS ALREADY the backend JSON.
-   * If no interceptor exists, `res.data` is the backend JSON.
-   */
+  const url = `${BASE_URL}/api/products/products/${productId}/related?${query.toString()}`;
 
-  const payload = (res)?.data ?? res;
+  console.log("CALLING URL:", url);
+
+  const res = await api.get(url);
+
+  // Axios interceptor may already return the JSON
+  const payload = res?.data ?? res;
 
   console.log("RELATED PRODUCTS PAYLOAD:", payload);
 
