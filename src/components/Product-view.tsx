@@ -372,7 +372,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
   if (!product) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-lg font-semibold">
+      <div className="min-h-screen flex items-center justify-center text-sm font-medium" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
         Loading product details...
       </div>
     );
@@ -400,37 +400,37 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${theme.pageBgFrom} ${theme.pageBgTo}`}>
+    <div className={`min-h-screen bg-gradient-to-br ${theme.pageBgFrom} ${theme.pageBgTo}`} style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
       {/* Header */}
-      <div className={`bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} text-white py-4 px-4 sm:py-6 sm:px-6 shadow-lg sticky top-0 z-20`}>
-        <div className="max-w-7xl mx-auto flex items-center gap-3 sm:gap-4">
-          <button onClick={onBack} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
-            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+      <div className={`bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} text-white py-3 px-4 sm:py-4 sm:px-5 shadow-lg sticky top-0 z-20`}>
+        <div className="max-w-7xl mx-auto flex items-center gap-2 sm:gap-3">
+          <button onClick={onBack} className="p-1.5 sm:p-2 hover:bg-white/20 rounded-lg transition-colors">
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Sparkles className="w-6 h-6 sm:w-8 sm:h-8" />
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" />
+            <h1 className="text-base sm:text-lg font-semibold tracking-tight">
               {category === "rudraksha" ? "Rudraksha Details" : "Product Details"}
             </h1>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Left Column - Image Carousel */}
-          <div className="space-y-4 sm:space-y-6">
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden">
+          <div className="space-y-3 sm:space-y-4">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden">
               <div
                 className={[
-                  "relative h-64 sm:h-80 md:h-96 bg-gradient-to-br flex items-center justify-center overflow-visible",
+                  "relative h-64 sm:h-72 md:h-80 bg-gradient-to-br flex items-center justify-center overflow-visible",
                   theme.bandFrom,
                   theme.bandVia ?? "",
                   theme.bandTo,
                 ].join(" ")}
               >
                 {discount > 0 && (
-                  <div className={`absolute top-3 right-3 sm:top-4 sm:right-4 md:top-6 md:right-6 ${theme.badgeWrap} ${theme.badgeText} px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-full text-xs sm:text-sm md:text-base font-bold shadow-lg z-30`}>
+                  <div className={`absolute top-2 right-2 sm:top-3 sm:right-3 ${theme.badgeWrap} ${theme.badgeText} px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold shadow-lg z-30`}>
                     {discount}% OFF
                   </div>
                 )}
@@ -445,9 +445,9 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                         e.stopPropagation();
                         prevImage();
                       }}
-                      className="absolute left-2 sm:left-3 md:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-1.5 sm:p-2 md:p-3 rounded-full shadow-lg transition-all z-20 cursor-pointer"
+                      className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-1.5 sm:p-2 rounded-full shadow-lg transition-all z-20 cursor-pointer"
                     >
-                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-800" />
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-800" />
                     </button>
 
                     <button
@@ -457,9 +457,9 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                         e.stopPropagation();
                         nextImage();
                       }}
-                      className="absolute right-2 sm:right-3 md:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-1.5 sm:p-2 md:p-3 rounded-full shadow-lg transition-all z-20 cursor-pointer"
+                      className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-1.5 sm:p-2 rounded-full shadow-lg transition-all z-20 cursor-pointer"
                     >
-                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-800" />
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-800" />
                     </button>
                   </>
                 )}
@@ -477,11 +477,11 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                       }}
                     />
                   ) : (
-                    <Star className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 text-black/10 relative z-10 drop-shadow-2xl" />
+                    <Star className="w-32 h-32 sm:w-40 sm:h-40 text-black/10 relative z-10 drop-shadow-2xl" />
                   )}
 
                   {displayImages.length > 1 && (
-                    <div className="absolute bottom-2 sm:bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 rounded-full text-xs sm:text-sm">
+                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 text-white bg-black/50 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-xs">
                       {currentImageIndex + 1} / {displayImages.length}
                     </div>
                   )}
@@ -490,7 +490,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
               {/* Thumbnail Indicators */}
               {displayImages.length > 1 && (
-                <div className="flex gap-2 justify-center p-3 sm:p-4 bg-gray-50">
+                <div className="flex gap-1.5 sm:gap-2 justify-center p-2.5 sm:p-3 bg-gray-50">
                   {displayImages.map((_, index) => (
                     <button
                       key={index}
@@ -499,10 +499,10 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                         e.preventDefault();
                         setCurrentImageIndex(index);
                       }}
-                      className={`h-2 sm:h-2.5 md:h-3 rounded-full transition-all cursor-pointer ${
+                      className={`h-2 rounded-full transition-all cursor-pointer ${
                         index === currentImageIndex 
-                          ? `${theme.dotActive} w-6 sm:w-7 md:w-8` 
-                          : `${theme.dotIdle} w-2 sm:w-2.5 md:w-3`
+                          ? `${theme.dotActive} w-6 sm:w-7` 
+                          : `${theme.dotIdle} w-2`
                       }`}
                     />
                   ))}
@@ -510,122 +510,122 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
               )}
 
               {/* Basic Info */}
-              <div className="p-4 sm:p-5 md:p-6 border-t border-gray-100">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+              <div className="p-3 sm:p-4 border-t border-gray-100">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-1.5">
                   {product.name}
                 </h2>
                 
                 {/* Star Rating */}
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-1.5 mb-2">
                   <div className="flex items-center gap-0.5">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-yellow-400 text-yellow-400" />
+                      <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-yellow-400 text-yellow-400" />
                     ))}
                   </div>
-                  <span className="text-sm sm:text-base text-gray-600 font-medium">
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
                     {reviewCount} reviews
                   </span>
                 </div>
 
-                <p className={`${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"} font-semibold text-sm sm:text-base md:text-lg mb-4`}>
+                <p className={`${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"} font-medium text-xs sm:text-sm mb-3`}>
                   Product ID: {product.id}
                 </p>
 
-                <div className="flex items-baseline gap-2 sm:gap-3 mb-4">
-                  <span className={`text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent`}>
+                <div className="flex items-baseline gap-2 mb-2.5">
+                  <span className={`text-xl sm:text-2xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent`}>
                     ₹{discountedPrice.toLocaleString()}
                   </span>
                   {discount > 0 && originalPrice > discountedPrice && (
-                    <span className="text-lg sm:text-xl md:text-2xl text-gray-400 line-through">
+                    <span className="text-base sm:text-lg text-gray-400 line-through">
                       ₹{originalPrice.toLocaleString()}
                     </span>
                   )}
                 </div>
 
-                <p className="text-xs sm:text-sm text-gray-600 mb-4">
+                <p className="text-xs text-gray-600 mb-3">
                   Tax included • Free delivery over ₹299
                 </p>
 
-                <div className="flex flex-wrap gap-2">
-                  <span className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium ${theme.catChip}`}>
+                <div className="flex flex-wrap gap-1.5">
+                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${theme.catChip}`}>
                     {categoryLabel}
                   </span>
-                  <span className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium ${theme.sizeChip}`}>
+                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${theme.sizeChip}`}>
                     Size / Qty: {product.quantity}
                   </span>
                 </div>
               </div>
 
               {/* Trust Badges */}
-              <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 border-t border-gray-100">
-                <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4">
-                  <div className="flex flex-col items-center justify-center bg-gray-50 rounded-xl p-3 sm:p-4">
-                    <Shield className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-green-600 mb-2" />
-                    <span className="text-xs sm:text-sm md:text-base font-semibold text-gray-800 text-center">
+              <div className="px-3 sm:px-4 pb-3 sm:pb-4 border-t border-gray-100">
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
+                    <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-green-600 mb-1" />
+                    <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
                       100%
                     </span>
-                    <span className="text-xs sm:text-sm text-red-600 font-medium text-center">
-                      Authentic
+                    <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
+                      genuine rudraksha
                     </span>
                   </div>
-                  <div className="flex flex-col items-center justify-center bg-gray-50 rounded-xl p-3 sm:p-4">
-                    <Award className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-600 mb-2" />
-                    <span className="text-xs sm:text-sm md:text-base font-semibold text-gray-800 text-center">
+                  <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
+                    <Award className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600 mb-1" />
+                    <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
                       100%
                     </span>
-                    <span className="text-xs sm:text-sm text-red-600 font-medium text-center">
-                      Genuine
+                    <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
+                      quality guarantee
                     </span>
                   </div>
-                  <div className="flex flex-col items-center justify-center bg-gray-50 rounded-xl p-3 sm:p-4">
-                    <Zap className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-orange-600 mb-2" />
-                    <span className="text-xs sm:text-sm md:text-base font-semibold text-gray-800 text-center">
+                  <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
+                    <Zap className="w-7 h-7 sm:w-8 sm:h-8 text-orange-600 mb-1" />
+                    <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
                       100%
                     </span>
-                    <span className="text-xs sm:text-sm text-red-600 font-medium text-center">
-                      Energized
+                    <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
+                      trustworthy brand
                     </span>
                   </div>
                 </div>
               </div>
 
               {/* Delivery Check */}
-              <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 border-t border-gray-100">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" />
-                  <span className="text-sm sm:text-base text-gray-600 font-medium">Delivery</span>
+              <div className="px-3 sm:px-4 pb-3 sm:pb-4 border-t border-gray-100">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">Delivery</span>
                   <input
                     type="text"
                     placeholder="Enter Pincode"
-                    className="flex-1 px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    className="flex-1 px-2.5 py-1.5 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                   />
-                  <button className="px-4 py-2 text-sm sm:text-base text-red-600 font-semibold hover:bg-red-50 rounded-lg transition-colors">
+                  <button className="px-3 py-1.5 text-xs sm:text-sm text-red-600 font-semibold hover:bg-red-50 rounded-md transition-colors">
                     Check
                   </button>
                 </div>
               </div>
 
               {/* Exclusive Offer */}
-              <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 border-t border-gray-100">
-                <div className="flex items-center gap-2 mb-3">
-                  <Gift className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />
-                  <h3 className="text-base sm:text-lg font-bold text-gray-900">EXCLUSIVE OFFERS</h3>
+              <div className="px-3 sm:px-4 pb-3 sm:pb-4 border-t border-gray-100">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
+                  <h3 className="text-sm sm:text-base font-semibold text-gray-900">EXCLUSIVE OFFERS</h3>
                 </div>
-                <div className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 border-dashed border-orange-300 rounded-xl p-3 sm:p-4">
-                  <div className="flex items-start gap-3">
-                    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 flex-shrink-0 mt-0.5" />
+                <div className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 border-dashed border-orange-300 rounded-lg p-2.5 sm:p-3">
+                  <div className="flex items-start gap-2">
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600 flex-shrink-0 mt-0.5" />
                     <div className="flex-1">
-                      <h4 className="text-sm sm:text-base font-bold text-gray-900 mb-1">
+                      <h4 className="text-xs sm:text-sm font-semibold text-gray-900 mb-0.5">
                         Free Rudraksha
                       </h4>
-                      <p className="text-xs sm:text-sm text-gray-700 mb-2">
+                      <p className="text-[10px] sm:text-xs text-gray-700 mb-1.5">
                         Complimentary 5 Mukhi certified Rudraksha
                       </p>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-red-600 bg-red-100 px-2 py-1 rounded">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] sm:text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded">
                           NAMASTE
                         </span>
-                        <button className="text-xs text-gray-600 hover:text-gray-900 font-medium">
+                        <button className="text-[10px] sm:text-xs text-gray-600 hover:text-gray-900 font-medium">
                           Copy
                         </button>
                       </div>
@@ -635,16 +635,16 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
               </div>
 
               {/* Special Note */}
-              <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6">
+              <div className="px-3 sm:px-4 pb-3 sm:pb-4">
                 <button
                   onClick={handleRefundPolicyClick}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-2 text-xs sm:text-sm"
+                  className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-1.5 text-xs sm:text-sm"
                 >
-                  <AlertCircle className="w-4 h-4" />
+                  <AlertCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   Specially Curated Item
                 </button>
 
-                <p className="text-red-600 text-xs text-center leading-relaxed mt-2">
+                <p className="text-red-600 text-[10px] sm:text-xs text-center leading-relaxed mt-1.5">
                   Minor color variations or appearance differences may occur due to lighting, photography or screen display settings.
                 </p>
               </div>
@@ -652,59 +652,59 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
           </div>
 
           {/* Right Column */}
-          <div className="space-y-4 sm:space-y-6">
+          <div className="space-y-3 sm:space-y-4">
             {/* Description */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-5 md:p-6">
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-3">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
                 Description
               </h3>
-              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+              <p className="text-gray-600 leading-relaxed text-xs sm:text-sm">
                 {product.description || "—"}
               </p>
             </div>
 
             {/* Quantity & Actions */}
-            <div className={`bg-gradient-to-br from-white to-white rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-5 md:p-6 border-2 ${theme.qtyBorder}`}>
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-4">
+            <div className={`bg-gradient-to-br from-white to-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4 border-2 ${theme.qtyBorder}`}>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3">
                 Select Quantity
               </h3>
-              <div className="flex items-center justify-center gap-3 sm:gap-4 mb-4">
+              <div className="flex items-center justify-center gap-3 mb-3">
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
                 >
-                  <Minus className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+                  <Minus className="w-4 h-4 text-gray-700" />
                 </button>
-                <span className="text-2xl sm:text-3xl font-bold text-gray-900 w-12 sm:w-16 text-center">
+                <span className="text-xl sm:text-2xl font-bold text-gray-900 w-12 text-center">
                   {quantity}
                 </span>
                 <button
                   onClick={() => setQuantity((q) => Math.min(product.quantity, q + 1))}
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
                 >
-                  <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+                  <Plus className="w-4 h-4 text-gray-700" />
                 </button>
               </div>
-              <p className={`text-xl sm:text-2xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent text-center mb-4`}>
+              <p className={`text-lg sm:text-xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent text-center mb-3`}>
                 Total: ₹{totalPrice.toLocaleString()}
               </p>
 
-              <div className="space-y-2.5">
+              <div className="space-y-2">
                 <button
-                  className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} hover:opacity-95 text-white font-bold py-3 sm:py-3.5 md:py-4 px-4 sm:px-5 md:px-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg transform hover:scale-105`}
+                  className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} hover:opacity-95 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-1.5 text-sm sm:text-base transform hover:scale-105`}
                   onClick={() => handleBuyNow(product, quantity)}
                 >
-                  <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <ShoppingCart className="w-4 h-4" />
                   Buy Now
                 </button>
 
                 <button
-                  className={`w-full bg-white hover:bg-gray-50 ${theme.outlineText} font-bold py-3 sm:py-3.5 md:py-4 px-4 sm:px-5 md:px-6 rounded-xl sm:rounded-2xl shadow-lg border-2 ${theme.outlineBorder} transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base md:text-lg transform hover:scale-105`}
+                  className={`w-full bg-white hover:bg-gray-50 ${theme.outlineText} font-semibold py-2.5 sm:py-3 px-4 rounded-lg sm:rounded-xl shadow-lg border-2 ${theme.outlineBorder} transition-all duration-300 flex items-center justify-center gap-1.5 text-sm sm:text-base transform hover:scale-105`}
                   onClick={() => {
                     handleAddToCart(product.id, quantity);
                   }}
                 >
-                  <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <Heart className="w-4 h-4" />
                   Add to Cart
                 </button>
               </div>
@@ -712,18 +712,18 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
             {/* Benefits */}
             {(benefits?.length ?? 0) > 0 && (
-              <div className={`bg-gradient-to-br ${category === "rudraksha" ? "from-orange-50" : "from-yellow-50"} to-white rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-5 md:p-6 border-2 ${theme.qtyBorder}`}>
-                <div className="flex items-center gap-2 mb-4">
-                  <Sparkles className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
+              <div className={`bg-gradient-to-br ${category === "rudraksha" ? "from-orange-50" : "from-yellow-50"} to-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4 border-2 ${theme.qtyBorder}`}>
+                <div className="flex items-center gap-1.5 mb-2.5">
+                  <Sparkles className={`w-5 h-5 sm:w-6 sm:h-6 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900">
                     Benefits
                   </h3>
                 </div>
-                <ul className="space-y-2.5 sm:space-y-3">
+                <ul className="space-y-2">
                   {benefits.map((benefit: string, idx: number) => (
-                    <li key={idx} className="flex items-start gap-2 sm:gap-3">
-                      <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${category === "rudraksha" ? "bg-orange-600" : "bg-yellow-600"} mt-2 flex-shrink-0`}></div>
-                      <span className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                    <li key={idx} className="flex items-start gap-2">
+                      <div className={`w-1.5 h-1.5 rounded-full ${category === "rudraksha" ? "bg-orange-600" : "bg-yellow-600"} mt-1.5 flex-shrink-0`}></div>
+                      <span className="text-gray-700 text-xs sm:text-sm leading-relaxed">
                         {benefit}
                       </span>
                     </li>
