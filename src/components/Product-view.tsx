@@ -555,147 +555,41 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                   </span>
                 </div>
               </div>
-
-              {/* Trust Badges */}
-              <div className="px-3 sm:px-4 pb-3 sm:pb-4 border-t border-gray-100">
-                <div className="grid grid-cols-3 gap-2">
-                  <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
-                    <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-green-600 mb-1" />
-                    <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
-                      100%
-                    </span>
-                    <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
-                      genuine rudraksha
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
-                    <Award className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600 mb-1" />
-                    <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
-                      100%
-                    </span>
-                    <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
-                      quality guarantee
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
-                    <Zap className="w-7 h-7 sm:w-8 sm:h-8 text-orange-600 mb-1" />
-                    <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
-                      100%
-                    </span>
-                    <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
-                      trustworthy brand
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Delivery Check */}
-              <div className="px-3 sm:px-4 pb-3 sm:pb-4 border-t border-gray-100">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0" />
-                  <span className="text-xs sm:text-sm text-gray-600 font-medium">Delivery</span>
-                  <input
-                    type="text"
-                    placeholder="Enter Pincode"
-                    className="flex-1 px-2.5 py-1.5 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
-                  <button className="px-3 py-1.5 text-xs sm:text-sm text-red-600 font-semibold hover:bg-red-50 rounded-md transition-colors">
-                    Check
-                  </button>
-                </div>
-              </div>
-
-              {/* Exclusive Offer */}
-              <div className="px-3 sm:px-4 pb-3 sm:pb-4 border-t border-gray-100">
-                <div className="flex items-center gap-1.5 mb-2">
-                  <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
-                  <h3 className="text-sm sm:text-base font-semibold text-gray-900">EXCLUSIVE OFFERS</h3>
-                </div>
-                <div className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 border-dashed border-orange-300 rounded-lg p-2.5 sm:p-3">
-                  <div className="flex items-start gap-2">
-                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600 flex-shrink-0 mt-0.5" />
-                    <div className="flex-1">
-                      <h4 className="text-xs sm:text-sm font-semibold text-gray-900 mb-0.5">
-                        Free Rudraksha
-                      </h4>
-                      <p className="text-[10px] sm:text-xs text-gray-700 mb-1.5">
-                        Complimentary 5 Mukhi certified Rudraksha
-                      </p>
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] sm:text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded">
-                          NAMASTE
-                        </span>
-                        <button className="text-[10px] sm:text-xs text-gray-600 hover:text-gray-900 font-medium">
-                          Copy
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Special Note */}
-              <div className="px-3 sm:px-4 pb-3 sm:pb-4">
-                <button
-                  onClick={handleRefundPolicyClick}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-1.5 text-xs sm:text-sm"
-                >
-                  <AlertCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  Specially Curated Item
-                </button>
-
-                <p className="text-red-600 text-[10px] sm:text-xs text-center leading-relaxed mt-1.5">
-                  Minor color variations or appearance differences may occur due to lighting, photography or screen display settings.
-                </p>
-              </div>
             </div>
           </div>
 
           {/* Right Column */}
           <div className="space-y-3 sm:space-y-4">
-            {/* Quantity & Actions */}
-            <div className={`bg-gradient-to-br from-white to-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4 border-2 ${theme.qtyBorder}`}>
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3">
-                Select Quantity
-              </h3>
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <button
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
-                >
-                  <Minus className="w-4 h-4 text-gray-700" />
-                </button>
-                <span className="text-xl sm:text-2xl font-bold text-gray-900 w-12 text-center">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => setQuantity((q) => Math.min(product.quantity, q + 1))}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 flex items-center justify-center transition-all shadow-md hover:shadow-lg"
-                >
-                  <Plus className="w-4 h-4 text-gray-700" />
-                </button>
-              </div>
-              <p className={`text-lg sm:text-xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent text-center mb-3`}>
-                Total: ₹{totalPrice.toLocaleString()}
-              </p>
+            {/* Quantity & Actions - MODIFIED STRUCTURE */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              {/* Quantity Selector */}
+              <div className="flex items-center justify-between gap-3 mb-3">
+                <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden">
+                  <button
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    className="p-3 hover:bg-gray-100 transition-colors"
+                  >
+                    <Minus className="w-4 h-4 text-gray-700" />
+                  </button>
+                  <span className="text-lg font-semibold text-gray-900 px-6">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() => setQuantity((q) => Math.min(product.quantity, q + 1))}
+                    className="p-3 hover:bg-gray-100 transition-colors"
+                  >
+                    <Plus className="w-4 h-4 text-gray-700" />
+                  </button>
+                </div>
 
-              <div className="space-y-2">
+                {/* Add to Cart Button */}
                 <button
-                  className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} hover:opacity-95 text-white font-semibold py-2.5 sm:py-3 px-4 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-1.5 text-sm sm:text-base transform hover:scale-105`}
-                  onClick={() => handleBuyNow(product, quantity)}
-                >
-                  <ShoppingCart className="w-4 h-4" />
-                  Buy Now
-                </button>
-
-                <button
-                  className={`w-full bg-white hover:bg-gray-50 ${theme.outlineText} font-semibold py-2.5 sm:py-3 px-4 rounded-lg sm:rounded-xl shadow-lg border-2 ${theme.outlineBorder} transition-all duration-300 flex items-center justify-center gap-1.5 text-sm sm:text-base transform hover:scale-105`}
+                  className="flex-1 bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
                   onClick={() => {
                     handleAddToCart(product.id, quantity);
                   }}
                 >
-                  <Heart className="w-4 h-4" />
-                  Add to Cart
+                  <span className="text-sm">ADD TO CART</span>
                 </button>
               </div>
             </div>
@@ -707,6 +601,99 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
               </h3>
               <p className="text-gray-600 leading-relaxed text-xs sm:text-sm">
                 {product.description || "—"}
+              </p>
+            </div>
+
+            {/* Trust Badges - Now below description on mobile */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              <div className="grid grid-cols-3 gap-2">
+                <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
+                  <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-green-600 mb-1" />
+                  <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
+                    100%
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
+                    genuine rudraksha
+                  </span>
+                </div>
+                <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
+                  <Award className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600 mb-1" />
+                  <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
+                    100%
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
+                    quality guarantee
+                  </span>
+                </div>
+                <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
+                  <Zap className="w-7 h-7 sm:w-8 sm:h-8 text-orange-600 mb-1" />
+                  <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
+                    100%
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
+                    trustworthy brand
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Delivery Check */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0" />
+                <span className="text-xs sm:text-sm text-gray-600 font-medium">Delivery</span>
+                <input
+                  type="text"
+                  placeholder="Enter Pincode"
+                  className="flex-1 px-2.5 py-1.5 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                />
+                <button className="px-3 py-1.5 text-xs sm:text-sm text-red-600 font-semibold hover:bg-red-50 rounded-md transition-colors">
+                  Check
+                </button>
+              </div>
+            </div>
+
+            {/* Exclusive Offer */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              <div className="flex items-center gap-1.5 mb-2">
+                <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
+                <h3 className="text-sm sm:text-base font-semibold text-gray-900">EXCLUSIVE OFFERS</h3>
+              </div>
+              <div className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 border-dashed border-orange-300 rounded-lg p-2.5 sm:p-3">
+                <div className="flex items-start gap-2">
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <h4 className="text-xs sm:text-sm font-semibold text-gray-900 mb-0.5">
+                      Free Rudraksha
+                    </h4>
+                    <p className="text-[10px] sm:text-xs text-gray-700 mb-1.5">
+                      Complimentary 5 Mukhi certified Rudraksha
+                    </p>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] sm:text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded">
+                        NAMASTE
+                      </span>
+                      <button className="text-[10px] sm:text-xs text-gray-600 hover:text-gray-900 font-medium">
+                        Copy
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Special Note */}
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
+              <button
+                onClick={handleRefundPolicyClick}
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-1.5 text-xs sm:text-sm"
+              >
+                <AlertCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                Specially Curated Item
+              </button>
+
+              <p className="text-red-600 text-[10px] sm:text-xs text-center leading-relaxed mt-1.5">
+                Minor color variations or appearance differences may occur due to lighting, photography or screen display settings.
               </p>
             </div>
 
