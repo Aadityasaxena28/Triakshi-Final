@@ -249,7 +249,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const theme = THEME[category] ?? THEME.gemstone;
 
   // Mock review count
-  const reviewCount = 247;
+  const reviewCount = 200;
 
   React.useEffect(() => {
     const fetchProduct = async () => {
