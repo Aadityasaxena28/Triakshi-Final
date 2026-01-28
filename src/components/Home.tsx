@@ -10,7 +10,7 @@ import NewCategories from "./NewCategories";
 import FAQ from "./faq";
 import SpiritualToolsUnder999 from "./SpiritualToolsUnder999";
 import CategorySection from "./CategorySection";
-
+import HeroSection from "./HeroSection";
 
 const Home = () => {
   const [isLoading, setLoading] = useState(true);
@@ -52,6 +52,7 @@ const Home = () => {
           <ProductSlider />
           <NewArrivals />
           <NewCategories />
+          <HeroSection />
           <Categories />
           <Testimonials />
           <FAQ />
