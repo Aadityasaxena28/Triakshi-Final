@@ -1,5 +1,7 @@
 import axios from "axios";
+import {api} from "./Api";
 import type { Product } from "@/DataTypes/product";
+import { url } from "inspector";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 // example: https://saxena-backend.onrender.com
@@ -23,11 +25,13 @@ export async function getRelatedProducts(
   page: number = 1,
   productCount: number = 8
 ): Promise<Product[]> {
-  const res = await axios.get(
+  const query=new URLSearchParams();
+  query.append("rangePercent", JSON.stringify(rangePercent));
+  query.append("page", JSON.stringify(page));
+  query.append("productCount", JSON.stringify(productCount));
+  const res = await api.get(
     `${BASE_URL}/api/products/products/${productId}/related`,
-    {
-      params: { rangePercent, page, productCount },
-    }
+
   );
 
   /**
