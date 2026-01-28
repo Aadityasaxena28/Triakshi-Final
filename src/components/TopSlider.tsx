@@ -154,25 +154,24 @@ const TopSlider = () => {
                   />
                   
                   {/* Interactive Button Overlay */}
-                  <div className="absolute inset-0 flex items-end justify-end pb-1 pr-2 sm:pr-3 md:pr-4">
-                    <Button
-                      onClick={handlePromoClick}
-                      className={`relative group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm md:text-base px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-3.5 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-amber-500/50 border-2 border-white/30 backdrop-blur-sm ${
-                        isMobile ? 'animate-bounce-subtle-mobile' : 'animate-bounce-subtle'
-                      }`}
-                    >
-                      <Sparkles className="inline-block w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1.5 animate-spin-slow" />
-                      Get Free Rudraksha Now
-                      <Sparkles className="inline-block w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 ml-1.5 animate-spin-slow" />
-                      
-                      {/* Pulsing Ring Effect */}
-                      <span className="absolute inset-0 rounded-full bg-amber-400/30 animate-ping"></span>
-                      
-                      {/* Shimmer Effect */}
-                      <span className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer-button"></span>
-                    </Button>
-                  </div>
-
+                 <div className="absolute inset-0 flex items-center justify-center">
+                   <Button
+                    onClick={handlePromoClick}
+                     className={`relative group bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-600 text-red-900 font-bold text-[10px] sm:text-xs md:text-sm px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5 rounded-full shadow-2xl transform transition-all duration-300 hover:scale-110 hover:shadow-amber-500/50 border-2 border-white/30 backdrop-blur-sm ${
+                       isMobile ? 'animate-bounce-subtle-mobile' : 'animate-bounce-subtle'
+                       }`}
+                        >
+                           <Sparkles className="inline-block w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 mr-1 animate-spin-slow" />
+                            Get Free Rudraksha
+                             <Sparkles className="inline-block w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5 ml-1 animate-spin-slow" />
+    
+     {/* Pulsing Ring Effect */}
+    <span className="absolute inset-0 rounded-full bg-amber-400/30 animate-ping"></span>
+    
+    {/* Shimmer Effect */}
+    <span className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer-button"></span>
+  </Button>
+</div>
                   {/* Enhanced Floating particles - More on desktop, fewer on mobile */}
                   <div className="absolute inset-0 overflow-hidden pointer-events-none">
                     <div className="promo-particle promo-particle-1"></div>
