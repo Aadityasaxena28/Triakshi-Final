@@ -11,6 +11,7 @@ import yantra from "@/assets/yantra.png";
 import tribh from "@/assets/tribhuvani incense.png";
 import blog from "@/assets/blogpic.png";
 import luckystone from "@/assets/luckstone.png";
+import nban from "@/assets/newban.jpeg";
 import { Button } from "@/components/ui/button";
 import { toastError } from "@/utlity/AlertSystem";
 import { Calculator, Circle, CircleDot, Gem, Heart, ShoppingBag, Sparkles } from "lucide-react";
@@ -29,7 +30,7 @@ const Categories = () => {
     {
       title: "Rudraksh",
       description: "Sacred beads for meditation and spiritual protection",
-      image: rudrakshImg,
+      image: nban,
       icon: Heart,
       color: "from-red-500 to-orange-500",
       link:"/rudraksha"
