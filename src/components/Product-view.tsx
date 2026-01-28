@@ -819,7 +819,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
         </div>
 
         {/* You May Also Like Section */}
-        <div className="mt-8 sm:mt-12">
+<div className="mt-8 sm:mt-12">
   {/* Section Header */}
   <div className="flex items-center gap-2 mb-4 sm:mb-6">
     <Sparkles
@@ -841,10 +841,11 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     </div>
   ) : relatedProducts && relatedProducts.length > 0 ? (
     /* Products Grid */
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 auto-rows-fr">
       {relatedProducts.map((relatedProduct) => {
         // ✅ Normalize product ID (_id OR id)
-        const productId = relatedProduct.id || relatedProduct._id;
+        const productId =
+          relatedProduct.id;
 
         if (!productId) return null;
 
@@ -872,6 +873,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     </div>
   )}
 </div>
+
 
       </div>
     </div>
