@@ -565,7 +565,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                       100%
                     </span>
                     <span className="text-xs sm:text-sm text-red-600 font-medium text-center">
-                      genuine rudraksha
+                      Authentic
                     </span>
                   </div>
                   <div className="flex flex-col items-center justify-center bg-gray-50 rounded-xl p-3 sm:p-4">
@@ -574,7 +574,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                       100%
                     </span>
                     <span className="text-xs sm:text-sm text-red-600 font-medium text-center">
-                      quality guarantee
+                      Genuine
                     </span>
                   </div>
                   <div className="flex flex-col items-center justify-center bg-gray-50 rounded-xl p-3 sm:p-4">
@@ -583,7 +583,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                       100%
                     </span>
                     <span className="text-xs sm:text-sm text-red-600 font-medium text-center">
-                      trustworthy brand
+                      Energized
                     </span>
                   </div>
                 </div>
