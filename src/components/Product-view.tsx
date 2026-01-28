@@ -4,7 +4,6 @@ import { getProductReviews } from "@/API/ReviewAPI";
 import { CartItem } from "@/DataTypes/CartData";
 import { CheckoutDraft, CheckoutItem } from "@/DataTypes/Checkout";
 import { getRelatedProducts } from "@/API/RelatedProducts";
-
 import type { Product } from "@/DataTypes/product";
 import { Review } from "@/DataTypes/Review";
 import { toastError, toastSuccess } from "@/utlity/AlertSystem";
@@ -31,211 +30,75 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ProductReviewSlider } from "./ProductReviewSlider";
 
 type Props = {
-  category?: "gemstone" | "rudraksha" | string;
+  category?: "gemstone" | "rudraksha" | "mala" | "bracelet" | "tribhuvani" | "yantra" | string;
 };
 
-const THEME: Record<
-  string,
-  {
-    pageBgFrom: string;
-    pageBgTo: string;
-    headerFrom: string;
-    headerTo: string;
-    bandFrom: string;
-    bandVia?: string;
-    bandTo: string;
-    overlayPulse: string;
-    badgeWrap: string;
-    badgeText: string;
-    catChip: string;
-    sizeChip: string;
-    priceFrom: string;
-    priceTo: string;
-    qtyBorder: string;
-    outlineText: string;
-    outlineBorder: string;
-    dotActive: string;
-    dotIdle: string;
-  }
-> = {
+const THEME: Record<string, any> = {
   gemstone: {
-    pageBgFrom: "from-yellow-50/30",
-    pageBgTo: "to-yellow-50/30",
-    headerFrom: "from-yellow-400",
-    headerTo: "to-yellow-500",
-
-    bandFrom: "from-yellow-50",
-    bandVia: undefined,
-    bandTo: "to-yellow-100",
-    overlayPulse: "bg-yellow-400/30",
-
-    badgeWrap: "bg-yellow-400",
-    badgeText: "text-gray-900",
-
-    catChip: "bg-gray-100 text-gray-800 border border-gray-200",
+    pageBgFrom: "from-yellow-50/30", pageBgTo: "to-yellow-50/30",
+    headerFrom: "from-yellow-400", headerTo: "to-yellow-500",
+    bandFrom: "from-yellow-50", bandTo: "to-yellow-100",
+    overlayPulse: "bg-yellow-400/30", badgeWrap: "bg-yellow-400",
+    badgeText: "text-gray-900", catChip: "bg-gray-100 text-gray-800 border border-gray-200",
     sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
-
-    priceFrom: "from-yellow-600",
-    priceTo: "to-yellow-600",
-
-    qtyBorder: "border-yellow-100",
-
-    outlineText: "text-gray-900",
-    outlineBorder: "border-yellow-400 hover:border-yellow-500",
-
-    dotActive: "bg-yellow-500",
-    dotIdle: "bg-gray-300 hover:bg-gray-400",
+    priceFrom: "from-yellow-600", priceTo: "to-yellow-600",
+    qtyBorder: "border-yellow-100", dotActive: "bg-yellow-500", dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
-
   rudraksha: {
-    pageBgFrom: "from-orange-50/30",
-    pageBgTo: "to-yellow-50/30",
-    headerFrom: "from-orange-500",
-    headerTo: "to-yellow-500",
-
-    bandFrom: "from-orange-50",
-    bandVia: "via-white",
-    bandTo: "to-yellow-100",
-    overlayPulse: "bg-orange-400/20",
-
-    badgeWrap: "bg-gradient-to-r from-orange-400 to-yellow-500",
-    badgeText: "text-white",
-
-    catChip: "bg-orange-50 text-orange-800 border-2 border-orange-200",
+    pageBgFrom: "from-orange-50/30", pageBgTo: "to-yellow-50/30",
+    headerFrom: "from-orange-500", headerTo: "to-yellow-500",
+    bandFrom: "from-orange-50", bandVia: "via-white", bandTo: "to-yellow-100",
+    overlayPulse: "bg-orange-400/20", badgeWrap: "bg-gradient-to-r from-orange-400 to-yellow-500",
+    badgeText: "text-white", catChip: "bg-orange-50 text-orange-800 border-2 border-orange-200",
     sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
-
-    priceFrom: "from-orange-600",
-    priceTo: "to-yellow-600",
-
-    qtyBorder: "border-orange-100",
-
-    outlineText: "text-orange-600",
-    outlineBorder: "border-orange-500",
-
-    dotActive: "bg-orange-500",
-    dotIdle: "bg-gray-300 hover:bg-gray-400",
+    priceFrom: "from-orange-600", priceTo: "to-yellow-600",
+    qtyBorder: "border-orange-100", dotActive: "bg-orange-500", dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
-
   mala: {
-    pageBgFrom: "from-orange-50/30",
-    pageBgTo: "to-yellow-50/30",
-    headerFrom: "from-orange-500",
-    headerTo: "to-yellow-500",
-
-    bandFrom: "from-orange-50",
-    bandVia: "via-white",
-    bandTo: "to-yellow-100",
-    overlayPulse: "bg-orange-400/20",
-
-    badgeWrap: "bg-gradient-to-r from-orange-400 to-yellow-500",
-    badgeText: "text-white",
-
-    catChip: "bg-orange-50 text-orange-800 border-2 border-orange-200",
+    pageBgFrom: "from-orange-50/30", pageBgTo: "to-yellow-50/30",
+    headerFrom: "from-orange-500", headerTo: "to-yellow-500",
+    bandFrom: "from-orange-50", bandVia: "via-white", bandTo: "to-yellow-100",
+    overlayPulse: "bg-orange-400/20", badgeWrap: "bg-gradient-to-r from-orange-400 to-yellow-500",
+    badgeText: "text-white", catChip: "bg-orange-50 text-orange-800 border-2 border-orange-200",
     sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
-
-    priceFrom: "from-orange-600",
-    priceTo: "to-yellow-600",
-
-    qtyBorder: "border-orange-100",
-
-    outlineText: "text-orange-600",
-    outlineBorder: "border-orange-500",
-
-    dotActive: "bg-orange-500",
-    dotIdle: "bg-gray-300 hover:bg-gray-400",
+    priceFrom: "from-orange-600", priceTo: "to-yellow-600",
+    qtyBorder: "border-orange-100", dotActive: "bg-orange-500", dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
-
   bracelet: {
-    pageBgFrom: "from-orange-50/30",
-    pageBgTo: "to-yellow-50/30",
-    headerFrom: "from-orange-500",
-    headerTo: "to-yellow-500",
-
-    bandFrom: "from-orange-50",
-    bandVia: "via-white",
-    bandTo: "to-yellow-100",
-    overlayPulse: "bg-orange-400/20",
-
-    badgeWrap: "bg-gradient-to-r from-orange-400 to-yellow-500",
-    badgeText: "text-white",
-
-    catChip: "bg-orange-50 text-orange-800 border-2 border-orange-200",
+    pageBgFrom: "from-orange-50/30", pageBgTo: "to-yellow-50/30",
+    headerFrom: "from-orange-500", headerTo: "to-yellow-500",
+    bandFrom: "from-orange-50", bandVia: "via-white", bandTo: "to-yellow-100",
+    overlayPulse: "bg-orange-400/20", badgeWrap: "bg-gradient-to-r from-orange-400 to-yellow-500",
+    badgeText: "text-white", catChip: "bg-orange-50 text-orange-800 border-2 border-orange-200",
     sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
-
-    priceFrom: "from-orange-600",
-    priceTo: "to-yellow-600",
-
-    qtyBorder: "border-orange-100",
-
-    outlineText: "text-orange-600",
-    outlineBorder: "border-orange-500",
-
-    dotActive: "bg-orange-500",
-    dotIdle: "bg-gray-300 hover:bg-gray-400",
+    priceFrom: "from-orange-600", priceTo: "to-yellow-600",
+    qtyBorder: "border-orange-100", dotActive: "bg-orange-500", dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
   tribhuvani: {
-    pageBgFrom: "from-purple-50/40",
-    pageBgTo: "to-indigo-50/40",
-
-    headerFrom: "from-purple-600",
-    headerTo: "to-indigo-600",
-
-    bandFrom: "from-purple-50",
-    bandVia: "via-white",
-    bandTo: "to-indigo-100",
-    overlayPulse: "bg-purple-400/20",
-
-    badgeWrap: "bg-gradient-to-r from-purple-500 to-indigo-600",
-    badgeText: "text-white",
-
-    catChip: "bg-purple-50 text-purple-800 border-2 border-purple-200",
+    pageBgFrom: "from-purple-50/40", pageBgTo: "to-indigo-50/40",
+    headerFrom: "from-purple-600", headerTo: "to-indigo-600",
+    bandFrom: "from-purple-50", bandVia: "via-white", bandTo: "to-indigo-100",
+    overlayPulse: "bg-purple-400/20", badgeWrap: "bg-gradient-to-r from-purple-500 to-indigo-600",
+    badgeText: "text-white", catChip: "bg-purple-50 text-purple-800 border-2 border-purple-200",
     sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
-
-    priceFrom: "from-purple-600",
-    priceTo: "to-indigo-600",
-
-    qtyBorder: "border-purple-100",
-
-    outlineText: "text-purple-700",
-    outlineBorder: "border-purple-500 hover:border-indigo-600",
-
-    dotActive: "bg-purple-500",
-    dotIdle: "bg-gray-300 hover:bg-gray-400",
+    priceFrom: "from-purple-600", priceTo: "to-indigo-600",
+    qtyBorder: "border-purple-100", dotActive: "bg-purple-500", dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
   yantra: {
-    pageBgFrom: "from-amber-50/30",
-    pageBgTo: "to-orange-50/30",
-
-    headerFrom: "from-amber-600",
-    headerTo: "to-orange-600",
-
-    bandFrom: "from-amber-50",
-    bandVia: "via-white",
-    bandTo: "to-orange-100",
-    overlayPulse: "bg-amber-400/20",
-
-    badgeWrap: "bg-gradient-to-r from-amber-500 to-orange-600",
-    badgeText: "text-white",
-
-    catChip: "bg-amber-50 text-amber-800 border-2 border-amber-200",
+    pageBgFrom: "from-amber-50/30", pageBgTo: "to-orange-50/30",
+    headerFrom: "from-amber-600", headerTo: "to-orange-600",
+    bandFrom: "from-amber-50", bandVia: "via-white", bandTo: "to-orange-100",
+    overlayPulse: "bg-amber-400/20", badgeWrap: "bg-gradient-to-r from-amber-500 to-orange-600",
+    badgeText: "text-white", catChip: "bg-amber-50 text-amber-800 border-2 border-amber-200",
     sizeChip: "bg-gray-50 text-gray-800 border-2 border-gray-200",
-
-    priceFrom: "from-amber-600",
-    priceTo: "to-orange-600",
-
-    qtyBorder: "border-amber-100",
-
-    outlineText: "text-amber-600",
-    outlineBorder: "border-amber-500 hover:border-orange-600",
-
-    dotActive: "bg-amber-500",
-    dotIdle: "bg-gray-300 hover:bg-gray-400",
+    priceFrom: "from-amber-600", priceTo: "to-orange-600",
+    qtyBorder: "border-amber-100", dotActive: "bg-amber-500", dotIdle: "bg-gray-300 hover:bg-gray-400",
   },
 };
-
 
 const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const params = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = React.useState<Product | null>(null);
   const [quantity, setQuantity] = React.useState(1);
   const [discount, setDiscount] = React.useState(0);
@@ -248,10 +111,8 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const [relatedProducts, setRelatedProducts] = React.useState<Product[]>([]);
   const [loadingRelated, setLoadingRelated] = React.useState(false);
 
-  const navigate = useNavigate();
   const BDK = import.meta.env.VITE_BUY_DRAFT_KEY;
   const theme = THEME[category] ?? THEME.gemstone;
-
   const reviewCount = 200;
 
   React.useEffect(() => {
@@ -259,7 +120,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       try {
         setLoadingRelated(true);
         const related = await getRelatedProducts(productId, 0.2, 1, 8);
-        setRelatedProducts(related || []); // Defensive: ensure array
+        setRelatedProducts(related || []);
       } catch (e) {
         console.error("Failed to load related products", e);
       } finally {
@@ -269,22 +130,14 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
     const fetchProduct = async () => {
       const productId = params.id || "MTI001";
-
       try {
         const fetchedProduct = await getProductById(productId);
-
-        // 1. Check if fetchedProduct exists before proceeding
-        if (!fetchedProduct) {
-          console.error("Product not found");
-          return;
-        }
+        if (!fetchedProduct) return;
 
         setProduct(fetchedProduct);
         fetchRelated(fetchedProduct.id);
 
-        // 2. Safely fetch reviews and handle potential undefined/null
         const productReviews = await getProductReviews(productId);
-        
         const mockReviews: Review[] = [
           {
             _id: "1",
@@ -294,17 +147,14 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
             date: "2024-01-15",
             verified: true,
           },
-          // ... (rest of your mock reviews)
         ];
 
-        // FIX: Added optional chaining and null check for reviews
         if (!productReviews || productReviews?.length === 0) {
           setReviews(mockReviews);
         } else {
           setReviews(productReviews);
         }
 
-        // 3. Image handling with optional chaining
         let imagesToDisplay: string[] = [];
         if (Array.isArray(fetchedProduct.images) && fetchedProduct.images?.length > 0) {
           imagesToDisplay = [...fetchedProduct.images];
@@ -313,10 +163,8 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
         }
         setDisplayImages(imagesToDisplay);
 
-        // 4. Pricing & discount logic
         const d = Math.max(0, Math.min(100, fetchedProduct.discount ?? 0));
         setDiscount(d);
-
         const safePrice = typeof fetchedProduct.price === "number" ? fetchedProduct.price : 0;
         const discPrice = Math.round(safePrice * (1 - d / 100));
 
@@ -325,7 +173,6 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
         setTotalPrice(discPrice * 1);
         setQuantity(1);
         setCurrentImageIndex(0);
-
       } catch (error) {
         console.error("Failed to fetch product data", error);
       }
@@ -336,7 +183,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+  }, [params.id]);
 
   React.useEffect(() => {
     if (discountedPrice >= 0) {
@@ -346,23 +193,19 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
 
   async function handleAddToCart(productId: string, quantity: number) {
     try {
-      const param: CartItem = {
-        productId,
-        quantity
-      };
+      const param: CartItem = { productId, quantity };
       const isAdded = await addToCart(param);
-      if (isAdded) {
-        toastSuccess("Item Successfully Added to cart");
-      }
+      if (isAdded) toastSuccess("Item Successfully Added to cart");
     } catch (error) {
       toastError(error || "Failed To Add Product");
     }
   }
 
   function handleBuyNow(product: Product, qty: number) {
-    const isLoggedIn: boolean = !!localStorage.getItem("tg_user");
+    const isLoggedIn = !!localStorage.getItem("tg_user");
     if (!isLoggedIn) {
       navigate("/login");
+      return;
     }
     const item: CheckoutItem = {
       productId: product.id,
@@ -373,432 +216,203 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       discount: product.discount ?? 0,
       type: product.type,
     };
-
     const draft: CheckoutDraft = { items: [item], createdAt: Date.now() };
-
     setWithExpiry(BDK, draft, 15 * 60 * 1000);
     navigate("/checkout", { state: { from: "buy-now" } });
   }
 
-  const handleRefundPolicyClick = () => {
-    navigate("/refund-policy");
-  };
-
-  const onBack = () => window.history.back();
-
-  if (!product) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-sm font-medium" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
-        Loading product details...
-      </div>
-    );
-  }
-
-  const categoryLabel = category === "rudraksha" ? "Rudraksha" : "Gemstone";
-  const originalPrice = product.price;
-
   const nextImage = () => {
     if (displayImages.length > 0) {
-      setCurrentImageIndex((p) => {
-        const newIndex = (p + 1) % displayImages.length;
-        return newIndex;
-      });
+      setCurrentImageIndex((p) => (p + 1) % displayImages.length);
     }
   };
   
   const prevImage = () => {
     if (displayImages.length > 0) {
-      setCurrentImageIndex((p) => {
-        const newIndex = (p - 1 + displayImages.length) % displayImages.length;
-        return newIndex;
-      });
+      setCurrentImageIndex((p) => (p - 1 + displayImages.length) % displayImages.length);
     }
   };
 
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-sm font-medium">
+        Loading product details...
+      </div>
+    );
+  }
+
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${theme.pageBgFrom} ${theme.pageBgTo}`} style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
+    <div className={`min-h-screen bg-gradient-to-br ${theme.pageBgFrom} ${theme.pageBgTo}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       {/* Header */}
-      <div className={`bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} text-white py-3 px-4 sm:py-4 sm:px-5 shadow-lg sticky top-0 z-20`}>
-        <div className="max-w-7xl mx-auto flex items-center gap-2 sm:gap-3">
-          <button onClick={onBack} className="p-1.5 sm:p-2 hover:bg-white/20 rounded-lg transition-colors">
-            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+      <div className={`bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} text-white py-3 px-4 shadow-lg sticky top-0 z-20`}>
+        <div className="max-w-7xl mx-auto flex items-center gap-3">
+          <button onClick={() => window.history.back()} className="p-2 hover:bg-white/20 rounded-lg">
+            <ArrowLeft className="w-5 h-5" />
           </button>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" />
-            <h1 className="text-base sm:text-lg font-semibold tracking-tight">
-              {category === "rudraksha" ? "Rudraksha Details" : "Product Details"}
-            </h1>
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-6 h-6" />
+            <h1 className="text-lg font-semibold">{category === "rudraksha" ? "Rudraksha Details" : "Product Details"}</h1>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Column - Image Carousel */}
-          <div className="space-y-3 sm:space-y-4">
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden">
-              <div
-                className={[
-                  "relative h-64 sm:h-72 md:h-80 bg-gradient-to-br flex items-center justify-center overflow-visible",
-                  theme.bandFrom,
-                  theme.bandVia ?? "",
-                  theme.bandTo,
-                ].join(" ")}
-              >
+          <div className="space-y-4">
+            <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+              <div className={["relative h-64 sm:h-96 flex items-center justify-center bg-gradient-to-br", theme.bandFrom, theme.bandVia ?? "", theme.bandTo].join(" ")}>
                 {discount > 0 && (
-                  <div className={`absolute top-2 right-2 sm:top-3 sm:right-3 ${theme.badgeWrap} ${theme.badgeText} px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold shadow-lg z-30`}>
+                  <div className={`absolute top-3 right-3 ${theme.badgeWrap} ${theme.badgeText} px-3 py-1.5 rounded-full text-sm font-semibold z-30`}>
                     {discount}% OFF
                   </div>
                 )}
 
-                {/* Carousel Navigation */}
                 {displayImages.length > 1 && (
                   <>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        prevImage();
-                      }}
-                      className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-1.5 sm:p-2 rounded-full shadow-lg transition-all z-20 cursor-pointer"
-                    >
-                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-800" />
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        nextImage();
-                      }}
-                      className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-1.5 sm:p-2 rounded-full shadow-lg transition-all z-20 cursor-pointer"
-                    >
-                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-800" />
-                    </button>
+                    <button onClick={prevImage} className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 p-2 rounded-full shadow-lg z-20"><ChevronLeft className="w-5 h-5" /></button>
+                    <button onClick={nextImage} className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 p-2 rounded-full shadow-lg z-20"><ChevronRight className="w-5 h-5" /></button>
                   </>
                 )}
 
                 <div className="relative w-full h-full flex items-center justify-center">
-                  <div className={`absolute inset-0 ${theme.overlayPulse} blur-3xl rounded-full animate-pulse`}></div>
-                  {displayImages.length > 0 ? (
-                    <img
-                      key={currentImageIndex}
-                      src={displayImages[currentImageIndex]}
-                      alt={`${product.name} - Image ${currentImageIndex + 1}`}
-                      className="w-full h-full object-contain relative z-10 drop-shadow-2xl px-4"
-                      onError={(e) => {
-                        e.currentTarget.src = product.image || '';
-                      }}
-                    />
-                  ) : (
-                    <Star className="w-32 h-32 sm:w-40 sm:h-40 text-black/10 relative z-10 drop-shadow-2xl" />
-                  )}
-
-                  {displayImages.length > 1 && (
-                    <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 text-white bg-black/50 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-xs">
-                      {currentImageIndex + 1} / {displayImages.length}
-                    </div>
-                  )}
+                  <div className={`absolute inset-0 ${theme.overlayPulse} blur-3xl animate-pulse`}></div>
+                  <img 
+                    src={displayImages[currentImageIndex]} 
+                    alt={product.name} 
+                    className="w-full h-full object-contain relative z-10 p-6" 
+                  />
                 </div>
               </div>
-
-              {/* Thumbnail Indicators */}
+              
+              {/* Thumbnails */}
               {displayImages.length > 1 && (
-                <div className="flex gap-1.5 sm:gap-2 justify-center p-2.5 sm:p-3 bg-gray-50">
+                <div className="flex gap-2 justify-center p-3 bg-gray-50">
                   {displayImages.map((_, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setCurrentImageIndex(index);
-                      }}
-                      className={`h-2 rounded-full transition-all cursor-pointer ${
-                        index === currentImageIndex 
-                          ? `${theme.dotActive} w-6 sm:w-7` 
-                          : `${theme.dotIdle} w-2`
-                      }`}
+                    <button 
+                      key={index} 
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`h-2 rounded-full transition-all ${index === currentImageIndex ? `${theme.dotActive} w-8` : `${theme.dotIdle} w-2`}`}
                     />
                   ))}
                 </div>
               )}
 
-              {/* Basic Info */}
-              <div className="p-3 sm:p-4 border-t border-gray-100">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-1.5">
-                  {product.name}
-                </h2>
-                
-                {/* Star Rating */}
+              <div className="p-4 border-t border-gray-100">
+                <h2 className="text-xl font-bold text-gray-900 mb-1">{product.name}</h2>
                 <div className="flex items-center gap-1.5 mb-2">
-                  <div className="flex items-center gap-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
+                  <div className="flex text-yellow-400">
+                    {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
                   </div>
-                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
-                    {reviewCount} reviews
-                  </span>
+                  <span className="text-sm text-gray-600 font-medium">{reviewCount} reviews</span>
                 </div>
-
-                <p className={`${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"} font-medium text-xs sm:text-sm mb-3`}>
-                  Product ID: {product.id}
-                </p>
-
-                <div className="flex items-baseline gap-2 mb-2.5">
-                  <span className={`text-xl sm:text-2xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent`}>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className={`text-2xl font-bold bg-gradient-to-r ${theme.priceFrom} ${theme.priceTo} bg-clip-text text-transparent`}>
                     ₹{discountedPrice.toLocaleString()}
                   </span>
-                  {discount > 0 && originalPrice > discountedPrice && (
-                    <span className="text-base sm:text-lg text-gray-400 line-through">
-                      ₹{originalPrice.toLocaleString()}
-                    </span>
-                  )}
+                  {discount > 0 && <span className="text-lg text-gray-400 line-through">₹{product.price?.toLocaleString()}</span>}
                 </div>
-
-                <p className="text-xs text-gray-600 mb-3">
-                  Tax included • Free delivery over ₹299
-                </p>
-
-                <div className="flex flex-wrap gap-1.5">
-                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${theme.catChip}`}>
-                    {categoryLabel}
-                  </span>
-                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${theme.sizeChip}`}>
-                    Size / Qty: {product.quantity}
-                  </span>
+                <div className="flex flex-wrap gap-2">
+                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${theme.catChip}`}>{category.toUpperCase()}</span>
+                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${theme.sizeChip}`}>Stock: {product.quantity}</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right Column */}
-          <div className="space-y-3 sm:space-y-4">
-            {/* Quantity & Actions */}
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
-              {/* Quantity Selector */}
-              <div className="flex items-center justify-between gap-3 mb-3">
-                <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden">
-                  <button
-                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="p-3 hover:bg-gray-100 transition-colors"
-                  >
-                    <Minus className="w-4 h-4 text-gray-700" />
-                  </button>
-                  <span className="text-lg font-semibold text-gray-900 px-6">
-                    {quantity}
-                  </span>
-                  <button
-                    onClick={() => setQuantity((q) => Math.min(product.quantity, q + 1))}
-                    className="p-3 hover:bg-gray-100 transition-colors"
-                  >
-                    <Plus className="w-4 h-4 text-gray-700" />
-                  </button>
+          <div className="space-y-4">
+            {/* Purchase Card */}
+            <div className="bg-white rounded-2xl shadow-xl p-4">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center border-2 border-gray-100 rounded-lg overflow-hidden">
+                  <button onClick={() => setQuantity(q => Math.max(1, q-1))} className="p-3 hover:bg-gray-50"><Minus className="w-4 h-4" /></button>
+                  <span className="px-6 font-bold">{quantity}</span>
+                  <button onClick={() => setQuantity(q => Math.min(product.quantity, q+1))} className="p-3 hover:bg-gray-50"><Plus className="w-4 h-4" /></button>
                 </div>
-
-                {/* Add to Cart Button */}
-                <button
-                  className="flex-1 bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
-                  onClick={() => {
-                    handleAddToCart(product.id, quantity);
-                  }}
-                >
-                  <span className="text-sm">ADD TO CART</span>
+                <button onClick={() => handleAddToCart(product.id, quantity)} className="flex-1 bg-gray-900 text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition-all">
+                  ADD TO CART
                 </button>
               </div>
-
-              {/* Buy Now Button */}
-              <button
-                className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} hover:opacity-90 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg`}
-                onClick={() => {
-                  handleBuyNow(product, quantity);
-                }}
-              >
-                <ShoppingCart className="w-4 h-4" />
-                <span className="text-sm">BUY NOW</span>
+              <button onClick={() => handleBuyNow(product, quantity)} className={`w-full bg-gradient-to-r ${theme.headerFrom} ${theme.headerTo} text-white font-bold py-4 rounded-lg shadow-lg flex items-center justify-center gap-2`}>
+                <ShoppingCart className="w-5 h-5" /> BUY NOW
               </button>
             </div>
 
             {/* Description */}
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
-                Description
-              </h3>
-              <p className="text-gray-600 leading-relaxed text-xs sm:text-sm">
-                {product.description || "—"}
-              </p>
+            <div className="bg-white rounded-2xl shadow-xl p-4">
+              <h3 className="font-bold text-gray-900 mb-2">Description</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">{product.description || "No description available."}</p>
             </div>
 
-            {/* Trust Badges - Now below description on mobile */}
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
-              <div className="grid grid-cols-3 gap-2">
-                <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
-                  <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-green-600 mb-1" />
-                  <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
-                    100%
-                  </span>
-                  <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
-                    Authentic 
-                  </span>
+            {/* Trust Badges */}
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { icon: Shield, label: "Authentic", color: "text-green-600" },
+                { icon: Award, label: "Certified", color: "text-blue-600" },
+                { icon: Zap, label: "Energized", color: "text-orange-600" }
+              ].map((badge, i) => (
+                <div key={i} className="bg-white p-3 rounded-xl shadow-md flex flex-col items-center">
+                  <badge.icon className={`w-8 h-8 ${badge.color} mb-1`} />
+                  <span className="text-[10px] font-bold text-gray-800 uppercase">{badge.label}</span>
                 </div>
-                <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
-                  <Award className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600 mb-1" />
-                  <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
-                    100%
-                  </span>
-                  <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
-                    Certified
-                  </span>
-                </div>
-                <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2.5 sm:p-3">
-                  <Zap className="w-7 h-7 sm:w-8 sm:h-8 text-orange-600 mb-1" />
-                  <span className="text-xs sm:text-sm font-semibold text-gray-800 text-center">
-                    100%
-                  </span>
-                  <span className="text-[10px] sm:text-xs text-red-600 font-medium text-center leading-tight">
-                    Energized
-                  </span>
-                </div>
-              </div>
+              ))}
             </div>
 
-            {/* Delivery Check */}
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0" />
-                <span className="text-xs sm:text-sm text-gray-600 font-medium">Delivery</span>
-                <input
-                  type="text"
-                  placeholder="Enter Pincode"
-                  className="flex-1 px-2.5 py-1.5 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-                <button className="px-3 py-1.5 text-xs sm:text-sm text-red-600 font-semibold hover:bg-red-50 rounded-md transition-colors">
-                  Check
-                </button>
-              </div>
-            </div>
-
-            {/* Exclusive Offer */}
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
-              <div className="flex items-center gap-1.5 mb-2">
-                <Gift className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
-                <h3 className="text-sm sm:text-base font-semibold text-gray-900">EXCLUSIVE OFFERS</h3>
-              </div>
-              <div className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 border-dashed border-orange-300 rounded-lg p-2.5 sm:p-3">
-                <div className="flex items-start gap-2">
-                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600 flex-shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <h4 className="text-xs sm:text-sm font-semibold text-gray-900 mb-0.5">
-                      Free Rudraksha
-                    </h4>
-                    <p className="text-[10px] sm:text-xs text-gray-700 mb-1.5">
-                      Complimentary 5 Mukhi certified Rudraksha
-                    </p>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] sm:text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded">
-                        NAMASTE
-                      </span>
-                      <button className="text-[10px] sm:text-xs text-gray-600 hover:text-gray-900 font-medium">
-                        Copy
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Special Note */}
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
-              <button
-                onClick={handleRefundPolicyClick}
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-1.5 text-xs sm:text-sm"
-              >
-                <AlertCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                Return Policy
-              </button>
-
-              <p className="text-red-600 text-[10px] sm:text-xs text-center leading-relaxed mt-1.5">
-                Minor color variations or appearance differences may occur due to lighting, photography or screen display settings.
-              </p>
+            {/* Delivery */}
+            <div className="bg-white rounded-2xl shadow-xl p-4 flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-gray-400" />
+              <input type="text" placeholder="Enter Pincode" className="flex-1 text-sm outline-none" />
+              <button className="text-red-600 font-bold text-sm">Check</button>
             </div>
 
             {/* Benefits */}
-            {(benefits?.length ?? 0) > 0 && (
-              <div className={`bg-gradient-to-br ${category === "rudraksha" ? "from-orange-50" : "from-yellow-50"} to-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4 border-2 ${theme.qtyBorder}`}>
-                <div className="flex items-center gap-1.5 mb-2.5">
-                  <Sparkles className={`w-5 h-5 sm:w-6 sm:h-6 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-900">
-                    Benefits
-                  </h3>
-                </div>
+            {benefits.length > 0 && (
+              <div className={`bg-white rounded-2xl shadow-xl p-4 border-l-4 ${category === 'rudraksha' ? 'border-orange-500' : 'border-yellow-500'}`}>
+                <h3 className="font-bold flex items-center gap-2 mb-3"><Sparkles className="w-5 h-5 text-orange-500" /> Benefits</h3>
                 <ul className="space-y-2">
-                  {benefits.map((benefit: string, idx: number) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <div className={`w-1.5 h-1.5 rounded-full ${category === "rudraksha" ? "bg-orange-600" : "bg-yellow-600"} mt-1.5 flex-shrink-0`}></div>
-                      <span className="text-gray-700 text-xs sm:text-sm leading-relaxed">
-                        {benefit}
-                      </span>
+                  {benefits.map((b, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                      <div className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-1.5" /> {b}
                     </li>
                   ))}
                 </ul>
               </div>
             )}
 
-            {/* Reviews Slider */}
-            {reviews.length > 0 && (
-              <ProductReviewSlider 
-                reviews={reviews} 
-                category={category} 
-              />
-            )}
-            {/* Related Products */}
-{relatedProducts.length > 0 && (
-  <div className="mt-10">
-    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">
-      Related Products
-    </h3>
-
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-      {relatedProducts.map((rp) => (
-        <div
-          key={rp.id}
-          className="bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer"
-          onClick={() => navigate(`/product/${rp.id}`)}
-        >
-          <div className="h-36 flex items-center justify-center bg-gray-50 rounded-t-xl">
-            <img
-              src={rp.image}
-              alt={rp.name}
-              className="h-full object-contain p-3"
-            />
+            {/* Reviews */}
+            {reviews.length > 0 && <ProductReviewSlider reviews={reviews} category={category} />}
           </div>
+        </div>
 
-          <div className="p-3">
-            <h4 className="text-sm font-semibold text-gray-800 line-clamp-2">
-              {rp.name}
-            </h4>
-
-            <div className="mt-1 flex items-center gap-2">
-              <span className="text-sm font-bold text-gray-900">
-                ₹{rp.price?.toLocaleString()}
-              </span>
-              {rp.discount && rp.discount > 0 && (
-                <span className="text-xs text-red-600 font-medium">
-                  {rp.discount}% OFF
-                </span>
-              )}
+        {/* Related Products Section */}
+        {relatedProducts.length > 0 && (
+          <div className="mt-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+              <Sparkles className="w-6 h-6 text-orange-500" /> Related Products
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {relatedProducts.map((rp) => (
+                <div 
+                  key={rp.id} 
+                  onClick={() => navigate(`/product/${rp.id}`)}
+                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group overflow-hidden"
+                >
+                  <div className="h-40 bg-gray-50 flex items-center justify-center p-4 group-hover:scale-105 transition-transform">
+                    <img src={rp.image} alt={rp.name} className="h-full object-contain" />
+                  </div>
+                  <div className="p-3">
+                    <h4 className="text-sm font-semibold text-gray-800 line-clamp-1">{rp.name}</h4>
+                    <div className="mt-2 flex items-center justify-between">
+                      <span className="font-bold text-gray-900">₹{rp.price?.toLocaleString()}</span>
+                      {rp.discount && <span className="text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-bold">{rp.discount}% OFF</span>}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      ))}
-    </div>
-  </div>
-)}
-
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
