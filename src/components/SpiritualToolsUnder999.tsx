@@ -21,7 +21,7 @@ const SpiritualToolsUnder999 = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-
+  
   // Fetch products under 999 using TanStack Query
   const { data: products = [], isLoading, isError } = useQuery({
     queryKey: ['products-under-999'],
@@ -175,7 +175,7 @@ const SpiritualToolsUnder999 = () => {
             <Sparkles className="w-8 h-8 text-amber-600 animate-pulse" />
             <h2 className="text-5xl font-extrabold relative inline-block overflow-hidden">
               <span className="relative bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-600 bg-clip-text text-transparent">
-                Spirituality Simplified Under ₹999
+                Spiritual need under 999 !
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-40 animate-shine"></span>
               </span>
             </h2>

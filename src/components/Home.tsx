@@ -9,6 +9,7 @@ import NewArrivals from "./NewArrivals";
 import NewCategories from "./NewCategories";
 import FAQ from "./faq";
 import SpiritualToolsUnder999 from "./SpiritualToolsUnder999";
+import CategorySection from "./CategorySection";
 
 
 const Home = () => {
@@ -44,6 +45,7 @@ const Home = () => {
         </div>
       ) : (
         <>
+          <CategorySection />
           <TopSlider />
           <Marquee />
           <SpiritualToolsUnder999/>
