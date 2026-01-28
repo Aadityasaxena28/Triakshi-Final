@@ -3,6 +3,8 @@ import { getProductById } from "@/API/Product";
 import { getProductReviews } from "@/API/ReviewAPI";
 import { CartItem } from "@/DataTypes/CartData";
 import { CheckoutDraft, CheckoutItem } from "@/DataTypes/Checkout";
+import { getRelatedProducts } from "@/API/RelatedProducts";
+
 import type { Product } from "@/DataTypes/product";
 import { Review } from "@/DataTypes/Review";
 import { toastError, toastSuccess } from "@/utlity/AlertSystem";
