@@ -357,24 +357,34 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     fetchProduct();
   }, [params.id]);
 
-  const fetchRelatedProducts = async (productId: string) => {
-    try {
-      setLoadingRelated(true);
-      console.log("Fetching related products for:", productId);
-      
-      // getRelatedProducts returns Promise<Product[]> directly
-      const productsArray = await getRelatedProducts(productId, 0.2, 1, 8);
-      console.log("Related products response:", productsArray);
-      
-      // Since getRelatedProducts already returns an array, just set it directly
-      setRelatedProducts(Array.isArray(productsArray) ? productsArray : []);
-    } catch (error) {
-      console.error("Failed to fetch related products:", error);
-      setRelatedProducts([]);
-    } finally {
-      setLoadingRelated(false);
-    }
-  };
+const fetchRelatedProducts = async (productId: string) => {
+  try {
+    setLoadingRelated(true);
+    console.log("Fetching related products for:", productId);
+
+    // API call
+    const productsArray = await getRelatedProducts(productId, 0.2, 1, 8);
+    console.log("Related products response:", productsArray);
+
+    const normalizedCurrentId = productId.toString();
+
+    // 🔥 FILTER OUT CURRENT PRODUCT
+    const filteredProducts = Array.isArray(productsArray)
+      ? productsArray.filter(
+          (product) =>
+            (productId)?.toString() !== normalizedCurrentId
+        )
+      : [];
+
+    setRelatedProducts(filteredProducts);
+  } catch (error) {
+    console.error("Failed to fetch related products:", error);
+    setRelatedProducts([]);
+  } finally {
+    setLoadingRelated(false);
+  }
+};
+
 
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
