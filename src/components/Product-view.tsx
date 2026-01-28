@@ -857,11 +857,11 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
             </div>
           ) : relatedProducts && relatedProducts.length > 0 ? (
             /* Horizontal Carousel */
-            <div className="relative group">
+            <div className="relative group px-2 sm:px-4">
               {/* Left Navigation Button */}
               <button
                 onClick={() => scrollCarousel('left')}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/95 hover:bg-white shadow-xl rounded-full p-2 sm:p-3 transition-all duration-300 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-2"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white shadow-xl rounded-full p-2 sm:p-3 transition-all duration-300 opacity-0 group-hover:opacity-100"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800" />
@@ -870,7 +870,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
               {/* Scrollable Container */}
               <div
                 ref={carouselRef}
-                className="flex gap-3 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+                className="flex gap-3 sm:gap-4 overflow-x-auto overflow-y-visible scrollbar-hide scroll-smooth py-2"
                 style={{
                   scrollbarWidth: 'none',
                   msOverflowStyle: 'none',
@@ -878,14 +878,14 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                 }}
               >
                 {relatedProducts.map((relatedProduct) => {
-                  const productId = relatedProduct.id;
+                  const productId = relatedProduct.id || relatedProduct._id;
 
                   if (!productId) return null;
 
                   return (
                     <div
                       key={productId}
-                      className="flex-shrink-0 w-[160px] sm:w-[200px] transition-transform duration-300 hover:-translate-y-2"
+                      className="flex-shrink-0 w-[180px] sm:w-[220px] md:w-[240px] transition-transform duration-300 hover:-translate-y-2"
                     >
                       <Product_card
                         product={relatedProduct}
@@ -905,7 +905,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
               {/* Right Navigation Button */}
               <button
                 onClick={() => scrollCarousel('right')}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/95 hover:bg-white shadow-xl rounded-full p-2 sm:p-3 transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:-translate-x-2"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/95 hover:bg-white shadow-xl rounded-full p-2 sm:p-3 transition-all duration-300 opacity-0 group-hover:opacity-100"
                 aria-label="Scroll right"
               >
                 <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800" />
