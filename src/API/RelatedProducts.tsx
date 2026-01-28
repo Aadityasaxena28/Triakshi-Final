@@ -25,7 +25,8 @@ export async function getRelatedProducts(
   page: number = 1,
   productCount: number = 8
 ): Promise<Product[]> {
-  console.log(productId);
+  console.log(productId,page,rangePercent,productCount);
+
   const query=new URLSearchParams();
   query.append("rangePercent", JSON.stringify(rangePercent));
   query.append("page", JSON.stringify(page));
