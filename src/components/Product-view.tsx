@@ -841,10 +841,10 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     </div>
   ) : relatedProducts && relatedProducts.length > 0 ? (
     /* Products Grid */
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
       {relatedProducts.map((relatedProduct) => {
         // ✅ Normalize product ID (_id OR id)
-        const productId = relatedProduct.id;
+        const productId = relatedProduct.id || relatedProduct._id;
 
         if (!productId) return null;
 
