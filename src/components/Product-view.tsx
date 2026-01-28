@@ -350,7 +350,9 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       setCurrentImageIndex(0);
 
       // Fetch related products
-      await fetchRelatedProducts(fetchedProduct.id);
+      if (fetchedProduct.id) {
+        await fetchRelatedProducts(fetchedProduct.id);
+      }
     };
     fetchProduct();
   }, [params.id]);
@@ -359,7 +361,8 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     try {
       setLoadingRelated(true);
       const related = await getRelatedProducts(productId, 0.2, 1, 8);
-      setRelatedProducts(related);
+      // Ensure we always set an array, even if the result is undefined or null
+      setRelatedProducts(Array.isArray(related) ? related : []);
     } catch (error) {
       console.error("Failed to fetch related products:", error);
       setRelatedProducts([]);
@@ -421,7 +424,10 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const onBack = () => window.history.back();
 
   // Handle view details for related products
-  const handleViewDetails = (productId: string, productType: string) => {
+  const handleViewDetails = (productId: string, productType?: string) => {
+    // Use the productType if provided, otherwise fall back to current category
+    const type = productType || category;
+    
     // Determine the route based on product type
     const typeMap: Record<string, string> = {
       gemstone: `/gem-view/${productId}`,
@@ -433,7 +439,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       books: `/books-view/${productId}`,
     };
 
-    const route = typeMap[productType.toLowerCase()] || `/gem-view/${productId}`;
+    const route = typeMap[type.toLowerCase()] || `/gem-view/${productId}`;
     navigate(route);
   };
 
@@ -808,7 +814,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
         </div>
 
         {/* You May Also Like Section */}
-        {relatedProducts.length > 0 && (
+        {relatedProducts && relatedProducts.length > 0 && (
           <div className="mt-8 sm:mt-12">
             <div className="flex items-center gap-2 mb-4 sm:mb-6">
               <Sparkles className={`w-5 h-5 sm:w-6 sm:h-6 ${category === "rudraksha" ? "text-orange-600" : "text-yellow-600"}`} />
@@ -827,8 +833,8 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                   <Product_card 
                     key={relatedProduct.id} 
                     product={relatedProduct}
-                    handleViewDetails={(id) => handleViewDetails(id, relatedProduct.type)}
-                    category={relatedProduct.type}
+                    handleViewDetails={(id) => handleViewDetails(id, relatedProduct.type || relatedProduct.category)}
+                    category={relatedProduct.type || relatedProduct.category}
                   />
                 ))}
               </div>
