@@ -1,59 +1,54 @@
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Gem, Circle, Watch, Grid, Book } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef } from "react";
 
 interface Category {
   id: string;
   name: string;
-  icon: React.ReactNode;
+  image: string; // URL to the category image
   path: string;
-  gradient: string;
 }
 
 const CategorySection = () => {
   const navigate = useNavigate();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const categories: Category[] = [
     {
       id: "rudraksha",
       name: "Rudraksha",
-      icon: <Circle className="w-8 h-8 md:w-10 md:h-10" />,
+      image: "/images/categories/rudraksha.jpg", // Replace with your actual image path
       path: "/rudraksha",
-      gradient: "from-amber-500 to-orange-600",
     },
     {
       id: "gemstones",
       name: "Gemstones",
-      icon: <Gem className="w-8 h-8 md:w-10 md:h-10" />,
+      image: "/images/categories/gemstones.jpg", // Replace with your actual image path
       path: "/gemstones",
-      gradient: "from-purple-500 to-pink-600",
     },
     {
       id: "mala",
       name: "Mala",
-      icon: <Sparkles className="w-8 h-8 md:w-10 md:h-10" />,
+      image: "/images/categories/mala.jpg", // Replace with your actual image path
       path: "/mala",
-      gradient: "from-green-500 to-emerald-600",
     },
     {
       id: "bracelets",
       name: "Bracelets",
-      icon: <Watch className="w-8 h-8 md:w-10 md:h-10" />,
+      image: "/images/categories/bracelets.jpg", // Replace with your actual image path
       path: "/bracelet",
-      gradient: "from-blue-500 to-cyan-600",
     },
     {
       id: "yantra",
       name: "Yantra",
-      icon: <Grid className="w-8 h-8 md:w-10 md:h-10" />,
+      image: "/images/categories/yantra.jpg", // Replace with your actual image path
       path: "/yantra",
-      gradient: "from-red-500 to-rose-600",
     },
     {
       id: "tribhuvani",
       name: "Tribhuvani",
-      icon: <Book className="w-8 h-8 md:w-10 md:h-10" />,
+      image: "/images/categories/tribhuvani.jpg", // Replace with your actual image path
       path: "/tribhuvani",
-      gradient: "from-indigo-500 to-violet-600",
     },
   ];
 
@@ -61,51 +56,92 @@ const CategorySection = () => {
     navigate(path);
   };
 
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 200;
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <section className="w-full py-8 md:py-12 px-4 bg-gradient-to-b from-white to-gray-50">
+    <section className="w-full py-6 md:py-8 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2">
-            Explore Our Categories
+        <div className="mb-4 md:mb-6">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900">
+            Shop by Category
           </h2>
-          <p className="text-sm md:text-base text-gray-600">
-            Discover spiritual products for your journey
-          </p>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => handleCategoryClick(category.path)}
-              className="group relative aspect-square rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-            >
-              {/* Gradient Background */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-90 group-hover:opacity-100 transition-opacity duration-300`}
-              />
+        {/* Scrollable Container with Navigation Buttons */}
+        <div className="relative group">
+          {/* Left Scroll Button - Hidden on mobile, visible on desktop */}
+          <button
+            onClick={() => scroll("left")}
+            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:shadow-xl transition-all opacity-0 group-hover:opacity-100 border border-gray-200"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="w-5 h-5 text-gray-700" />
+          </button>
 
-              {/* Content */}
-              <div className="relative h-full flex flex-col items-center justify-center p-4 text-white">
-                {/* Icon Container */}
-                <div className="mb-2 md:mb-3 transform group-hover:scale-110 transition-transform duration-300">
-                  {category.icon}
+          {/* Categories Horizontal Scroll */}
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-2"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}
+          >
+            {categories.map((category) => (
+              <div
+                key={category.id}
+                onClick={() => handleCategoryClick(category.path)}
+                className="flex-shrink-0 cursor-pointer group/item"
+              >
+                {/* Square Icon Container - Reduced to 25% (80px on mobile, 100px on desktop) */}
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-gray-100">
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Fallback to a gradient background if image fails to load
+                      e.currentTarget.style.display = "none";
+                      e.currentTarget.parentElement!.style.background =
+                        "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+                    }}
+                  />
                 </div>
 
                 {/* Category Name */}
-                <h3 className="text-sm md:text-base font-semibold text-center leading-tight">
+                <h3 className="mt-2 text-xs md:text-sm font-semibold text-center text-gray-800 w-20 md:w-24">
                   {category.name}
                 </h3>
               </div>
+            ))}
+          </div>
 
-              {/* Hover Effect Overlay */}
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
-            </button>
-          ))}
+          {/* Right Scroll Button - Hidden on mobile, visible on desktop */}
+          <button
+            onClick={() => scroll("right")}
+            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:shadow-xl transition-all opacity-0 group-hover:opacity-100 border border-gray-200"
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="w-5 h-5 text-gray-700" />
+          </button>
         </div>
       </div>
+
+      {/* Hide scrollbar CSS */}
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
   );
 };
