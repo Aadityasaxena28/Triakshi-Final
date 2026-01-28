@@ -1,7 +1,7 @@
 import { api } from "./Api";
 import type { Product } from "@/DataTypes/product";
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+const BASE_URL = import.meta.env.VITE_api_url;
 
 export async function getRelatedProducts(
   productId: string,
