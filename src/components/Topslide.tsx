@@ -18,7 +18,7 @@ const Topslide: React.FC = () => {
       <div className="relative z-10 container mx-auto px-4 sm:px-6 h-full flex items-center">
         <div className="max-w-3xl space-y-4 md:space-y-6 animate-fadeIn w-full">
           {/* Decorative Element */}
-          <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-4">
+          <div className="flex items-center gap-2 md:gap-3">
             <div className="w-8 md:w-12 h-[2px] bg-gradient-to-r from-amber-400 to-transparent"></div>
             <span className="text-amber-400 font-light tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm uppercase">
               Spiritual Elegance
@@ -35,7 +35,7 @@ const Topslide: React.FC = () => {
 
           {/* Body Text - Better line height and spacing for mobile */}
           <p className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl font-light">
-            It promote mental peace, emotional balance, and stress relief —making it one of the most powerful and widely worn Rudraksha beads.
+            5 Mukhi Rudraksha is known to promote mental peace, emotional balance, and stress relief, helping calm the mind and improve focus—making it one of the most powerful and widely worn Rudraksha beads for daily well-being, meditation, and spiritual growth.
           </p>
 
           {/* CTA Button */}
@@ -61,14 +61,14 @@ const Topslide: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <div className="w-1 h-1 rounded-full bg-amber-400"></div>
-              <span className="text-xs md:text-sm font-light">Energized Products</span>
+              <span className="text-xs md:text-sm font-light">Spiritual Guidance</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Decorative Bottom Element */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 md:h-32 bg-gradient-to-t from-black/80 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-12 md:h-16 bg-gradient-to-t from-black/80 to-transparent"></div>
 
       {/* Scroll Indicator - Hidden on mobile, visible on larger screens */}
       <div className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
