@@ -17,14 +17,6 @@ const Topslide: React.FC = () => {
       {/* Content Container */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 h-full flex items-center">
         <div className="max-w-3xl space-y-4 md:space-y-6 animate-fadeIn w-full">
-          {/* Decorative Element */}
-          <div className="flex items-center gap-2 md:gap-3">
-            <div className="w-8 md:w-12 h-[2px] bg-gradient-to-r from-amber-400 to-transparent"></div>
-            <span className="text-amber-400 font-light tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm uppercase">
-              Spiritual Elegance
-            </span>
-          </div>
-
           {/* Main Heading - Responsive sizing with center alignment */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif text-white leading-tight tracking-tight text-center">
             Free
@@ -35,7 +27,7 @@ const Topslide: React.FC = () => {
 
           {/* Body Text - Better line height and spacing for mobile */}
           <p className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl font-light">
-            5 Mukhi Rudraksha is known to promote mental peace, emotional balance, and stress relief, helping calm the mind and improve focus—making it one of the most powerful and widely worn Rudraksha beads for daily well-being, meditation, and spiritual growth.
+            One of the most powerful and widely worn Rudraksha beads for daily well-being.
           </p>
 
           {/* CTA Button */}
@@ -50,18 +42,10 @@ const Topslide: React.FC = () => {
           </div>
 
           {/* Trust Indicators - Stack on mobile, horizontal on larger screens */}
-          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 sm:gap-6 md:gap-8 pt-3 md:pt-4 text-white/80 justify-center">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 sm:gap-6 md:gap-8 text-white/80 justify-center">
             <div className="flex items-center gap-2">
               <div className="w-1 h-1 rounded-full bg-amber-400"></div>
               <span className="text-xs md:text-sm font-light">Authentic Products</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-1 h-1 rounded-full bg-amber-400"></div>
-              <span className="text-xs md:text-sm font-light">Certified Quality</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-1 h-1 rounded-full bg-amber-400"></div>
-              <span className="text-xs md:text-sm font-light">Spiritual Guidance</span>
             </div>
           </div>
         </div>
@@ -77,7 +61,7 @@ const Topslide: React.FC = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes fadeIn {
           from {
             opacity: 0;
