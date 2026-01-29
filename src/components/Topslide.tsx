@@ -4,7 +4,7 @@ import freefivemukhibanner from "@/assets/freefivemukhibanner.png";
 
 const Topslide: React.FC = () => {
   return (
-    <section className="relative w-full h-screen min-h-[500px] md:min-h-[600px] overflow-hidden">
+    <section className="relative w-full h-[75vh] min-h-[375px] md:min-h-[450px] overflow-hidden">
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -27,7 +27,7 @@ const Topslide: React.FC = () => {
 
           {/* Body Text - Better line height and spacing for mobile */}
           <p className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl font-light">
-            One of the most powerful and widely worn Rudraksha beads for daily well-being.
+            Known to promote mental peace, emotional balance, and stress relief,making it one of the most powerful and widely worn Rudraksha.
           </p>
 
           {/* CTA Button */}
