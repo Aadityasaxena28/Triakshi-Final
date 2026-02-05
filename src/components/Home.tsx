@@ -50,9 +50,9 @@ const Home = () => {
           <Marquee />
           <Topslide />
           {/*<TopSlider />*/}
+          <NewArrivals />
           <SpiritualToolsUnder999/>
           <ProductSlider />
-          <NewArrivals />
           <NewCategories />
           <HeroSection />
           <Categories />

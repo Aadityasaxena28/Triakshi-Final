@@ -101,8 +101,8 @@ const NewArrivals = () => {
         toastSuccess("Item Successfully Added to cart");
       }
     } 
-    catch (error: any) {
-      toastError(error?.message || "Failed To Add Product");
+    catch (error) {
+      toastError(error || "Failed To Add Product");
     }
   };
 
@@ -190,7 +190,7 @@ const NewArrivals = () => {
                   animation: 'gradient 3s ease infinite',
                 }}
               >
-                New Arrivals
+                Shivratri Special
               </span>
             </h2>
             <Package className="w-4 h-4 text-orange-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
@@ -340,10 +340,7 @@ const NewArrivals = () => {
                   <div className="flex space-x-1">
                     <Button 
                       className="flex-1 h-7 text-[10px] bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold shadow-lg"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleAddToCart(product);
-                      }}
+                      onClick={() => handleAddToCart(product)}
                       disabled={product.availability === 'out-of-stock'}
                     >
                       <ShoppingCart className="mr-0.5 h-2.5 w-2.5" /> Add
@@ -351,10 +348,7 @@ const NewArrivals = () => {
                     <Button
                       variant="outline"
                       className="h-7 px-2 text-[10px] border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-semibold transition-all"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleViewDetails(product);
-                      }}
+                      onClick={() => handleViewDetails(product)}
                     >
                       <Eye className="h-2.5 w-2.5" />
                     </Button>
