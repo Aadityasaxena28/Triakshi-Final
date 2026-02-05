@@ -22,7 +22,8 @@ const TribhuvaniPage = () => {
   const categories = [
     { key: 'kapoor', label: 'Kapoor', icon: '🕉️' },
     { key: 'incense', label: 'Incense', icon: '🔥' },
-    { key: 'essential-oils', label: 'Essential Oils', icon: '💧' }
+    { key: 'essential-oils', label: 'Essential Oils', icon: '💧' },
+    { key: 'Shivling', label: 'Shivling', icon: '🔱' },
   ];
 
   const allMobileCategories = useMemo(() => {
