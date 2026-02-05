@@ -35,7 +35,7 @@ const CategorySection = () => {
       id: "mala",
       name: "Mala",
       image: health,
-      path: "/mala",
+      path: "/Mala",
     },
     {
       id: "bracelets",

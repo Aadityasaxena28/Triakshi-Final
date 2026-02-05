@@ -17,6 +17,7 @@ import ContactUs from "./components/ContactUs";
 import GemstonesPage from "./components/gemstones-category-page";
 import Home from "./components/Home";
 import Mala_listing from "./components/Mala_listing";
+import new_mala from "./components/new_mala";
 import PaymentStatusPage from "./components/Payment-Status-Page";
 import PaymentsRefund from "./components/Payments_refund";
 import PrivacyPolicy from "./components/Privacypolicy";
@@ -24,7 +25,7 @@ import ProductDetailView from "./components/Product-view";
 import ProfilePage from "./components/Profile/profile_page";
 import { RequireAuth } from "./components/RequireAuth";
 import RudrakshPage from "./components/rudraksha-category";
-import ShippingPolicy from "./components/shippingpolicy";
+import ShippingPolicy from "./components/Shippingpolicy";
 import TermsConditions from "./components/Terms_conditions";
 import TribhuvaniPage from "./components/tribhuvani-page";
 import YantraPage from "./components/YantraPage";
@@ -62,6 +63,7 @@ const App = () => (
           <Route path="/books"element ={<BooksPage/>}/>
           <Route path="books-view/:id" element={<ProductDetailView category= "books"/>}/>
           <Route path="mala" element={<Mala_listing/>} />
+          <Route path="Mala" element={<new_mala/>} />
           <Route path="bracelet" element={<Mala_listing/>} />
           <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="mala"/>}/>
           <Route path="/payment-status/:id" element= {<PaymentStatusPage/>}/>
