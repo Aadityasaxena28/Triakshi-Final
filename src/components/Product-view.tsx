@@ -438,7 +438,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     const typeMap: Record<string, string> = {
       gemstone: `/gem-view/${productId}`,
       rudraksha: `/rudra-view/${productId}`,
-      mala: `/mala-view/${productId}`,
+      mala: `/mala-brace-view/${productId}`,
       bracelet: `/mala-brace-view/${productId}`,
       tribhuvani: `/tribhuvani-view/${productId}`,
       yantra: `/yantra-view/${productId}`,
