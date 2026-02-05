@@ -182,7 +182,7 @@ const NewArrivals = () => {
         <div className="text-center mb-3">
           <div className="flex items-center justify-center gap-1.5 mb-1">
             <Package className="w-4 h-4 text-orange-500 animate-pulse" />
-            <h2 className="text-xl sm:text-3xl font-bold relative inline-block">
+            <h2 className="text-xl sm:text-4xl font-bold relative inline-block">
               <span 
                 className="bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_200%]"
                 style={{
@@ -190,7 +190,7 @@ const NewArrivals = () => {
                   animation: 'gradient 3s ease infinite',
                 }}
               >
-                New Arrivals
+                Shivratri Special
               </span>
             </h2>
             <Package className="w-4 h-4 text-orange-500 animate-pulse" style={{ animationDelay: '0.5s' }} />

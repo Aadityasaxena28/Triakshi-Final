@@ -17,6 +17,7 @@ import ContactUs from "./components/ContactUs";
 import GemstonesPage from "./components/gemstones-category-page";
 import Home from "./components/Home";
 import Mala_listing from "./components/Mala_listing";
+import NewMala from "./components/NewMala";
 import PaymentStatusPage from "./components/Payment-Status-Page";
 import PaymentsRefund from "./components/Payments_refund";
 import PrivacyPolicy from "./components/Privacypolicy";
@@ -62,6 +63,8 @@ const App = () => (
           <Route path="/books"element ={<BooksPage/>}/>
           <Route path="books-view/:id" element={<ProductDetailView category= "books"/>}/>
           <Route path="mala" element={<Mala_listing/>} />
+          <Route path="Mala" element={<NewMala/>} />
+          <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="mala"/>}/>
           <Route path="bracelet" element={<Mala_listing/>} />
           <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="mala"/>}/>
           <Route path="/payment-status/:id" element= {<PaymentStatusPage/>}/>

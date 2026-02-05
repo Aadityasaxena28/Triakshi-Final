@@ -11,6 +11,7 @@ import FAQ from "./faq";
 import SpiritualToolsUnder999 from "./SpiritualToolsUnder999";
 import CategorySection from "./CategorySection";
 import HeroSection from "./HeroSection";
+import Topslide from "./Topslide";
 
 const Home = () => {
   const [isLoading, setLoading] = useState(true);
@@ -47,10 +48,11 @@ const Home = () => {
         <>
           <CategorySection />
           <Marquee />
-          <TopSlider />
+          <Topslide />
+          {/*<TopSlider />*/}
+          <NewArrivals />
           <SpiritualToolsUnder999/>
           <ProductSlider />
-          <NewArrivals />
           <NewCategories />
           <HeroSection />
           <Categories />

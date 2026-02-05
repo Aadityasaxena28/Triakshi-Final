@@ -173,7 +173,7 @@ const SpiritualToolsUnder999 = () => {
         <div className="text-center mb-3">
           <div className="flex items-center justify-center gap-1.5 mb-1">
             <Sparkles className="w-4 h-4 text-amber-600 animate-pulse" />
-            <h2 className="text-xl sm:text-2xl font-bold relative inline-block overflow-hidden">
+            <h2 className="text-xl sm:text-4xl font-bold relative inline-block overflow-hidden">
               <span className="relative bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-600 bg-clip-text text-transparent">
                 Spiritual need under 999 !
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-40 animate-shine"></span>
