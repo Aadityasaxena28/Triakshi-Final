@@ -8,6 +8,8 @@ import yantra from "@/assets/yantra.png";
 import tribh from "@/assets/tribhuvani incense.png";
 import braceletImg from "@/assets/bracelet-category.jpg";
 import icon from "@/assets/malaface.png";
+import pyriteImg from "@/assets/pyrite_1.jpg";
+
 interface Category {
   id: string;
   name: string;
@@ -31,6 +33,12 @@ const CategorySection = () => {
       name: "Gemstones",
       image: manik,
       path: "/gemstones",
+    },
+    {
+      id: "pyrite",
+      name: "Pyrite",
+      image: pyriteImg,
+      path: "/gemstones?type=pyrite",
     },
     {
       id: "mala",
