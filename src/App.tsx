@@ -25,7 +25,7 @@ import ProductDetailView from "./components/Product-view";
 import ProfilePage from "./components/Profile/profile_page";
 import { RequireAuth } from "./components/RequireAuth";
 import RudrakshPage from "./components/rudraksha-category";
-import ShippingPolicy from "./components/Shippingpolicy";
+import ShippingPolicy from "./components/shippingpolicy";
 import TermsConditions from "./components/Terms_conditions";
 import TribhuvaniPage from "./components/tribhuvani-page";
 import YantraPage from "./components/YantraPage";
