@@ -38,7 +38,7 @@ const CategorySection = () => {
       id: "pyrite",
       name: "Pyrite",
       image: pyriteImg,
-      path: "/gemstones?type=pyrite",
+      path: "gem-view/69847c7c9b2687cd8f7dddcf",
     },
     {
       id: "mala",
