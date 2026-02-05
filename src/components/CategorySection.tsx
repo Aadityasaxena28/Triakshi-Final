@@ -3,10 +3,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
 import pachmukhi from '@/assets/5 mukhi.png';
 import manik from "@/assets/Stones/Ruby.png";
-import health from '@/assets/health.png';
+//import health from '@/assets/health.png';
 import yantra from "@/assets/yantra.png";
 import tribh from "@/assets/tribhuvani incense.png";
 import braceletImg from "@/assets/bracelet-category.jpg";
+import icon from "@/assets/malaface.png";
 interface Category {
   id: string;
   name: string;
@@ -34,7 +35,7 @@ const CategorySection = () => {
     {
       id: "mala",
       name: "Mala",
-      image: health,
+      image: icon,
       path: "/Mala",
     },
     {
