@@ -5,20 +5,21 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from './General/Loader';
 import Product_card from './Product_card';
-import carer  from '@/assets/career (2).png';
+import carer from '@/assets/career (2).png';
 import love from '@/assets/love life.png';
 import health from '@/assets/health.png';
 import finance from '@/assets/finance.png';
-const new_mala = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+
+const NewMala = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [mobileFilterOpen, setMobileFilterOpen] = useState<boolean>(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const page = 1;
   const productCount = 40;
   const navigate = useNavigate();
 
-  // Fetch Mala products
+  // Fetch Mala products only
   const { data: malaResponse, isLoading: malaLoading, isError: malaError } = useQuery({
     queryKey: ["mala-products", selectedCategory, page, productCount],
     queryFn: () =>
@@ -30,8 +31,6 @@ const new_mala = () => {
       }),
     staleTime: 1000 * 60 * 2,
   });
-
-
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -56,7 +55,7 @@ const new_mala = () => {
     return cats;
   }, []);
 
-  // Merge and filter products
+  // Parse and filter mala products only
   const parseType = (t?: string) => {
     const [cat, cls] = String(t || "").toLowerCase().split(":").map(s => s.trim());
     return { cat, cls };
@@ -67,17 +66,18 @@ const new_mala = () => {
   const filteredProducts = useMemo(() => {
     const toArr = (resp: any) => (Array.isArray(resp) ? resp : resp?.products || resp?.data || []);
     const malaProducts = toArr(malaResponse);
-    //const bracProducts = toArr(bracResponse);
 
-    let merged: any[] = [...malaProducts, ...bracProducts];
+    let filtered: any[] = [...malaProducts];
 
+    // Filter by category
     if (normKey !== "all") {
-      merged = merged.filter(p => parseType(p?.type).cls === normKey);
+      filtered = filtered.filter(p => parseType(p?.type).cls === normKey);
     }
 
+    // Filter by search query
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      merged = merged.filter(p => {
+      filtered = filtered.filter(p => {
         const idStr = String(p?._id ?? p?.id ?? "");
         return (
           String(p?.name ?? "").toLowerCase().includes(q) ||
@@ -89,8 +89,8 @@ const new_mala = () => {
       });
     }
 
-    return merged;
-  }, [malaResponse, selectedCategory, searchQuery]);
+    return filtered;
+  }, [malaResponse, selectedCategory, searchQuery, normKey]);
 
   const handleViewDetails = (id: string) => {
     navigate(`/mala-brace-view/${id}`);
@@ -139,8 +139,8 @@ const new_mala = () => {
       {/* Header */}
       <div className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white py-6 sm:py-8 px-4 sm:px-6 shadow-lg">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2">Mala & Bracelet Collection</h1>
-          <p className="text-sm sm:text-base text-orange-50">Discover sacred prayer malas and bracelets crafted for your spiritual journey</p>
+          <h1 className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2">Mala Collection</h1>
+          <p className="text-sm sm:text-base text-orange-50">Discover sacred prayer malas crafted for your spiritual journey</p>
         </div>
       </div>
 
@@ -150,6 +150,7 @@ const new_mala = () => {
           <button
             onClick={scrollLeft}
             className="absolute left-0 z-10 bg-gradient-to-r from-white to-transparent h-full px-2 flex items-center"
+            aria-label="Scroll left"
           >
             <div className="bg-orange-400 rounded-full p-1.5 shadow-lg">
               <ChevronLeft className="w-4 h-4 text-white" />
@@ -221,6 +222,7 @@ const new_mala = () => {
           <button
             onClick={scrollRight}
             className="absolute right-0 z-10 bg-gradient-to-l from-white to-transparent h-full px-2 flex items-center"
+            aria-label="Scroll right"
           >
             <div className="bg-orange-400 rounded-full p-1.5 shadow-lg">
               <ChevronRight className="w-4 h-4 text-white" />
@@ -322,6 +324,7 @@ const new_mala = () => {
                 <button
                   onClick={() => setMobileFilterOpen(false)}
                   className="text-white hover:bg-white/20 rounded-lg p-2 transition-colors"
+                  aria-label="Close filters"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -435,4 +438,4 @@ const new_mala = () => {
   );
 };
 
-export default new_mala;
+export default NewMala;
