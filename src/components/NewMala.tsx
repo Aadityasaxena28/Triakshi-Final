@@ -65,19 +65,42 @@ const NewMala = () => {
 
   const filteredProducts = useMemo(() => {
     const toArr = (resp: any) => (Array.isArray(resp) ? resp : resp?.products || resp?.data || []);
-    const malaProducts = toArr(malaResponse);
+    let products = toArr(malaResponse);
 
-    let filtered: any[] = [...malaProducts];
+    // CRITICAL: Filter out any bracelets - only keep mala products
+    products = products.filter((p: any) => {
+      const category = String(p?.category ?? "").toLowerCase().trim();
+      const type = String(p?.type ?? "").toLowerCase();
+      const name = String(p?.name ?? "").toLowerCase();
+      
+      // Exclude if it's explicitly a bracelet
+      if (category.includes('bracelet') || 
+          category.includes('brace') ||
+          type.includes('bracelet') || 
+          type.includes('brace') ||
+          name.includes('bracelet')) {
+        return false;
+      }
+      
+      // Only include if it's explicitly mala or has mala-related keywords
+      return category === 'mala' || 
+             category.includes('mala') || 
+             type.includes('mala') ||
+             name.includes('mala');
+    });
 
-    // Filter by category
+    // Filter by selected category (career, love life, etc.)
     if (normKey !== "all") {
-      filtered = filtered.filter(p => parseType(p?.type).cls === normKey);
+      products = products.filter((p: any) => {
+        const parsed = parseType(p?.type);
+        return parsed.cls === normKey || parsed.cat === normKey;
+      });
     }
 
     // Filter by search query
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      filtered = filtered.filter(p => {
+      products = products.filter((p: any) => {
         const idStr = String(p?._id ?? p?.id ?? "");
         return (
           String(p?.name ?? "").toLowerCase().includes(q) ||
@@ -89,7 +112,7 @@ const NewMala = () => {
       });
     }
 
-    return filtered;
+    return products;
   }, [malaResponse, selectedCategory, searchQuery, normKey]);
 
   const handleViewDetails = (id: string) => {
@@ -396,7 +419,7 @@ const NewMala = () => {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-800">
                 {selectedCategory === 'all' 
-                  ? 'All Products'
+                  ? 'All Mala Products'
                   : categories.find(c => c.key === selectedCategory)?.label}
               </h2>
               <span className="text-gray-600">{filteredProducts.length} products</span>
@@ -421,7 +444,7 @@ const NewMala = () => {
                 <div className="text-gray-400 mb-4">
                   <Search className="w-12 sm:w-16 h-12 sm:h-16 mx-auto" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-700 mb-2">No products found</h3>
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-700 mb-2">No mala products found</h3>
                 <p className="text-sm sm:text-base text-gray-500">Try adjusting your filters or search query</p>
               </div>
             )}
