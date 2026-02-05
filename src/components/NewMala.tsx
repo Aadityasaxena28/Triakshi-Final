@@ -116,7 +116,7 @@ const NewMala = () => {
   }, [malaResponse, selectedCategory, searchQuery, normKey]);
 
   const handleViewDetails = (id: string) => {
-    navigate(`/mala-brace-view/${id}`);
+    navigate(`/mala-view/${id}`);
   };
 
   const handleCategoryClick = (catKey: string) => {
