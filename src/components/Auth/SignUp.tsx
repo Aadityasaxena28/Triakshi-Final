@@ -67,7 +67,7 @@ const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redi
     >
       <form onSubmit={handleSignup} id="auth-signupForm-el">
         <div className="auth-form-group">
-          <label htmlFor="auth-signupName" className="auth-label">
+          <label htmlFor="auth-signupName" className="auth-label" style={{ color: '#FFD700' }}>
             Full Name
           </label>
           <input
@@ -77,10 +77,11 @@ const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redi
             placeholder="Enter your full name"
             required
             disabled={isLoading}
+            style={{ color: '#FFD700' }}
           />
         </div>
         <div className="auth-form-group">
-          <label htmlFor="auth-signupEmail" className="auth-label">
+          <label htmlFor="auth-signupEmail" className="auth-label" style={{ color: '#FFD700' }}>
             Email
           </label>
           <input
@@ -90,10 +91,11 @@ const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redi
             placeholder="ravi32@gmail.com"
             required
             disabled={isLoading}
+            style={{ color: '#FFD700' }}
           />
         </div>
         <div className="auth-form-group">
-          <label htmlFor="auth-signupPhone" className="auth-label">
+          <label htmlFor="auth-signupPhone" className="auth-label" style={{ color: '#FFD700' }}>
             Phone Number
           </label>
           <div className="auth-phone-input">
@@ -104,6 +106,7 @@ const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redi
               id="auth-signupCountryCode"
               disabled={isLoading}
               required
+              style={{ color: '#FFD700' }}
             />
             <input
               type="tel"
@@ -113,12 +116,13 @@ const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redi
               required
               pattern="[0-9]{10}"
               disabled={isLoading}
+              style={{ color: '#FFD700' }}
             />
           </div>
         </div>
 
         <div className="auth-form-group">
-          <label htmlFor="auth-signupPassword" className="auth-label">
+          <label htmlFor="auth-signupPassword" className="auth-label" style={{ color: '#FFD700' }}>
             Password
           </label>
           <input
@@ -129,11 +133,12 @@ const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redi
             required
             minLength={6}
             disabled={isLoading}
+            style={{ color: '#FFD700' }}
           />
         </div>
 
         <div className="auth-form-group">
-          <label htmlFor="auth-confirmPassword" className="auth-label">
+          <label htmlFor="auth-confirmPassword" className="auth-label" style={{ color: '#FFD700' }}>
             Confirm Password
           </label>
           <input
@@ -144,6 +149,7 @@ const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redi
             required
             minLength={6}
             disabled={isLoading}
+            style={{ color: '#FFD700' }}
           />
         </div>
 
@@ -152,6 +158,7 @@ const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redi
           className="auth-submit-btn"
           id="auth-signupSubmit"
           disabled={isLoading}
+          style={{ color: '#FFD700' }}
         >
           {isLoading ? (
             <>
