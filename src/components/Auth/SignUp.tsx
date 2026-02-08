@@ -1,7 +1,6 @@
 import { Signup as SignupAPI } from "@/API/Auth";
 import { SignupData } from "@/DataTypes/Auth";
 import { toastError, toastSuccess } from "@/utlity/AlertSystem";
-import nban from "@/assets/newban.jpeg";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -64,7 +63,7 @@ const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redi
     <div
       id="auth-signupForm"
       className={`auth-form-content ${isActive ? "auth-active" : ""}`}
-      style={{ backgroundImage: `url(${nban})` }}
+      style={{ backgroundColor: 'transparent' }}
     >
       <form onSubmit={handleSignup} id="auth-signupForm-el">
         <div className="auth-form-group">
