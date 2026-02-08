@@ -637,7 +637,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                 </div>
 
                 <p className="text-xs text-gray-600 mb-3">
-                  Tax included • Free delivery over ₹299
+                  Tax included
                 </p>
 
                 <div className="flex flex-wrap gap-1.5">
@@ -742,21 +742,7 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
               </div>
             </div>
 
-            {/* Delivery Check */}
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0" />
-                <span className="text-xs sm:text-sm text-gray-600 font-medium">Delivery</span>
-                <input
-                  type="text"
-                  placeholder="Enter Pincode"
-                  className="flex-1 px-2.5 py-1.5 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-                <button className="px-3 py-1.5 text-xs sm:text-sm text-red-600 font-semibold hover:bg-red-50 rounded-md transition-colors">
-                  Check
-                </button>
-              </div>
-            </div>
+            
 
             {/* Exclusive Offer */}
             <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4">
@@ -774,14 +760,6 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
                     <p className="text-[10px] sm:text-xs text-gray-700 mb-1.5">
                       Complimentary 5 Mukhi certified Rudraksha
                     </p>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] sm:text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded">
-                        NAMASTE
-                      </span>
-                      <button className="text-[10px] sm:text-xs text-gray-600 hover:text-gray-900 font-medium">
-                        Copy
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
