@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Search, X, TrendingUp } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
-import { search } from "@/API/Product"; // Adjust path as needed
+import { search } from "@/API/Product";
 import pachmukhi from '@/assets/5 mukhi.png';
 import manik from "@/assets/Stones/Ruby.png";
 import yantra from "@/assets/yantra.png";
@@ -23,7 +23,6 @@ interface Product {
   category?: string;
   price?: number;
   image?: string;
-  // Add other product fields as needed
 }
 
 const CategorySection = () => {
@@ -36,6 +35,7 @@ const CategorySection = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
 
   const categories: Category[] = [
     {
@@ -82,29 +82,34 @@ const CategorySection = () => {
     },
   ];
 
-  // Trending searches (you can make this dynamic from your backend)
-  const trendingSearches = ["Rudraksha Mala", "Ruby Gemstone", "Yantra", "5 Mukhi"];
+  const trendingSearches = ["Rudraksha", "Ruby", "Yantra", "Mala"];
 
-  // Debounced search
+  // Debounced search with error handling
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
-      if (searchQuery.trim().length > 0) {
+      // Only search if query has at least 2 characters
+      if (searchQuery.trim().length >= 2) {
         setIsSearching(true);
+        setSearchError(null);
+        
         try {
           const results = await search(searchQuery);
           setSearchResults(results);
           setShowResults(true);
-        } catch (error) {
+        } catch (error: any) {
           console.error("Search error:", error);
+          setSearchError(error.message || "Search failed");
           setSearchResults([]);
+          setShowResults(true);
         } finally {
           setIsSearching(false);
         }
       } else {
         setSearchResults([]);
         setShowResults(false);
+        setSearchError(null);
       }
-    }, 300);
+    }, 400); // Increased debounce time to 400ms
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
@@ -116,7 +121,7 @@ const CategorySection = () => {
   const handleProductClick = (productId: string) => {
     setShowResults(false);
     setSearchQuery("");
-    navigate(`/product/${productId}`); // Adjust route as needed
+    navigate(`/product/${productId}`);
   };
 
   const handleTrendingClick = (query: string) => {
@@ -128,6 +133,7 @@ const CategorySection = () => {
     setSearchQuery("");
     setSearchResults([]);
     setShowResults(false);
+    setSearchError(null);
   };
 
   const scroll = (direction: "left" | "right") => {
@@ -188,9 +194,21 @@ const CategorySection = () => {
             </div>
 
             {/* Search Results Dropdown */}
-            {showResults && (
+            {showResults && searchQuery.length >= 2 && (
               <div className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-2xl shadow-2xl max-h-96 overflow-y-auto">
-                {searchResults.length > 0 ? (
+                {searchError ? (
+                  <div className="px-4 py-8 text-center">
+                    <div className="text-red-400 mb-2">
+                      <X className="w-12 h-12 mx-auto" />
+                    </div>
+                    <p className="text-red-600 text-sm font-medium mb-1">
+                      Search Error
+                    </p>
+                    <p className="text-gray-500 text-xs">
+                      {searchError}
+                    </p>
+                  </div>
+                ) : searchResults.length > 0 ? (
                   <div className="py-2">
                     <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">
                       Results ({searchResults.length})
@@ -206,11 +224,14 @@ const CategorySection = () => {
                             <img
                               src={product.image}
                               alt={product.name}
-                              className="w-12 h-12 object-cover rounded-lg"
+                              className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                              onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                              }}
                             />
                           )}
-                          <div className="flex-1">
-                            <h4 className="text-sm font-semibold text-gray-800">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-sm font-semibold text-gray-800 truncate">
                               {product.name}
                             </h4>
                             {product.category && (
@@ -220,7 +241,7 @@ const CategorySection = () => {
                             )}
                           </div>
                           {product.price && (
-                            <div className="text-sm font-bold text-amber-600">
+                            <div className="text-sm font-bold text-amber-600 flex-shrink-0">
                               ₹{product.price}
                             </div>
                           )}
@@ -236,8 +257,18 @@ const CategorySection = () => {
                     <p className="text-gray-500 text-sm">
                       No products found for "{searchQuery}"
                     </p>
+                    <p className="text-gray-400 text-xs mt-1">
+                      Try searching with different keywords
+                    </p>
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* Helper text for minimum characters */}
+            {searchQuery.length > 0 && searchQuery.length < 2 && isSearchFocused && (
+              <div className="mt-2 text-xs text-gray-400 text-center">
+                Type at least 2 characters to search
               </div>
             )}
 
