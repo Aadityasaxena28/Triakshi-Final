@@ -60,7 +60,7 @@ const Auth: React.FC<props> = ({ state }) => {
           <p>
             ✨ Jai Maa Pitambara ✨
             <br />
-             Login/SignUp to Proceed , You are just a step away...
+            <span style={{ color: '#FFD700' }}>Login/SignUp to Proceed , You are just a step away...</span>
           </p>
         </div>
 
