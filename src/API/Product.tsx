@@ -77,6 +77,25 @@ export async function getLatestProducts({category="",type="",count=10}) {
     throw new Error(error)
   }
 }
+export async function search(query: string): Promise<Product[]> {
+  try {
+    if (!query || query.trim().length === 0) {
+      return [];
+    }
+
+    const { data } = await api.get("/api/products/products/search", {
+      params: { query }
+    });
+
+    if (!data.success) {
+      throw new Error(data.error || "Search failed");
+    }
+
+    return data.results.map(toProduct);
+  } catch (error) {
+    throw new Error("Failed to search products: " + error);
+  }
+}
 
 
 export async function getDiscountedProducts({category="",type="",count=10, discount=10}){

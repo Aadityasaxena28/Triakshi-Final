@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef } from "react";
+import { ChevronLeft, ChevronRight, Search, X, TrendingUp } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { search } from "@/API/Product"; // Adjust path as needed
 import pachmukhi from '@/assets/5 mukhi.png';
 import manik from "@/assets/Stones/Ruby.png";
-//import health from '@/assets/health.png';
 import yantra from "@/assets/yantra.png";
 import tribh from "@/assets/tribhuvani incense.png";
 import braceletImg from "@/assets/bracelet-category.jpg";
@@ -13,13 +13,29 @@ import pyriteImg from "@/assets/pyrite_1.jpg";
 interface Category {
   id: string;
   name: string;
-  image: string; // URL to the category image
+  image: string;
   path: string;
+}
+
+interface Product {
+  _id: string;
+  name: string;
+  category?: string;
+  price?: number;
+  image?: string;
+  // Add other product fields as needed
 }
 
 const CategorySection = () => {
   const navigate = useNavigate();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   const categories: Category[] = [
     {
@@ -66,8 +82,52 @@ const CategorySection = () => {
     },
   ];
 
+  // Trending searches (you can make this dynamic from your backend)
+  const trendingSearches = ["Rudraksha Mala", "Ruby Gemstone", "Yantra", "5 Mukhi"];
+
+  // Debounced search
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(async () => {
+      if (searchQuery.trim().length > 0) {
+        setIsSearching(true);
+        try {
+          const results = await search(searchQuery);
+          setSearchResults(results);
+          setShowResults(true);
+        } catch (error) {
+          console.error("Search error:", error);
+          setSearchResults([]);
+        } finally {
+          setIsSearching(false);
+        }
+      } else {
+        setSearchResults([]);
+        setShowResults(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery]);
+
   const handleCategoryClick = (path: string) => {
     navigate(path);
+  };
+
+  const handleProductClick = (productId: string) => {
+    setShowResults(false);
+    setSearchQuery("");
+    navigate(`/product/${productId}`); // Adjust route as needed
+  };
+
+  const handleTrendingClick = (query: string) => {
+    setSearchQuery(query);
+    searchInputRef.current?.focus();
+  };
+
+  const clearSearch = () => {
+    setSearchQuery("");
+    setSearchResults([]);
+    setShowResults(false);
   };
 
   const scroll = (direction: "left" | "right") => {
@@ -81,16 +141,133 @@ const CategorySection = () => {
   };
 
   return (
-    <section className="w-full py-6 md:py-8 px-4 bg-white">
+    <section className="w-full py-6 md:py-8 px-4 bg-gradient-to-b from-amber-50/30 to-white">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
+        {/* Search Bar Section */}
+        <div className="mb-8 md:mb-10">
+          <div className="relative max-w-3xl mx-auto">
+            {/* Search Input */}
+            <div
+              className={`relative transition-all duration-300 ${
+                isSearchFocused ? "transform scale-[1.02]" : ""
+              }`}
+            >
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Search
+                  className={`w-5 h-5 transition-colors duration-200 ${
+                    isSearchFocused ? "text-amber-600" : "text-gray-400"
+                  }`}
+                />
+              </div>
+              
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
+                placeholder="Search for spiritual products..."
+                className="w-full pl-12 pr-12 py-4 text-base md:text-lg bg-white border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-amber-500 focus:ring-4 focus:ring-amber-100 transition-all duration-200 shadow-sm hover:shadow-md placeholder:text-gray-400"
+              />
 
-        {/* Scrollable Container with Navigation Buttons */}
+              {searchQuery && (
+                <button
+                  onClick={clearSearch}
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+
+              {isSearching && (
+                <div className="absolute inset-y-0 right-12 flex items-center pr-4">
+                  <div className="w-5 h-5 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
+            </div>
+
+            {/* Search Results Dropdown */}
+            {showResults && (
+              <div className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-2xl shadow-2xl max-h-96 overflow-y-auto">
+                {searchResults.length > 0 ? (
+                  <div className="py-2">
+                    <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                      Results ({searchResults.length})
+                    </div>
+                    {searchResults.map((product) => (
+                      <div
+                        key={product._id}
+                        onClick={() => handleProductClick(product._id)}
+                        className="px-4 py-3 hover:bg-amber-50 cursor-pointer transition-colors duration-150 border-b border-gray-100 last:border-b-0"
+                      >
+                        <div className="flex items-center gap-3">
+                          {product.image && (
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-12 h-12 object-cover rounded-lg"
+                            />
+                          )}
+                          <div className="flex-1">
+                            <h4 className="text-sm font-semibold text-gray-800">
+                              {product.name}
+                            </h4>
+                            {product.category && (
+                              <p className="text-xs text-gray-500 mt-0.5">
+                                {product.category}
+                              </p>
+                            )}
+                          </div>
+                          {product.price && (
+                            <div className="text-sm font-bold text-amber-600">
+                              ₹{product.price}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="px-4 py-8 text-center">
+                    <div className="text-gray-400 mb-2">
+                      <Search className="w-12 h-12 mx-auto opacity-50" />
+                    </div>
+                    <p className="text-gray-500 text-sm">
+                      No products found for "{searchQuery}"
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Trending Searches */}
+            {!searchQuery && !showResults && (
+              <div className="mt-4 flex flex-wrap items-center gap-2 justify-center">
+                <span className="text-xs font-medium text-gray-500 flex items-center gap-1">
+                  <TrendingUp className="w-3.5 h-3.5" />
+                  Trending:
+                </span>
+                {trendingSearches.map((trend, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleTrendingClick(trend)}
+                    className="px-3 py-1.5 text-xs font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-full transition-colors duration-200 border border-amber-200"
+                  >
+                    {trend}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Categories Section */}
         <div className="relative group">
-          {/* Left Scroll Button - Hidden on mobile, visible on desktop */}
+          {/* Left Scroll Button */}
           <button
             onClick={() => scroll("left")}
-            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:shadow-xl transition-all opacity-0 group-hover:opacity-100 border border-gray-200"
+            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:shadow-xl transition-all opacity-0 group-hover:opacity-100 border border-gray-200 hover:border-amber-300"
             aria-label="Scroll left"
           >
             <ChevronLeft className="w-5 h-5 text-gray-700" />
@@ -111,33 +288,32 @@ const CategorySection = () => {
                 onClick={() => handleCategoryClick(category.path)}
                 className="flex-shrink-0 cursor-pointer group/item"
               >
-                {/* Square Icon Container - Reduced to 25% (80px on mobile, 100px on desktop) */}
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-gray-100">
+                {/* Square Icon Container */}
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-gradient-to-br from-amber-100 to-orange-50">
                   <img
                     src={category.image}
                     alt={category.name}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      // Fallback to a gradient background if image fails to load
                       e.currentTarget.style.display = "none";
                       e.currentTarget.parentElement!.style.background =
-                        "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+                        "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)";
                     }}
                   />
                 </div>
 
                 {/* Category Name */}
-                <h3 className="mt-2 text-xs md:text-sm font-semibold text-center text-gray-800 w-20 md:w-24">
+                <h3 className="mt-2 text-xs md:text-sm font-semibold text-center text-gray-800 w-20 md:w-24 group-hover/item:text-amber-700 transition-colors">
                   {category.name}
                 </h3>
               </div>
             ))}
           </div>
 
-          {/* Right Scroll Button - Hidden on mobile, visible on desktop */}
+          {/* Right Scroll Button */}
           <button
             onClick={() => scroll("right")}
-            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:shadow-xl transition-all opacity-0 group-hover:opacity-100 border border-gray-200"
+            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:shadow-xl transition-all opacity-0 group-hover:opacity-100 border border-gray-200 hover:border-amber-300"
             aria-label="Scroll right"
           >
             <ChevronRight className="w-5 h-5 text-gray-700" />
