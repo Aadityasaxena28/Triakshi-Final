@@ -56,9 +56,9 @@ const Auth: React.FC<props> = ({ state }) => {
         backgroundColor: 'transparent'
       }}>
         <div className="auth-logo" id="auth-logo">
-          <h1 style={{ color: '#FFD700' }}>✦ TRIAKSHI GEMS ✦</h1>
+          <h1 style={{ color: '#FFD700' }}>त्रिakshi Gems</h1>
           <p>
-            <span style={{ color: '#FFD700' }}>✨ Jai Maa Pitambara ✨</span>
+            <span style={{ color: '#FFD700' }}>✨Jai Maa Pitambara✨</span>
             <br />
             <span style={{ color: '#FFD700' }}>Login/SignUp to Proceed , You are just a step away...</span>
           </p>
