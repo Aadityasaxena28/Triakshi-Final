@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import nban from "@/assets/newban.jpeg";
 import "./Auth.css";
 import ForgetPassword from "./ForgetPassword";
 import Login from "./Login";
@@ -49,7 +50,7 @@ const Auth: React.FC<props> = ({ state }) => {
   };
 
   return (
-    <div className="auth_body">
+    <div className="auth_body" style={{ backgroundImage: `url(${nban})` }}>
       <div className="auth-container" id="auth-container">
         <div className="auth-logo" id="auth-logo">
           <h1>✦ TRIAKSHI GEMS ✦</h1>
