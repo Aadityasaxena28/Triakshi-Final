@@ -67,7 +67,7 @@ const Login: React.FC<LoginProps> = ({ isActive, isLoading, setIsLoading, redire
     >
       <form onSubmit={handleLogin} id="auth-loginForm-el">
         <div className="auth-form-group">
-          <label htmlFor="auth-loginPhone" className="auth-label">
+          <label htmlFor="auth-loginPhone" className="auth-label" style={{ color: '#FFD700' }}>
             Phone Number
           </label>
           <div className="auth-phone-input">
@@ -77,6 +77,7 @@ const Login: React.FC<LoginProps> = ({ isActive, isLoading, setIsLoading, redire
               placeholder="+91"
               required
               id="auth-loginCountryCode"
+              style={{ color: '#FFD700' }}
             />
             <input
               type="tel"
@@ -86,12 +87,13 @@ const Login: React.FC<LoginProps> = ({ isActive, isLoading, setIsLoading, redire
               required
               pattern="[0-9]{10}"
               disabled={isLoading}
+              style={{ color: '#FFD700' }}
             />
           </div>
         </div>
 
         <div className="auth-form-group">
-          <label htmlFor="auth-loginPassword" className="auth-label">
+          <label htmlFor="auth-loginPassword" className="auth-label" style={{ color: '#FFD700' }}>
             Password
           </label>
           <input
@@ -101,6 +103,7 @@ const Login: React.FC<LoginProps> = ({ isActive, isLoading, setIsLoading, redire
             placeholder="Enter your password"
             required
             disabled={isLoading}
+            style={{ color: '#FFD700' }}
           />
         </div>
 
@@ -109,6 +112,7 @@ const Login: React.FC<LoginProps> = ({ isActive, isLoading, setIsLoading, redire
           className="auth-submit-btn"
           id="auth-loginSubmit"
           disabled={isLoading}
+          style={{ color: '#FFD700' }}
         >
           {isLoading ? (
             <>
@@ -126,6 +130,7 @@ const Login: React.FC<LoginProps> = ({ isActive, isLoading, setIsLoading, redire
             onClick={onForgetPassword}
             className="auth-text-btn"
             disabled={isLoading}
+            style={{ color: '#FFD700' }}
           >
             Forgot Password?
           </button>
