@@ -2,10 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Search, X, TrendingUp } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { search } from "@/API/Product";
+import { Product } from "@/DataTypes/product";
 import pachmukhi from '@/assets/5 mukhi.png';
 import manik from "@/assets/Stones/Ruby.png";
-import yantra from "@/assets/yantra.png";
-import tribh from "@/assets/tribhuvani incense.png";
+import yantra from '@/assets/yantra.png';
+import tribh from '@/assets/tribhuvani incense.png';
 import braceletImg from "@/assets/bracelet-category.jpg";
 import icon from "@/assets/malaface.png";
 import pyriteImg from "@/assets/pyrite_1.jpg";
@@ -15,14 +16,6 @@ interface Category {
   name: string;
   image: string;
   path: string;
-}
-
-interface Product {
-  _id: string;
-  name: string;
-  category?: string;
-  price?: number;
-  image?: string;
 }
 
 const CategorySection = () => {
@@ -215,8 +208,8 @@ const CategorySection = () => {
                     </div>
                     {searchResults.map((product) => (
                       <div
-                        key={product._id}
-                        onClick={() => handleProductClick(product._id)}
+                        key={product.id}
+                        onClick={() => handleProductClick(product.id)}
                         className="px-4 py-3 hover:bg-amber-50 cursor-pointer transition-colors duration-150 border-b border-gray-100 last:border-b-0"
                       >
                         <div className="flex items-center gap-3">
