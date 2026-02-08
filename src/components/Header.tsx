@@ -65,6 +65,7 @@ const Header: React.FC = () => {
       const count = cartData.items.reduce((sum: number, item: any) => sum + (item.qty || 0), 0);
       setCartItemCount(count);
     } else {
+      
       setCartItemCount(0);
     }
   }, [cartData]);

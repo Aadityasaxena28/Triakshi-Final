@@ -9,9 +9,10 @@ type SignupProps = {
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
   redirectTo: string;
+  handleAuthFollowups: ()=> void;
 };
 
-const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redirectTo }) => {
+const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redirectTo, handleAuthFollowups }) => {
   const Navigate = useNavigate();
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,6 +50,7 @@ const SignUp: React.FC<SignupProps> = ({ isActive, isLoading, setIsLoading, redi
 
         toastSuccess("Account created successfully!");
         Navigate(redirectTo, { replace: true });
+        await handleAuthFollowups();
       }
     } catch (err: any) {
       const errorMessage = typeof err === 'string' ? err : err?.message || "Signup failed.";

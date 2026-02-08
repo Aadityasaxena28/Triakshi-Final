@@ -30,6 +30,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ProductReviewSlider } from "./ProductReviewSlider";
 import Product_card from "./Product_card";
+import { getGuestCart, saveGuestCart } from "@/utlity/ProductF";
 
 type Props = {
   category?: "gemstone" | "rudraksha" | string;
@@ -278,10 +279,11 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
   const [relatedProducts, setRelatedProducts] = React.useState<Product[]>([]);
   const [loadingRelated, setLoadingRelated] = React.useState(false);
   const carouselRef = React.useRef<HTMLDivElement>(null);
-
+  
   const navigate = useNavigate();
   const BDK = import.meta.env.VITE_BUY_DRAFT_KEY;
   const theme = THEME[category] ?? THEME.gemstone;
+  const isLoggedIn: boolean = !!localStorage.getItem("tg_user");
 
   // Mock review count
   const reviewCount = 200;
@@ -401,9 +403,49 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
       toastError(error || "Failed To Add Product");
     }
   }
+  async function handleAddToCart(productId:string,quantity:number){
+    try {
+      // Require Login otherwise add it to guest cart
+      const param:CartItem= {
+        productId,
+        quantity
+      };
+      let isAdded = null;
+      console.log("hello",isLoggedIn);
+      if(isLoggedIn){
+        isAdded = await addToCart(param);
+      }
 
+      else{
+        const cart = getGuestCart();
+        const existing = cart.find(i=> i.productId===product.id);
+        if(existing){
+          existing.qty =quantity;
+        }
+        else{
+          const eff = Math.round(product.price * (1 - product.discount / 100));
+          cart.push({
+          productId: product.id,
+          qty: quantity,
+          "unitPrice": product.price,
+          "discount": product.discount,
+          "effectivePrice": eff,
+          "lineTotal": eff*quantity,
+          "name": product.name,
+          image:product.image,
+          "total_quantity": product.quantity
+          })
+        }
+        isAdded = saveGuestCart(cart);
+      }
+      if (isAdded){
+        toastSuccess("Item Successfully Added to cart")
+      }
+    } catch (error) {
+      toastError(error||"Failed To Add Product")
+    }
+  } ;
   function handleBuyNow(product: Product, qty: number) {
-    const isLoggedIn: boolean = !!localStorage.getItem("tg_user");
     if (!isLoggedIn) {
       navigate("/login");
     }

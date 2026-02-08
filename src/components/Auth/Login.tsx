@@ -10,9 +10,10 @@ type LoginProps = {
   setIsLoading: (loading: boolean) => void;
   redirectTo: string;
   onForgetPassword: () => void;
+  handleAuthFollowups: ()=> void;
 };
 
-const Login: React.FC<LoginProps> = ({ isActive, isLoading, setIsLoading, redirectTo, onForgetPassword }) => {
+const Login: React.FC<LoginProps> = ({ isActive, isLoading, setIsLoading, redirectTo, onForgetPassword,  handleAuthFollowups}) => {
   const Navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +42,7 @@ const Login: React.FC<LoginProps> = ({ isActive, isLoading, setIsLoading, redire
 
     try {
       const res = await LoginAPI(payload);
-
+      
       if (res?.success) {
         // Persist session
         if (res.token) localStorage.setItem("tg_token", res.token);
@@ -49,6 +50,7 @@ const Login: React.FC<LoginProps> = ({ isActive, isLoading, setIsLoading, redire
 
         toastSuccess("Logged in successfully!");
         Navigate(redirectTo, { replace: true });
+        await handleAuthFollowups();
       }
     } catch (err: any) {
       const errorMessage = typeof err === 'string' ? err : err?.message || "Login failed.";

@@ -24,7 +24,7 @@ export async function  getCartItems(){
     if(!data.success){
       throw new Error(data.error||"Failed To Fetch Cart Products");
     }
-    // console.log(data);
+    console.log(data);
     return data
   } 
   catch (error) {
@@ -35,13 +35,27 @@ export async function  getCartItems(){
 
 export async function updateCartItems(items: CartItem[]) {
   try {
-    console.log(items)
+    // console.log(items)
     const { data } = await api.post("/api/cart/update", { items });
     if (!data?.success) {
       throw new Error(data?.error || "Failed to update cart");
     }
     toastSuccess(data.message);
     return 
+  } catch (err: any) {
+    toastError(err?.message || "Failed to update cart");
+  }
+}
+
+export async function mergeGuestCartItems(items: CartItem[]) {
+  try {
+    // console.log(items)
+    const { data } = await api.patch("/api/cart/merge", { items });
+    if (!data?.success) {
+      throw new Error(data?.error || "Failed to update cart");
+    }
+    toastSuccess(data.message);
+    return ;
   } catch (err: any) {
     toastError(err?.message || "Failed to update cart");
   }

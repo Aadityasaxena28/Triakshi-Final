@@ -6,6 +6,9 @@ import "./Auth.css";
 import ForgetPassword from "./ForgetPassword";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import { QueryClient } from "@tanstack/react-query";
+import { clearGuestCart, getGuestCart } from "@/utlity/ProductF";
+import { mergeGuestCartItems, updateCartItems } from "@/API/Cart";
 
  
 type props = {
@@ -48,6 +51,28 @@ const Auth: React.FC<props> = ({ state }) => {
   const handleBackToLogin = () => {
     setActiveTab("login");
   };
+
+
+
+  const handleAuthSuccess = async () => {
+
+  // 2️⃣ Get guest cart
+  const guestItems = getGuestCart();
+
+  // 3️⃣ Merge ONLY if items exist
+  if (guestItems.length > 0) {
+    try {
+      await mergeGuestCartItems(guestItems);
+
+      clearGuestCart();
+    } catch (err) {
+      console.error("Cart merge failed", err);
+    }
+  }
+
+  // 4️⃣ Fetch server cart
+  // await QueryClient.invalidateQueries(["cart"]);
+};
 
   return (
     <div className="auth_body" style={{ backgroundImage: `url(${nban})` }}>
@@ -93,6 +118,7 @@ const Auth: React.FC<props> = ({ state }) => {
           setIsLoading={setIsLoginLoading}
           redirectTo={redirectTo}
           onForgetPassword={handleForgetPassword}
+          handleAuthFollowups={handleAuthSuccess}
         />
 
         <SignUp 
@@ -100,6 +126,8 @@ const Auth: React.FC<props> = ({ state }) => {
           isLoading={isSignupLoading}
           setIsLoading={setIsSignupLoading}
           redirectTo={redirectTo}
+          handleAuthFollowups={handleAuthSuccess}
+
         />
 
         <ForgetPassword

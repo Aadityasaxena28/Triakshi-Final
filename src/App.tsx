@@ -32,6 +32,7 @@ import YantraPage from "./components/YantraPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ReturnsRefundPolicy from "./components/returns_refund_policy";
+import Cart from "./components/Profile/Cart";
 
 const queryClient = new QueryClient();
  
@@ -104,6 +105,8 @@ const App = () => (
 
           
           </Route>
+
+          {/* <Route path="/temp-cart" element={<Cart/>}/> */}
 
           {/*---------------- Handle any invalid URL -----------------*/}
           <Route path="*" element={<NotFound />} />
