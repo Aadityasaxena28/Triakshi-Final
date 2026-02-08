@@ -1,6 +1,7 @@
 import { Login as LoginAPI } from "@/API/Auth";
 import { LoginData } from "@/DataTypes/Auth";
 import { toastError, toastSuccess } from "@/utlity/AlertSystem";
+import nban from "@/assets/newban.jpeg";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -63,6 +64,7 @@ const Login: React.FC<LoginProps> = ({ isActive, isLoading, setIsLoading, redire
     <div
       id="auth-loginForm"
       className={`auth-form-content ${isActive ? "auth-active" : ""}`}
+      style={{ backgroundImage: `url(${nban})` }}
     >
       <form onSubmit={handleLogin} id="auth-loginForm-el">
         <div className="auth-form-group">

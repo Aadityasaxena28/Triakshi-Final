@@ -51,7 +51,10 @@ const Auth: React.FC<props> = ({ state }) => {
 
   return (
     <div className="auth_body" style={{ backgroundImage: `url(${nban})` }}>
-      <div className="auth-container" id="auth-container">
+      <div className="auth-container" id="auth-container" style={{ 
+        backgroundImage: `url(${nban})`,
+        backgroundColor: 'transparent'
+      }}>
         <div className="auth-logo" id="auth-logo">
           <h1>✦ TRIAKSHI GEMS ✦</h1>
           <p>
