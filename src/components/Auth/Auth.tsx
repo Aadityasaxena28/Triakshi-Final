@@ -60,7 +60,7 @@ const Auth: React.FC<props> = ({ state }) => {
           <p>
             ✨ Jai Maa Pitambara ✨
             <br />
-            Welcome to <strong>Triakshi Gems</strong> – trusted for pure and authentic gemstones.
+             Login/SignUp to Proceed , You are just a step away...
           </p>
         </div>
 
