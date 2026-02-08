@@ -362,13 +362,30 @@ const Header: React.FC = () => {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden p-2 rounded-lg hover:bg-secondary transition-smooth"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="h-4 w-4 text-foreground" /> : <Menu className="h-4 w-4 text-foreground" />}
-            </button>
+            {/* Mobile Right Side - Cart Icon + Menu Button */}
+            <div className="lg:hidden flex items-center space-x-2">
+              {/* Mobile Cart Icon */}
+              <Button 
+                variant="outline" 
+                className="relative rounded-full p-2" 
+                onClick={() => navigate("/cart")}
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                    {cartItemCount}
+                  </span>
+                )}
+              </Button>
+
+              {/* Mobile Menu Button */}
+              <button
+                className="p-2 rounded-lg hover:bg-secondary transition-smooth"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {isMenuOpen ? <X className="h-4 w-4 text-foreground" /> : <Menu className="h-4 w-4 text-foreground" />}
+              </button>
+            </div>
           </div>
 
           {/* Mobile Menu */}
