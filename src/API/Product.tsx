@@ -1,7 +1,7 @@
 import { Product, RawProduct, toProduct } from "@/DataTypes/product";
 import { api } from "./Api";
 
-
+import axios from "axios";
 
 type GetProductsParams = {
   page?:number;
@@ -77,23 +77,39 @@ export async function getLatestProducts({category="",type="",count=10}) {
     throw new Error(error)
   }
 }
-export async function search(query: string): Promise<Product[]> {
+const API_BASE_URL = 'https://saxena-backend.onrender.com/api/products/products';
+export const search = async (query: string): Promise<Product[]> => {
   try {
-    if (!query || query.trim().length === 0) {
-      return [];
-    }
-
-    const { data } = await api.get("/api/products/products/search", {
-      params: { query }
+    const response = await axios.get(`${API_BASE_URL}/search`, {
+      params: { query },
+      timeout: 10000, // 10 second timeout
     });
 
-    if (!data.success) {
-      throw new Error(data.error || "Search failed");
+    // Extract the results array from the response
+    if (response.data.success && Array.isArray(response.data.results)) {
+      return response.data.results;
     }
 
-    return data.results.map(toProduct);
-  } catch (error) {
-    throw new Error("Failed to search products: " + error);
+    // If the response format is unexpected, return empty array
+    console.warn('Unexpected API response format:', response.data);
+    return [];
+  } catch (error: any) {
+    // Better error handling
+    if (error.code === 'ECONNABORTED') {
+      throw new Error('Search request timed out. Please try again.');
+    }
+    
+    if (error.response) {
+      // Server responded with error status
+      const message = error.response.data?.message || 'Server error occurred';
+      throw new Error(message);
+    } else if (error.request) {
+      // Request made but no response received
+      throw new Error('No response from server. Please check your connection.');
+    } else {
+      // Something else happened
+      throw new Error(error.message || 'An unexpected error occurred');
+    }
   }
 }
 
