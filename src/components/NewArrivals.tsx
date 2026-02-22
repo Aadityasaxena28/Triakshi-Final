@@ -190,7 +190,7 @@ const NewArrivals = () => {
                   animation: 'gradient 3s ease infinite',
                 }}
               >
-                Shivratri Special
+                New Arrivals 
               </span>
             </h2>
             <Package className="w-4 h-4 text-orange-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
@@ -351,7 +351,7 @@ const NewArrivals = () => {
                       onClick={() => handleViewDetails(product)}
                     >
                       <Eye className="h-2.5 w-2.5" />
-                    </Button>
+                    </Button> 
                   </div>
                 </div>
               </div>
