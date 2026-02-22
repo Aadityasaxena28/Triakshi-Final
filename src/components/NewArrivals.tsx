@@ -336,6 +336,7 @@ const NewArrivals = () => {
                     </div>
                   )}
 
+
                   {/* Buttons */}
                   <div className="flex space-x-1">
                     <Button 
