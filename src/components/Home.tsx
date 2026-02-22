@@ -51,6 +51,7 @@ const Home = () => {
           <Topslide />
           <SpiritualToolsUnder999/>
           {/*<TopSlider />*/}
+          
           <NewArrivals />
           <ProductSlider />
           <NewCategories />
