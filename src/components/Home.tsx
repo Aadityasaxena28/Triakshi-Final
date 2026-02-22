@@ -49,9 +49,9 @@ const Home = () => {
           <CategorySection />
           <Marquee />
           <Topslide />
+          <SpiritualToolsUnder999/>
           {/*<TopSlider />*/}
           <NewArrivals />
-          <SpiritualToolsUnder999/>
           <ProductSlider />
           <NewCategories />
           <HeroSection />
