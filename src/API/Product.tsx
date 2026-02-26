@@ -1,7 +1,6 @@
 import { Product, RawProduct, toProduct } from "@/DataTypes/product";
 import { api } from "./Api";
 
-import axios from "axios";
 
 type GetProductsParams = {
   page?:number;
@@ -77,21 +76,22 @@ export async function getLatestProducts({category="",type="",count=10}) {
     throw new Error(error)
   }
 }
-const API_BASE_URL = 'https://saxena-backend.onrender.com/api/products/products';
+
+
 export const search = async (query: string): Promise<Product[]> => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/search`, {
-      params: { query },
-      timeout: 10000, // 10 second timeout
+    const response = await api.get(`/api/products/productsearch`, {
+      params: { query }
     });
 
+    // console.log(response.data);
     // Extract the results array from the response
     if (response.data.success && Array.isArray(response.data.results)) {
       return response.data.results;
     }
 
     // If the response format is unexpected, return empty array
-    console.warn('Unexpected API response format:', response.data);
+    // console.warn('Unexpected API response format:', response.data);
     return [];
   } catch (error: any) {
     // Better error handling
