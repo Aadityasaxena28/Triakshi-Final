@@ -1,16 +1,12 @@
-import { addToCart } from '@/API/Cart';
 import { getProducts } from '@/API/Product';
 import { Button } from '@/components/ui/button';
-import { CartItem } from '@/DataTypes/CartData';
 import { Product } from '@/DataTypes/product';
-import { toastError, toastSuccess } from '@/utlity/AlertSystem';
 import { useQuery } from '@tanstack/react-query';
 import {
   ChevronLeft,
   ChevronRight,
   Eye,
   Heart,
-  ShoppingCart,
   Sparkles,
   Star
 } from 'lucide-react';
@@ -85,21 +81,6 @@ const SpiritualToolsUnder999 = () => {
       navigate(`/rudra-view/${product.id}`);
     } else {
       navigate(`/rudra-view/${product.id}`);
-    }
-  };
-
-  const handleAddToCart = async (product: Product) => {
-    try {
-      const param: CartItem = {
-        productId: product.id,
-        quantity: 1
-      };
-      const isAdded = await addToCart(param);
-      if (isAdded) {
-        toastSuccess("Item Successfully Added to cart");
-      }
-    } catch (error) {
-      toastError(error || "Failed To Add Product");
     }
   };
 
@@ -366,21 +347,14 @@ const SpiritualToolsUnder999 = () => {
                     </div>
                   )}
 
-                  {/* Buttons */}
+                  {/* View Details Button */}
                   <div className="flex space-x-1">
-                    <Button 
-                      className="flex-1 h-7 text-[10px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold shadow-lg"
-                      onClick={() => handleAddToCart(product)}
-                      disabled={product.availability === 'out-of-stock'}
-                    >
-                      <ShoppingCart className="mr-0.5 h-2.5 w-2.5" /> Add
-                    </Button>
                     <Button
                       variant="outline"
-                      className="h-7 px-2 text-[10px] border-2 border-amber-500 text-amber-600 hover:bg-amber-500 hover:text-white font-semibold transition-all"
+                      className="w-full h-7 px-2 text-[10px] border-2 border-amber-500 text-amber-600 hover:bg-amber-500 hover:text-white font-semibold transition-all"
                       onClick={() => handleViewDetails(product)}
                     >
-                      <Eye className="h-2.5 w-2.5" />
+                      <Eye className="mr-0.5 h-2.5 w-2.5" /> View Details
                     </Button>
                   </div>
                 </div>

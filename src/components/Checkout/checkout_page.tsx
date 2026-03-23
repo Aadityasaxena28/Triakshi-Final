@@ -130,7 +130,7 @@ export default function CheckoutPage() {
 
     // Free shipping for both buy-now and cart
     const shippingCost = items.length > 0 ? 0 : 0;
-    const taxAmount = Math.round(sub * 0.03); // 3% GST
+    const taxAmount = Math.round(sub * 0.0); // 3% GST
     const grand = sub + shippingCost + taxAmount;
 
     return { subTotal: sub, discountTotal: disc, shipping: shippingCost, tax: taxAmount, grandTotal: grand };
