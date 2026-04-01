@@ -67,7 +67,7 @@ const App = () => (
           <Route path="Mala" element={<NewMala/>} />
           <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="mala"/>}/>
           <Route path="bracelet" element={<Mala_listing/>} />
-          <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="mala"/>}/>
+          <Route path ="/mala-brace-view/:id" element={<ProductDetailView category="bracelet"/>}/>
           <Route path="/payment-status/:id" element= {<PaymentStatusPage/>}/>
           <Route path="/tribhuvani" element ={<TribhuvaniPage/>}/>
           <Route path ="/tribhuvani-view/:id" element= {<ProductDetailView category="tribhuvani"/>}/>

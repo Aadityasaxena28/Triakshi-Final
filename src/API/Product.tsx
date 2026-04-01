@@ -87,7 +87,7 @@ export const search = async (query: string): Promise<Product[]> => {
     // console.log(response.data);
     // Extract the results array from the response
     if (response.data.success && Array.isArray(response.data.results)) {
-      return response.data.results;
+      return response.data.results.map(p=>toProduct(p));
     }
 
     // If the response format is unexpected, return empty array

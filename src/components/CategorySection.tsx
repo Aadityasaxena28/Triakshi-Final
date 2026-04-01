@@ -10,6 +10,7 @@ import tribh from '@/assets/tribhuvani incense.png';
 import braceletImg from "@/assets/bracelet-category.jpg";
 import icon from "@/assets/malaface.png";
 import pyriteImg from "@/assets/pyrite_1.jpg";
+import { getProductRelativeLink } from "@/lib/ProductToViewMapping";
 
 interface Category {
   id: string;
@@ -111,10 +112,11 @@ const CategorySection = () => {
     navigate(path);
   };
 
-  const handleProductClick = (productId: string) => {
+  const handleProductClick = (product:Product) => {
     setShowResults(false);
     setSearchQuery("");
-    navigate(`/product/${productId}`);
+    const relPath = getProductRelativeLink(product)
+    navigate(relPath);
   };
 
   const handleTrendingClick = (query: string) => {
@@ -209,7 +211,7 @@ const CategorySection = () => {
                     {searchResults.map((product) => (
                       <div
                         key={product.id}
-                        onClick={() => handleProductClick(product.id)}
+                        onClick={() => handleProductClick(product)}
                         className="px-4 py-3 hover:bg-amber-50 cursor-pointer transition-colors duration-150 border-b border-gray-100 last:border-b-0"
                       >
                         <div className="flex items-center gap-3">
