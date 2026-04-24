@@ -434,4 +434,5 @@ const NewCategories = () => {
   );
 };
 
+
 export default NewCategories;
