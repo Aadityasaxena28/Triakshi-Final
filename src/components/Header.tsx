@@ -55,7 +55,7 @@ const Header: React.FC = () => {
       }
     },
     enabled: isLoggedIn,
-    refetchInterval: 1000*60, // Refetch every 5 seconds
+    refetchInterval: 1000 * 60,
     staleTime: 3000,
   });
 
@@ -65,7 +65,6 @@ const Header: React.FC = () => {
       const count = cartData.items.reduce((sum: number, item: any) => sum + (item.qty || 0), 0);
       setCartItemCount(count);
     } else {
-      
       setCartItemCount(0);
     }
   }, [cartData]);
@@ -103,15 +102,13 @@ const Header: React.FC = () => {
     { name: "Yantra", path: "/yantra" },
     { name: "Tribhuvani", path: "/tribhuvani" },
     { name: "Mala & Bracelets", path: "/mala" },
-    { name: "Books",path:"/books"},
-    //{ name: "Spirtual products",path:"/"}
+    { name: "Books", path: "/books" },
   ];
 
   const calculatorItems: MenuItem[] = [
     { name: "Life Stone Calculator", path: "/life-calculator" },
     { name: "Health Stone Calculator", path: "/health-stone-calculator" },
     { name: "Lucky Stone Calculator", path: "/lucky-stone-calculator" },
-    //{ name: "Rudraksh Calculator", path: "/health-calculator" },
     { name: "GemStone Report", path: "/report" },
   ];
 
@@ -129,6 +126,11 @@ const Header: React.FC = () => {
   const handleAuthClick = (): void => {
     if (!isLoggedIn) navigate("/login");
     else setIsProfileOpen(!isProfileOpen);
+  };
+
+  // ✅ CHANGE: Dedicated cart handler — always navigates to /cart, never to login
+  const handleCartClick = (): void => {
+    navigate("/cart");
   };
 
   const handleLogout = (): void => {
@@ -313,8 +315,8 @@ const Header: React.FC = () => {
                 NEW
               </Button>
 
-              {/* Cart Button */}
-              <Button variant="outline" className="relative rounded-full p-2" onClick={() => navigate("/cart")}>
+              {/* ✅ CHANGE: Desktop cart button now uses handleCartClick */}
+              <Button variant="outline" className="relative rounded-full p-2" onClick={handleCartClick}>
                 <ShoppingCart className="h-5 w-5" />
                 {cartItemCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
@@ -364,11 +366,11 @@ const Header: React.FC = () => {
 
             {/* Mobile Right Side - Cart Icon + Menu Button */}
             <div className="lg:hidden flex items-center space-x-2">
-              {/* Mobile Cart Icon */}
-              <Button 
-                variant="outline" 
-                className="relative rounded-full p-2" 
-                onClick={() => navigate("/cart")}
+              {/* ✅ CHANGE: Mobile cart icon now uses handleCartClick */}
+              <Button
+                variant="outline"
+                className="relative rounded-full p-2"
+                onClick={handleCartClick}
               >
                 <ShoppingCart className="h-5 w-5" />
                 {cartItemCount > 0 && (
@@ -403,11 +405,12 @@ const Header: React.FC = () => {
                   >
                     NEW
                   </Button>
+                  {/* ✅ CHANGE: Mobile menu cart button now uses handleCartClick */}
                   <Button
                     variant="outline"
                     className="relative rounded-xl flex-1 text-sm"
                     onClick={() => {
-                      navigate("/cart");
+                      handleCartClick();
                       closeMobileMenu();
                     }}
                   >
@@ -419,7 +422,6 @@ const Header: React.FC = () => {
                     )}
                   </Button>
                 </div>
-
 
                 {/* Menu Items */}
                 {menuItems.map((item) => (
@@ -543,5 +545,5 @@ const Header: React.FC = () => {
     </>
   );
 };
- 
+
 export default Header;
