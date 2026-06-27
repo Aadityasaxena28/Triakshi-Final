@@ -127,7 +127,7 @@ const Header: React.FC = () => {
   ];
 
   const handleAuthClick = (): void => {
-    if (!isLoggedIn) navigate("/login");
+    if (!isLoggedIn) navigate("/cart");
     else setIsProfileOpen(!isProfileOpen);
   };
 
