@@ -11,7 +11,7 @@ import { getGuestCart } from "@/utlity/ProductF";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const isLoggedIn = !!localStorage.getItem("tg_token");
+  //const isLoggedIn = !!localStorage.getItem("tg_token");
 
   /* ---------------- STATE ---------------- */
   const [cartItems, setCartItems] = useState<CartItemInfo[]>(getGuestCart());
