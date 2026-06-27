@@ -28,9 +28,9 @@ const Cart = () => {
     isError,
     error,
   } = useQuery({
-    queryKey: ["cart-items", isLoggedIn],
+    queryKey: ["cart-items"],
     queryFn: fetchCartItems,
-    enabled: isLoggedIn,
+    //enabled: isLoggedIn,
   });
 
   /* ---------------- EFFECTS ---------------- */
@@ -54,11 +54,11 @@ const Cart = () => {
   // Update backend cart on unmount
   useEffect(() => {
     return () => {
-      if (isLoggedIn && cartModifiedRef.current) {
+      if (cartModifiedRef.current) {
         updateCartOnUnmount();
       }
     };
-  }, [isLoggedIn]);
+  }, []);
 
   /* ---------------- HELPERS ---------------- */
 
@@ -109,7 +109,7 @@ const Cart = () => {
 
   const handleBuyNow = async () => {
     try {
-      if (isLoggedIn && cartModifiedRef.current) {
+      if (cartModifiedRef.current) {
         const payload = cartItems.map(item => ({
           productId: item.productId,
           qty: item.qty ?? 0,
