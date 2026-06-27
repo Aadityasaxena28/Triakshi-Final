@@ -18,7 +18,6 @@ const Header: React.FC = () => {
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
   const [cartItemCount, setCartItemCount] = useState<number>(0);
 
-  // Mobile-specific states
   const [mobileCalcOpen, setMobileCalcOpen] = useState<boolean>(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState<boolean>(false);
   const [mobileProfileOpen, setMobileProfileOpen] = useState<boolean>(false);
@@ -41,7 +40,6 @@ const Header: React.FC = () => {
     retry: false,
   });
 
-  // Fetch cart items count using React Query
   const { data: cartData } = useQuery({
     queryKey: ["cart-count"],
     queryFn: async () => {
@@ -59,7 +57,6 @@ const Header: React.FC = () => {
     staleTime: 3000,
   });
 
-  // Update cart count when data changes
   useEffect(() => {
     if (cartData?.success && cartData?.items) {
       const count = cartData.items.reduce((sum: number, item: any) => sum + (item.qty || 0), 0);
@@ -128,7 +125,7 @@ const Header: React.FC = () => {
     else setIsProfileOpen(!isProfileOpen);
   };
 
-  // ✅ CHANGE: Dedicated cart handler — always navigates to /cart, never to login
+  // ✅ ADDED: only change — cart always goes to /cart regardless of login state
   const handleCartClick = (): void => {
     navigate("/cart");
   };
@@ -315,7 +312,7 @@ const Header: React.FC = () => {
                 NEW
               </Button>
 
-              {/* ✅ CHANGE: Desktop cart button now uses handleCartClick */}
+              {/* ✅ CHANGED: onClick only — was navigate("/cart"), now handleCartClick */}
               <Button variant="outline" className="relative rounded-full p-2" onClick={handleCartClick}>
                 <ShoppingCart className="h-5 w-5" />
                 {cartItemCount > 0 && (
@@ -366,7 +363,7 @@ const Header: React.FC = () => {
 
             {/* Mobile Right Side - Cart Icon + Menu Button */}
             <div className="lg:hidden flex items-center space-x-2">
-              {/* ✅ CHANGE: Mobile cart icon now uses handleCartClick */}
+              {/* ✅ CHANGED: onClick only — was navigate("/cart"), now handleCartClick */}
               <Button
                 variant="outline"
                 className="relative rounded-full p-2"
@@ -405,7 +402,7 @@ const Header: React.FC = () => {
                   >
                     NEW
                   </Button>
-                  {/* ✅ CHANGE: Mobile menu cart button now uses handleCartClick */}
+                  {/* ✅ CHANGED: onClick only — was navigate("/cart"), now handleCartClick */}
                   <Button
                     variant="outline"
                     className="relative rounded-xl flex-1 text-sm"
