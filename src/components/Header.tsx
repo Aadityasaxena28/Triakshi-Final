@@ -116,7 +116,7 @@ const Header: React.FC = () => {
 
   const profileItems = [
     { name: "Profile", path: "/profile", icon: UserCircle },
-    { name: "Cart", path: "/cart", icon: ShoppingCart },
+    { name: "Cart", path: "/test-page", icon: ShoppingCart }, // ✅ updated path
     { name: "Refer & Earn", path: "/refer-earn", icon: Share2 },
   ];
 
@@ -125,9 +125,9 @@ const Header: React.FC = () => {
     else setIsProfileOpen(!isProfileOpen);
   };
 
-  // ✅ ADDED: only change — cart always goes to /cart regardless of login state
+  // ✅ ONLY CHANGE: navigate to /test-page instead of /cart
   const handleCartClick = (): void => {
-    navigate("/cart");
+    navigate("/test-page");
   };
 
   const handleLogout = (): void => {
@@ -312,7 +312,7 @@ const Header: React.FC = () => {
                 NEW
               </Button>
 
-              {/* ✅ CHANGED: onClick only — was navigate("/cart"), now handleCartClick */}
+              {/* ✅ CHANGED: onClick uses handleCartClick → /test-page */}
               <Button variant="outline" className="relative rounded-full p-2" onClick={handleCartClick}>
                 <ShoppingCart className="h-5 w-5" />
                 {cartItemCount > 0 && (
@@ -363,7 +363,7 @@ const Header: React.FC = () => {
 
             {/* Mobile Right Side - Cart Icon + Menu Button */}
             <div className="lg:hidden flex items-center space-x-2">
-              {/* ✅ CHANGED: onClick only — was navigate("/cart"), now handleCartClick */}
+              {/* ✅ CHANGED: onClick uses handleCartClick → /test-page */}
               <Button
                 variant="outline"
                 className="relative rounded-full p-2"
@@ -402,7 +402,7 @@ const Header: React.FC = () => {
                   >
                     NEW
                   </Button>
-                  {/* ✅ CHANGED: onClick only — was navigate("/cart"), now handleCartClick */}
+                  {/* ✅ CHANGED: onClick uses handleCartClick → /test-page */}
                   <Button
                     variant="outline"
                     className="relative rounded-xl flex-1 text-sm"
@@ -482,7 +482,7 @@ const Header: React.FC = () => {
                   )}
                 </div>
 
-                {/* Profile Section for Logged In Users */}
+                {/* Profile Section */}
                 {isLoggedIn ? (
                   <div className="border-t border-border/20 pt-2">
                     <button
