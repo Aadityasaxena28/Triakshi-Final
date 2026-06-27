@@ -1,8 +1,8 @@
 import { Bill, createBill } from "@/API/OrderAndBill";
-import { getProfile } from "@/API/Profile";
+import { getProfile, fetchGuestUser  } from "@/API/Profile";
 import { CheckoutDraft } from "@/DataTypes/Checkout";
 import { UserProfile } from "@/DataTypes/Profile";
-import { toastError } from "@/utlity/AlertSystem";
+import { toastError, toastInfo } from "@/utlity/AlertSystem";
 import { getWithExpiry } from "@/utlity/Storage";
 import { ChevronRight, XCircle } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -19,6 +19,7 @@ export default function CheckoutPage() {
 
   const BDK = import.meta.env.VITE_BUY_DRAFT_KEY;
   const baseUrl = import.meta.env.VITE_api_url || "http://localhost:5000";
+  const isLoggedIn = !!localStorage.getItem("tg_token");
 
   const [currentStep, setCurrentStep] = useState<"contact" | "address" | "payment">("contact");
   const [loading, setLoading] = useState(false);
@@ -62,8 +63,11 @@ export default function CheckoutPage() {
 
     async function loadProfile() {
       try {
-        setUserLoading(true);
-        setUserError(null);
+        if (!isLoggedIn) {
+          setUserLoading(false);
+          setUserError(null);
+          return;
+        }
 
         const profile: UserProfile = await getProfile();
         if (!alive || !profile) return;
@@ -91,7 +95,7 @@ export default function CheckoutPage() {
     return () => {
       alive = false;
     };
-  }, []);
+  }, [isLoggedIn]);
 
   // ====== Load items from either Buy-Now Draft OR Cart State ======
   useEffect(() => {
@@ -139,6 +143,45 @@ export default function CheckoutPage() {
   }, [draft]);
 
   // ====== Step handlers ======
+  const fetchAndLockGuestUser = async () => {
+  const username = fullName.trim();
+
+  if (!username) {
+    toastError("Please enter your name.");
+    return false;
+  }
+
+  if (!/^\d{10}$/.test(mobileNumber)) {
+    toastError("Please enter a valid 10-digit mobile number.");
+    return false;
+  }
+
+  if (!/^\S+@\S+\.\S+$/.test(email)) {
+    toastError("Please enter a valid email.");
+    return false;
+  }
+
+  try {
+    const payload = await fetchGuestUser({
+      username,
+      phonenumber: mobileNumber,
+      email: email.trim(),
+    });
+    //console.log('Guest User  info',payload);
+    if (!payload?.success || !payload?.user || !payload?.token) {
+      toastError(payload?.message || "Failed to verify guest user.");
+      return false;
+    }
+    toastInfo(payload?.message);
+    localStorage.setItem("tg_guest_user", String(payload.user));
+    
+    return true;
+  } catch (err: any) {
+    console.error("Guest user fetch failed", err);
+    toastError(err?.message || String(err) || "Failed to verify guest user.");
+    return false;
+  }
+};
   const handleAddressContinue = async () => {
     // Validate address fields
     const errors: Record<string, boolean> = {};
@@ -161,8 +204,16 @@ export default function CheckoutPage() {
     }
 
     setLoading(true);
-
+    
     try {
+      if (!isLoggedIn) {
+        const guestLocked = await fetchAndLockGuestUser();
+
+        if (!guestLocked) {
+          setLoading(false);
+          return;
+        }
+      }
       const payload:Bill = {
         contact: { mobileNumber: `+91${mobileNumber}`, email, receiveUpdates },
         address: { fullName, addressLine1, addressLine2, city, state, pincode },
@@ -177,11 +228,16 @@ export default function CheckoutPage() {
         meta: { source },
       };
 
-
+      const user = isLoggedIn? localStorage.getItem('tg_user'):localStorage.getItem('tg_guest_user');
+      if (!user) {
+        toastError("User not found for billing.");
+        setLoading(false);
+        return;
+      }
       // const createJson = await createRes.json();
-      const createRes =  await createBill(payload);
+      const createRes =  await createBill(payload, user);
 
-      const billId =createRes.billId;
+      const billId = createRes.billId;
       // console.log(billId)
       if (!billId) {
         throw new Error('Missing billId from server');
@@ -232,47 +288,46 @@ export default function CheckoutPage() {
     }
   };
 
-  const handlePaymentComplete = async () => {
-    if (!paymentMethod) {
-      alert("Please select a payment method");
-      return;
-    }
+  // const handlePaymentComplete = async () => {
+  //   if (!paymentMethod) {
+  //     alert("Please select a payment method");
+  //     return;
+  //   }
 
-    if (!draft?.items?.length) {
-      alert("Your order is empty.");
-      return;
-    }
+  //   if (!draft?.items?.length) {
+  //     alert("Your order is empty.");
+  //     return;
+  //   }
 
-    // Payload for backend
-    const payload = {
-      contact: { mobileNumber: `+91${mobileNumber}`, email, receiveUpdates },
-      address: { fullName, addressLine1, addressLine2, city, state, pincode },
-      payment: { method: paymentMethod },
-      order: {
-        items: draft.items,
-        subTotal,
-        discountTotal,
-        shipping,
-        tax,
-        grandTotal,
-      },
-      meta: { source }, // "buy-now" or "cart"
-    };
+  //   // Payload for backend
+  //   const payload = {
+  //     contact: { mobileNumber: `+91${mobileNumber}`, email, receiveUpdates },
+  //     address: { fullName, addressLine1, addressLine2, city, state, pincode },
+  //     payment: { method: paymentMethod },
+  //     order: {
+  //       items: draft.items,
+  //       subTotal,
+  //       discountTotal,
+  //       shipping,
+  //       tax,
+  //       grandTotal,
+  //     },
+  //     meta: { source }, // "buy-now" or "cart"
+  //   };
 
-    console.log("PLACE ORDER payload ->", payload);
+  //   console.log("PLACE ORDER payload ->", payload);
 
-    // TODO: Send to backend API
-    // const response = await placeOrder(payload);
+  //   // const response = await placeOrder(payload);
 
-    // On success:
-    if (source === "buy-now") {
-      sessionStorage.removeItem(BDK); // Clear buy-now draft
-    }
-    // If from cart, you might want to call a clear cart API
+  //   // On success:
+  //   if (source === "buy-now") {
+  //     sessionStorage.removeItem(BDK); // Clear buy-now draft
+  //   }
+  //   // If from cart, you might want to call a clear cart API
 
-    alert("Order placed successfully!");
-    navigate("/home");
-  };
+  //   alert("Order placed successfully!");
+  //   navigate("/home");
+  // };
 
   // ====== Empty/Invalid draft UI ======
   if (!draft || !draft.items || draft.items.length === 0) {

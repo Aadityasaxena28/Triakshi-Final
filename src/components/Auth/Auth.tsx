@@ -57,10 +57,10 @@ const Auth: React.FC<props> = ({ state }) => {
 
   const handleAuthSuccess = async () => {
 
-  // 2️⃣ Get guest cart
+  // Get guest cart
   const guestItems = getGuestCart();
 
-  // 3️⃣ Merge ONLY if items exist
+  // Merge ONLY if items exist
   if (guestItems.length > 0) {
     try {
       await mergeGuestCartItems(guestItems);
@@ -71,7 +71,7 @@ const Auth: React.FC<props> = ({ state }) => {
     }
   }
 
-  // 4️⃣ Fetch server cart
+  // Fetch server cart
   // await QueryClient.invalidateQueries(["cart"]);
 };
 

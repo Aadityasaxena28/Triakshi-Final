@@ -7,14 +7,14 @@ import { Minus, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../General/Loader";
-import { getGuestCart } from "@/utlity/ProductF";
+import { getGuestCart, saveGuestCart  } from "@/utlity/ProductF";
 
-const Cart = () => {
+const Cart2 = () => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("tg_token");
 
   /* ---------------- STATE ---------------- */
-  const [cartItems, setCartItems] = useState<CartItemInfo[]>(getGuestCart());
+  const [cartItems, setCartItems] = useState<CartItemInfo[]>(isLoggedIn ? [] : getGuestCart());
 
   /* ---------------- REFS ---------------- */
   const cartModifiedRef = useRef(false);
@@ -35,16 +35,26 @@ const Cart = () => {
 
   /* ---------------- EFFECTS ---------------- */
 
-  // Sync backend cart → state (ONLY when logged in)
-  useEffect(() => {
+// Sync cart based on login state
+useEffect(() => {
+  if (isLoggedIn) {
+    // Logged-in user: backend cart
     if (data?.success && Array.isArray(data.items)) {
       setCartItems(data.items);
-      console.log(data.items);
+
       // Deep copy to prevent mutation bugs
       initialCartRef.current = JSON.parse(JSON.stringify(data.items));
       currentCartRef.current = data.items;
     }
-  }, [data]);
+  } else {
+    // Guest user: localStorage cart
+    const guestCart = getGuestCart();
+
+    setCartItems(guestCart);
+    initialCartRef.current = JSON.parse(JSON.stringify(guestCart));
+    currentCartRef.current = guestCart;
+  }
+}, [isLoggedIn, data]);
 
   // Keep latest cart in ref
   useEffect(() => {
@@ -76,73 +86,92 @@ const Cart = () => {
     }
   };
 
-  const hasCartChanged = () => {
+const hasCartChanged = () => {
     const initialMap = new Map(
-      initialCartRef.current.map(i => [i.productId, i.qty])
+    initialCartRef.current.map(i => [i.productId, i.qty])
     );
 
     return cartItems.some(item => {
-      return initialMap.get(item.productId) !== item.qty;
+    return initialMap.get(item.productId) !== item.qty;
     });
   };
 
   /* ---------------- CART ACTIONS ---------------- */
 
-  const updateQuantity = (productId: string, change: number) => {
-    setCartItems(prev =>
-      prev.map(item => {
+const updateQuantity = (productId: string, change: number) => {
+    setCartItems(prev => {
+        const updatedCart = prev.map(item => {
         if (item.productId !== productId) return item;
 
         const qty = Math.max(0, (item.qty ?? 0) + change);
         const unitPrice = item.unitPrice ?? 0;
         const discount = item.discount ?? 0;
+
         const effectivePrice =
-          item.effectivePrice ?? Math.round(unitPrice * (1 - discount / 100));
+            item.effectivePrice ?? Math.round(unitPrice * (1 - discount / 100));
+
         const lineTotal = effectivePrice * qty;
 
+        return {
+            ...item,
+            qty,
+            effectivePrice,
+            lineTotal,
+        };
+        });
+
+        currentCartRef.current = updatedCart;
+
+        if (isLoggedIn) {
         cartModifiedRef.current = true;
+        } else {
+        saveGuestCart(updatedCart);
+        }
 
-        return { ...item, qty, effectivePrice, lineTotal };
-      })
-    );
-  };
+        return updatedCart;
+    });
+};
 
-  const handleBuyNow = async () => {
+const handleBuyNow = async () => {
     try {
-      if (isLoggedIn && cartModifiedRef.current) {
+        if (isLoggedIn && cartModifiedRef.current) {
         const payload = cartItems.map(item => ({
-          productId: item.productId,
-          qty: item.qty ?? 0,
+            productId: item.productId,
+            qty: item.qty ?? 0,
         }));
 
         await updateCartItems(payload);
         cartModifiedRef.current = false;
-      }
+        }
 
-      const checkoutItems = cartItems
+        if (!isLoggedIn) {
+        saveGuestCart(cartItems);
+        }
+
+        const checkoutItems = cartItems
         .filter(item => (item.qty ?? 0) > 0)
         .map(toCheckoutItem);
 
-      if (checkoutItems.length === 0) {
+        if (checkoutItems.length === 0) {
         toastError("Your cart is empty.");
         return;
-      }
+        }
 
-      navigate("/checkout", {
+        navigate("/checkout", {
         state: { from: "cart", items: checkoutItems },
-      });
+        });
     } catch (err) {
-      toastError("Failed to proceed to checkout");
+        toastError("Failed to proceed to checkout");
     }
-  };
+};
 
   /* ---------------- CART CHANGE TRACKER ---------------- */
 
-  useEffect(() => {
-    if (initialCartRef.current.length > 0) {
-      cartModifiedRef.current = hasCartChanged();
+useEffect(() => {
+    if (isLoggedIn && initialCartRef.current.length > 0) {
+        cartModifiedRef.current = hasCartChanged();
     }
-  }, [cartItems]);
+}, [cartItems, isLoggedIn]);
 
   /* ---------------- TOTAL ---------------- */
 
@@ -252,4 +281,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Cart2;

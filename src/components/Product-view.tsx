@@ -389,20 +389,20 @@ const ProductDetailView: React.FC<Props> = ({ category = "gemstone" }) => {
     }
   }, [quantity, discountedPrice]);
 
-  async function handleAddToCart(productId: string, quantity: number) {
-    try {
-      const param: CartItem = {
-        productId,
-        quantity
-      };
-      const isAdded = await addToCart(param);
-      if (isAdded) {
-        toastSuccess("Item Successfully Added to cart");
-      }
-    } catch (error) {
-      toastError(error || "Failed To Add Product");
-    }
-  }
+  // async function handleAddToCart(productId: string, quantity: number) {
+  //   try {
+  //     const param: CartItem = {
+  //       productId,
+  //       quantity
+  //     };
+  //     const isAdded = await addToCart(param);
+  //     if (isAdded) {
+  //       toastSuccess("Item Successfully Added to cart");
+  //     }
+  //   } catch (error) {
+  //     toastError(error || "Failed To Add Product");
+  //   }
+  // }
   async function handleAddToCart(productId:string,quantity:number){
     try {
       // Require Login otherwise add it to guest cart

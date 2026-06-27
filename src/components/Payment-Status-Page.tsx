@@ -1,6 +1,7 @@
 
 
 import { getBill } from "@/API/OrderAndBill";
+import { clearGuestCart } from "@/utlity/ProductF";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { CheckCircle, Download, XCircle } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
@@ -97,6 +98,13 @@ const PaymentStatusPage: React.FC = () => {
 
   // Treat both "paid" (DB) and "success" (gateway) as success for UI
   const isSuccess = orderData?.status === "paid" || orderData?.status === "success";
+
+  useEffect(() => {
+  if (!isSuccess || !orderData) return;
+    clearGuestCart();
+    localStorage.removeItem("tg_guest_user");
+}, [isSuccess, orderData]);
+
 
   const items = useMemo<BillItem[]>(
     () => (Array.isArray(orderData?.items) ? orderData!.items : []),

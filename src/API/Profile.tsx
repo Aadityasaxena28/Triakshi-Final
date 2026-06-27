@@ -34,8 +34,16 @@ export type changePassParams = {
   newPass:string;
 }
 export async function changePasswordAPI(params:changePassParams) {
-  const resp = await api.put("/api/users/change-password",params)
+  const resp = await api.put("/api/users/change-password",params);
   const payload = resp.data;
   if(!payload.success) return Promise.reject(payload.message);
   return payload;
 }
+
+export async function fetchGuestUser(params:{username:string;phonenumber:string ;email:string}) {
+  const resp = await api.post("/api/users/fetch-guest-user",params);
+  const payload = resp.data;
+  console.log(payload);
+  if(!payload.success) return Promise.reject(payload.message);
+  return payload;
+} 

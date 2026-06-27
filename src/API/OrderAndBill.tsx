@@ -59,10 +59,11 @@ export type Bill = {
   };
 };
 
-export async function createBill(params: Bill) {
+export async function createBill(params: Bill,user:string) {
   try {
     const { data } = await api.post(`/api/payment/create-bill`, {
-      bill: params
+      bill: params,
+      user
     });
 
     if (!data.success) {
