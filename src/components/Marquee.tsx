@@ -3,7 +3,7 @@ const Marquee = () => {
     <div className="bg-black py-3 overflow-hidden">
       <div className="animate-marquee whitespace-nowrap">
         <span className="text-yellow-400 font-bold text-lg mx-8">
-          JAI MAA PITAMBARA, WELCOME TO TRIAKSHI GEMS, HAPPY SHOPPING
+          JAI MAA BAGLAMUKHI 🙏🏻 WELCOME TO TRIAKSHI GEMS 🙏🏻
         </span>
         <span className="text-yellow-400 font-bold text-lg mx-8">
           The Third Eye Awakens.
