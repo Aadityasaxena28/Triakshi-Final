@@ -2,7 +2,7 @@ import { TokenValidation } from "@/API/Auth";
 import { Button } from "@/components/ui/button";
 import { toastInfo } from "@/utlity/AlertSystem";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronDown, ChevronUp, Gem, LogOut, Menu, Share2, ShoppingCart, User, UserCircle, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Gem, LogOut, Menu, Share2, ShoppingCart, User, UserCircle, X, Package } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -116,7 +116,7 @@ const Header: React.FC = () => {
 
   const profileItems = [
     { name: "Profile", path: "/profile", icon: UserCircle },
-    { name: "Cart", path: "/test-page", icon: ShoppingCart }, // ✅ updated path
+    { name: "Order", path: "/order", icon: Package }, 
     { name: "Refer & Earn", path: "/refer-earn", icon: Share2 },
   ];
 
@@ -125,9 +125,9 @@ const Header: React.FC = () => {
     else setIsProfileOpen(!isProfileOpen);
   };
 
-  // ✅ ONLY CHANGE: navigate to /test-page instead of /cart
+  //  navigate to /cart
   const handleCartClick = (): void => {
-    navigate("/test-page");
+    navigate("/cart");
   };
 
   const handleLogout = (): void => {

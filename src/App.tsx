@@ -93,7 +93,7 @@ const App = () => (
           <Route path="/Shippingpolicy" element={<ShippingPolicy/>}/>
           <Route path="/return" element={<ReturnsRefundPolicy/>}/>
 
-          <Route path='/test-page' element={<Cart2/>}/>
+          <Route path='/cart' element={<Cart2/>}/>
           {/* For Cart Purchase Functionality */}
           <Route path="checkout" element= {<CheckoutPage/>}/>
           {/*For Buy now functionality*/}
@@ -102,8 +102,9 @@ const App = () => (
           {/* --------------Protected Pages-------------------- */}
           <Route element={<RequireAuth/>}>
           <Route path="/profile" element={<ProfilePage option="profile"/>}/>
-          <Route path="/cart" element={<ProfilePage option="cart"/>}/>
-          <Route path="/refer-earn" element={<ProfilePage option="refer"/>}/>
+          <Route path="/order" element={<ProfilePage option="order"/>}/>
+          <Route path="/refer-earn" element={<ProfilePage option="refer-earn"/>}/>
+          <Route path="/password" element={<ProfilePage option="password"/>}/>
           </Route>
 
           

@@ -37,7 +37,7 @@ const SideBar = ({setSidebarOpen,sidebarOpen, setCurrentPage}) => {
       <span className="font-semibold text-gray-800 text-lg">Profile</span>
     </button>
 
-    <button
+    {/* <button
       onClick={() => {
         setCurrentPage("cart");
         setSidebarOpen(false);
@@ -46,11 +46,11 @@ const SideBar = ({setSidebarOpen,sidebarOpen, setCurrentPage}) => {
     >
       <ShoppingCart className="w-10 h-10 text-yellow-600 shrink-0" />
       <span className="font-semibold text-gray-800 text-lg">Cart</span>
-    </button>
+    </button> */}
 
     <button
       onClick={() => {
-        setCurrentPage("orders");
+        setCurrentPage("order");
         setSidebarOpen(false);
       }}
       className="w-full flex items-center gap-4 p-4 hover:bg-yellow-100 rounded-lg transition"
@@ -61,7 +61,7 @@ const SideBar = ({setSidebarOpen,sidebarOpen, setCurrentPage}) => {
 
     <button
       onClick={() => {
-        setCurrentPage("refer");
+        setCurrentPage("refer-earn");
         setSidebarOpen(false);
       }}
       className="w-full flex items-center gap-4 p-4 hover:bg-yellow-100 rounded-lg transition"
