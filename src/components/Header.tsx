@@ -1,7 +1,7 @@
 import { TokenValidation } from "@/API/Auth";
 import { Button } from "@/components/ui/button";
 import { toastInfo } from "@/utlity/AlertSystem";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown, ChevronUp, Gem, LogOut, Menu, Share2, ShoppingCart, User, UserCircle, X, Package } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,6 +29,8 @@ const Header: React.FC = () => {
   const [isLoggedIn, setLoggedIn] = useState<boolean>(false);
   const token = localStorage.getItem("tg_token");
   const hasUser = !!localStorage.getItem("tg_user");
+
+  const queryClient = useQueryClient();
 
   const { data, isError, isSuccess } = useQuery({
     queryKey: ["validateToken", token],
@@ -65,6 +67,17 @@ const Header: React.FC = () => {
       setCartItemCount(0);
     }
   }, [cartData]);
+
+  // ✅ NEW: listen for a "cartUpdated" event fired anywhere in the app
+  // (e.g. from the Add to Cart button) and refetch the cart count instantly,
+  // instead of waiting for the 60s poll interval.
+  useEffect(() => {
+    const handleCartUpdate = () => {
+      queryClient.invalidateQueries({ queryKey: ["cart-count"] });
+    };
+    window.addEventListener("cartUpdated", handleCartUpdate);
+    return () => window.removeEventListener("cartUpdated", handleCartUpdate);
+  }, [queryClient]);
 
   useEffect(() => {
     if (isError) {
@@ -239,7 +252,7 @@ const Header: React.FC = () => {
                 <div className="bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900 p-2 rounded-xl shadow-elegant">
                   <Gem className="h-4 w-4 text-white" />
                 </div>
-                <span className="text-xl golden-glare">त्रिakshi Gems</span>
+                <span className="text-xl golden-glare">त्रiakshi Gems</span>
               </Link>
             </div>
 
@@ -542,8 +555,5 @@ const Header: React.FC = () => {
     </>
   );
 };
-
-
-
 
 export default Header;
