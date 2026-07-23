@@ -457,7 +457,7 @@ const RudrakshPage = () => {
                 </div>
 
                 {filteredProducts.length > 0 ? (
-                  <div className="flex flex-wrap gap-y-4">
+                  <div className="flex flex-wrap gap-x-5 gap-y-6 sm:gap-x-6 sm:gap-y-8">
                      {filteredProducts.map((product) => (
                        <Product_card key={product.id} product={product} handleViewDetails={handleViewDetails} />
                      ))}
