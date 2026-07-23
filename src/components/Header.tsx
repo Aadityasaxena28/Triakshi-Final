@@ -54,7 +54,7 @@ const Header: React.FC = () => {
         return null;
       }
     },
-    enabled: isLoggedIn,
+    enabled: true,
     refetchInterval: 1000 * 60,
     staleTime: 3000,
   });
