@@ -131,7 +131,7 @@ const FAQSection = () => {
           </p>
           <div className="flex justify-center">
             <a 
-              href="https://astroashoknarayan.com/home"
+              href="www.astroashoknarayan.com"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold py-2.5 px-6 rounded-full shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center space-x-2 text-sm"

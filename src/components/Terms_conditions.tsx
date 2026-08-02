@@ -10,7 +10,6 @@ export default function TermsConditions() {
     setAnimateCards(true);
   }, []);
 
-  
   const toggleSection = (id) => {
     setExpandedSections(prev => ({
       ...prev,
@@ -21,80 +20,133 @@ export default function TermsConditions() {
   const sections = [
     {
       id: 1,
-      icon: "⚡",
-      title: "Services Provided",
+      icon: "📋",
+      title: "General Information",
       color: "from-yellow-400/20 to-orange-500/10",
-      content: "We offer personlized gemstone recommendation. Our services do not constitute medical, legal, or financial advice."
+      content: "triakshi.co.in is owned and operated by Life Is Divine. Throughout the site, the terms \"we\", \"us\", and \"our\" refer to Triakshi.co.in. By using our website, you agree that:",
+      isList: true,
+      items: [
+        "You are at least 18 years old or using the site under the supervision of a parent/guardian",
+        "You will use the website for lawful purposes only",
+        "You will provide accurate and complete information during registration or purchase"
+      ]
     },
     {
       id: 2,
-      icon: "👤",
-      title: "Eligibility",
+      icon: "🛍️",
+      title: "Product Information",
       color: "from-orange-400/20 to-red-500/10",
-      content: "You must be at least 18 years old to use our services. By using our Site, you represent and warrant that you are of legal age."
+      content: "We strive to display all products and descriptions as accurately as possible. However, minor color variations or appearance differences may occur due to lighting, photography, or screen display settings. All product prices shown on triakshi.co.in are inclusive of GST."
     },
     {
       id: 3,
-      icon: "✋",
-      title: "User Responsibilities",
+      icon: "💳",
+      title: "Orders and Payments",
       color: "from-red-400/20 to-orange-500/10",
       isList: true,
       items: [
-        "Provide accurate, current, and complete information",
-        "Not use the Site for any unlawful or prohibited activities",
-        "Respect the rights of other users and our intellectual property"
+        "All orders placed on the website are subject to acceptance and availability",
+        "We reserve the right to cancel or refuse any order at our discretion",
+        "Payments can be made securely through our trusted online payment gateways",
+        "In case of online payments, triakshi.co.in does not store any card or banking details"
       ]
     },
     {
       id: 4,
-      icon: "💳",
-      title: "Payments and Refunds",
+      icon: "🚚",
+      title: "Shipping & Delivery",
       color: "from-orange-400/20 to-yellow-500/10",
-      content: "All payments are final unless otherwise stated. We may offer refunds or credits at our sole discretion. Refund policies for specific services (e.g., readings or webinars) will be detailed on the relevant service page."
+      isList: true,
+      items: [
+        "Orders are usually processed within 2-3 working days and delivered within 10-12 working days after dispatch",
+        "Shipping timelines may vary depending on your location or courier delays",
+        "For full details, please read our Shipping Policy"
+      ]
     },
     {
       id: 5,
-      icon: "©️",
-      title: "Intellectual Property",
+      icon: "↩️",
+      title: "Returns and Refunds",
       color: "from-yellow-400/20 to-orange-500/10",
-      content: "All content on this Site, including but not limited to text, graphics, logos, and images, is our property or licensed to us. You may not copy, reproduce, or distribute any content without prior written permission."
+      isList: true,
+      items: [
+        "We do not accept returns or exchanges once the product has been delivered",
+        "For more details, refer to our Return & Refund Policy"
+      ],
+      highlight: true
     },
     {
       id: 6,
-      icon: "⚠️",
-      title: "Disclaimer",
+      icon: "©️",
+      title: "Intellectual Property",
       color: "from-orange-400/20 to-red-500/10",
-      content: "All services are provided \"as is\" without warranties of any kind. Astrology is not a science and results may vary. We do not guarantee the accuracy, reliability, or completeness of any information provided.",
-      highlight: true
+      content: "All content on triakshi.co.in, including text, images, graphics, logos, designs, and product descriptions, is the intellectual property of Triakshi.co.in and protected under applicable copyright laws. You may not:",
+      isList: true,
+      items: [
+        "Copy, reproduce, or distribute any material from our website without prior written consent",
+        "Use our trademarks, product images, or content for commercial or misleading purposes"
+      ]
     },
     {
       id: 7,
       icon: "🛡️",
       title: "Limitation of Liability",
       color: "from-red-400/20 to-orange-500/10",
-      content: "We are not liable for any indirect, incidental, or consequential damages arising from your use of our Site or services.",
+      content: "triakshi.co.in shall not be held responsible for:",
+      isList: true,
+      items: [
+        "Any indirect, incidental, or consequential damages resulting from product use or misuse",
+        "Delays or delivery failures due to natural calamities, courier issues, or circumstances beyond our control"
+      ],
+      note: "Our total liability for any claim shall not exceed the amount paid by the customer for that specific order.",
       highlight: true
     },
     {
       id: 8,
-      icon: "🔒",
-      title: "Privacy Policy",
+      icon: "🚫",
+      title: "User Conduct",
       color: "from-orange-400/20 to-yellow-500/10",
-      content: "Your use of our Site is also governed by our Privacy Policy, which is incorporated into these Terms by reference."
+      content: "You agree not to:",
+      isList: true,
+      items: [
+        "Engage in any unlawful activity through our website",
+        "Upload or share harmful, abusive, or offensive content",
+        "Attempt to hack, disrupt, or misuse our website or data systems"
+      ],
+      note: "Violation of these terms may lead to suspension or permanent blocking of your access."
     },
     {
       id: 9,
-      icon: "📝",
-      title: "Modifications to Terms",
+      icon: "🔗",
+      title: "Third-Party Links",
       color: "from-yellow-400/20 to-orange-500/10",
-      content: "We may update these Terms from time to time. Continued use of the Site after changes are posted constitutes acceptance of those changes."
+      content: "Our website may include links to third-party websites or tools for convenience. We are not responsible for the privacy practices, content, or accuracy of information on these external sites."
     },
     {
       id: 10,
       icon: "⚖️",
       title: "Governing Law",
       color: "from-orange-400/20 to-red-500/10",
-      content: "These Terms shall be governed by and construed in accordance with the laws of Uttar Pradesh."
+      content: "These Terms & Conditions are governed by and interpreted according to the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts in Uttar Pradesh."
+    },
+    {
+      id: 11,
+      icon: "📝",
+      title: "Changes to Terms",
+      color: "from-red-400/20 to-orange-500/10",
+      content: "triakshi.co.in reserves the right to modify or update these Terms & Conditions at any time. Updates will be reflected on this page with the revised \"Effective Date.\" Continued use of the website after such updates implies your acceptance of the new terms."
+    },
+    {
+      id: 12,
+      icon: "📧",
+      title: "Contact Us",
+      color: "from-orange-400/20 to-yellow-500/10",
+      content: "For any questions about these Terms & Conditions, please contact:",
+      isList: true,
+      items: [
+        "Email: triakshijewels@gmail.com",
+        "Website: www.triakshi.co.in"
+      ]
     }
   ];
 
@@ -117,17 +169,17 @@ export default function TermsConditions() {
             Terms & Conditions
           </h1>
           <p className="text-xl text-amber-100 font-semibold">Please Read Carefully</p>
-          <p className="text-amber-300 text-sm mt-4">Last Updated: 25 April 2025</p>
+          <p className="text-amber-300 text-sm mt-4">Owned & Operated by Life Is Divine</p>
         </div>
 
         {/* Welcome Section */}
         <div className="max-w-4xl mx-auto px-6 mb-12">
           <div className="bg-gradient-to-br from-orange-900/50 to-red-900/50 backdrop-blur-sm border-2 border-yellow-400/30 rounded-2xl p-10 shadow-2xl">
             <p className="text-amber-50 text-lg leading-relaxed mb-4">
-              Welcome to our website <span className="font-bold text-yellow-300">triakshi.co.in</span>. 
+              Welcome to <span className="font-bold text-yellow-300">triakshi.co.in</span>!
             </p>
             <p className="text-amber-100 text-lg leading-relaxed">
-              By accessing or using our website located at <span className="font-bold text-orange-200">triakshi.co.in</span> (the "Site"), you agree to be bound by these Terms and Conditions (the "Terms"). Please read them carefully before using our services.
+              These Terms and Conditions outline the rules and regulations for the use of our website and services. By accessing or making a purchase on <span className="font-bold text-orange-200">triakshi.co.in</span>, you agree to be bound by these terms. If you do not agree, please refrain from using our website.
             </p>
           </div>
         </div>
@@ -144,8 +196,8 @@ export default function TermsConditions() {
               <div className={`absolute inset-0 bg-gradient-to-br ${section.color} rounded-xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100`}></div>
 
               <div className={`relative bg-gradient-to-br from-amber-800/60 to-orange-800/40 backdrop-blur-sm border-2 transition-all duration-300 rounded-xl shadow-2xl ${
-                section.highlight 
-                  ? 'border-red-400/60 group-hover:border-red-300/80' 
+                section.highlight
+                  ? 'border-red-400/60 group-hover:border-red-300/80'
                   : 'border-yellow-400/40 group-hover:border-yellow-300/70'
               }`}>
                 {/* Highlight Badge */}
@@ -165,9 +217,7 @@ export default function TermsConditions() {
                     <span className="text-4xl drop-shadow-lg">{section.icon}</span>
                     <div className="text-left">
                       <h2 className="text-2xl font-bold text-yellow-300">{section.title}</h2>
-                      {section.id <= 10 && (
-                        <p className="text-amber-300 text-xs mt-1">Section {section.id}</p>
-                      )}
+                      <p className="text-amber-300 text-xs mt-1">Section {section.id}</p>
                     </div>
                   </div>
                   <ChevronDown
@@ -194,6 +244,17 @@ export default function TermsConditions() {
                         ))}
                       </ul>
                     )}
+
+                    {section.note && (
+                      <p className="text-amber-200 leading-relaxed text-sm italic">{section.note}</p>
+                    )}
+
+                    {section.title === "Contact Us" && (
+                      <div className="flex items-center gap-2 pt-2">
+                        <Mail className="w-4 h-4 text-yellow-300" />
+                        <span className="text-amber-300 text-sm">We usually respond within 1-2 business days</span>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -204,8 +265,6 @@ export default function TermsConditions() {
             </div>
           ))}
         </div>
-
-        {/* ... (rest of the code remains unchanged) ... */}
       </div>
     </div>
   );
