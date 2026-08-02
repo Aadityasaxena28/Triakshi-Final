@@ -142,7 +142,7 @@ export default function CheckoutPage() {
       const d = Math.min(100, Math.max(0, Number(it.discount) || 0));
       const discountedUnit = Math.round(unit * (1 - d / 100));
 
-      sub += discountedUnit * qty;
+      sub += unit * qty;
       disc += Math.round(unit * qty - discountedUnit * qty);
     }
 
@@ -452,7 +452,7 @@ export default function CheckoutPage() {
             <div className="mt-6 border-t pt-4 space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-600">Subtotal</span>
-                <span className="text-gray-900">₹{currency(subTotal + discountTotal)}</span>
+                <span className="text-gray-900">₹{currency(subTotal)}</span>
               </div>
               {discountTotal > 0 && (
                 <div className="flex justify-between">
