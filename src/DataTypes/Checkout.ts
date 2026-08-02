@@ -4,7 +4,7 @@ export interface CheckoutItem {
   name: string;
   qty: number;
   image?: string;
-  images?:string
+  images?:string[];
   unitPrice: number; 
   discount: number;  // %
   type?: string;     

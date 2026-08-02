@@ -1,4 +1,4 @@
-import { Bill, createBill } from "@/API/OrderAndBill";
+import { Bill, createBill, default_items  } from "@/API/OrderAndBill";
 import { getProfile, fetchGuestUser  } from "@/API/Profile";
 import { CheckoutDraft } from "@/DataTypes/Checkout";
 import { UserProfile } from "@/DataTypes/Profile";
@@ -115,10 +115,24 @@ export default function CheckoutPage() {
       setSource("buy-now");
     }
   }, [BDK, location.state]);
+  
+  const checkoutItems = useMemo(() => {
+    const items = draft?.items || [];
+
+    // do not add default items when cart/buy-now draft is empty
+    if (items.length === 0) {
+      return [];
+    }
+
+    return [
+      ...items,
+      ...default_items,
+    ];
+  }, [draft]);
 
   // Derived pricing
   const { subTotal, discountTotal, shipping, tax, grandTotal } = useMemo(() => {
-    const items = draft?.items || [];
+    const items = checkoutItems;
     let sub = 0;
     let disc = 0;
 
@@ -140,8 +154,7 @@ export default function CheckoutPage() {
 
 
     return { subTotal: sub, discountTotal: disc, shipping: shippingCost, tax: taxAmount, grandTotal: grand };
-  }, [draft]);
-
+  }, [checkoutItems]);
   // ====== Step handlers ======
   const fetchAndLockGuestUser = async () => {
   const username = fullName.trim();
@@ -218,7 +231,7 @@ export default function CheckoutPage() {
         contact: { mobileNumber: `+91${mobileNumber}`, email, receiveUpdates },
         address: { fullName, addressLine1, addressLine2, city, state, pincode },
         order: {
-          items: draft.items,
+          items: checkoutItems,
           subTotal,
           discountTotal,
           shipping,
@@ -391,7 +404,7 @@ export default function CheckoutPage() {
                 Order summary
                 {source === "cart" && (
                   <span className="ml-2 text-xs font-normal text-gray-500">
-                    ({draft.items.length} {draft.items.length === 1 ? "item" : "items"})
+                    ({checkoutItems.length} {checkoutItems.length === 1 ? "item" : "items"})
                   </span>
                 )}
               </h2>
@@ -400,7 +413,7 @@ export default function CheckoutPage() {
 
             {/* Items */}
             <div className="space-y-4 max-h-64 overflow-y-auto">
-              {draft.items.map((it, idx) => {
+              {checkoutItems.map((it, idx) => {
                 const d = Math.min(100, Math.max(0, Number(it.discount) || 0));
                 const unit = Math.max(0, Number(it.unitPrice) || 0);
                 const discountedUnit = Math.round(unit * (1 - d / 100));

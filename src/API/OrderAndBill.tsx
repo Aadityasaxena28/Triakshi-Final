@@ -76,3 +76,14 @@ export async function createBill(params: Bill,user:string) {
     throw new Error(message);
   }
 }
+
+export const default_items:CheckoutItem[]= [{
+  productId:"692b703a09e2057af820b27f" ,
+  name: "5 Mukhi Rudraksha",
+  qty: 1,
+  image: "https://res.cloudinary.com/dqhr4mbkb/image/upload/v1764454457/saxena_products/tmp-9-681764454457369_ahetmf.webp",
+  images:["https://res.cloudinary.com/dqhr4mbkb/image/upload/v1764454457/saxena_products/tmp-9-681764454457369_ahetmf.webp"],
+  unitPrice: 0,
+  discount: 0,
+  type:"rudraksha:5-mukhi"
+}]
