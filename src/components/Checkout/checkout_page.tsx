@@ -150,7 +150,7 @@ export default function CheckoutPage() {
     const shippingCost = items.length > 0 ? 0 : 0;
     const taxAmount = Math.round(sub * 0.03); // 3% GST
     // const grand = sub + shippingCost + taxAmount;
-    const grand = sub + shippingCost;
+    const grand = sub + shippingCost-disc;
 
 
     return { subTotal: sub, discountTotal: disc, shipping: shippingCost, tax: taxAmount, grandTotal: grand };
