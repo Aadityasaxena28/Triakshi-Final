@@ -452,7 +452,7 @@ export default function CheckoutPage() {
             <div className="mt-6 border-t pt-4 space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-600">Subtotal</span>
-                <span className="text-gray-900">₹{currency(subTotal)}</span>
+                <span className="text-gray-900">₹{currency(subTotal + discountTotal)}</span>
               </div>
               {discountTotal > 0 && (
                 <div className="flex justify-between">
