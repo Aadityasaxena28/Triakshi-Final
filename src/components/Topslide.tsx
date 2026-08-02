@@ -27,10 +27,10 @@ const Topslide: React.FC = () => {
 
           {/* Body Text - Better line height and spacing for mobile */}
           <p className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl font-light">
-            Known to promote mental peace, emotional balance, and stress relief,making it one of the most powerful and widely worn Rudraksha.
+            Known to promote mental peace, emotional balance, and stress relief, we offer a free 5 Mukhi Rudraksha this Shravan month with every purchase. Hurry Up! Grab yours now !
           </p>
 
-          {/* CTA Button */}
+          {/* CTA Button 
           <div className="flex justify-center pt-2 md:pt-4">
             <Link 
               to="/rudra-view/692b703a09e2057af820b27f"
@@ -39,7 +39,7 @@ const Topslide: React.FC = () => {
               <span className="relative z-10">Get FREE Rudraksha</span>
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-600 to-amber-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
             </Link>
-          </div>
+          </div>*/}
 
           {/* Trust Indicators - Stack on mobile, horizontal on larger screens */}
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 sm:gap-6 md:gap-8 text-white/80 justify-center">
